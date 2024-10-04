@@ -16,15 +16,21 @@ client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
 });
 
+const fs = require('fs');
+
+// Carrega o arquivo JSON
+const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
+
 async function Comandos(message) {
     if (message.body === '/2'){
-        await client.sendMessage(message.from, `@${melga}`, 
-            { mentions: [melga + '@c.us'] });
+        await client.sendMessage(message.from, `@${c.aranhas.melga}`, 
+            { mentions: [c.aranhas.melga + '@c.us'] });
     }
 
     if (message.body === '/formigas'){
-        await client.sendMessage(message.from, `@${andre}, @${maycon}, @${fischer}, @${enrico}`, 
-            {mentions: [andre + '@c.us', maycon + '@c.us', fischer + '@c.us', enrico + '@c.us']});
+        await client.sendMessage(message.from, `@${c.borboletas.andre}, @${c.formigas.maycon}, @${c.borboletas.fischer}, @${c.enrico}`, 
+            {mentions: [c.borboletas.andre + '@c.us', c.formigas.maycon + '@c.us', 
+                c.borboletas.fischer + '@c.us', c.enrico + '@c.us']});
     }
 
     if (message.body === '/1'){
@@ -32,14 +38,8 @@ async function Comandos(message) {
     }
 }
 
-// Funcao de pausa para evitar spam
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 let lista_spam = new Array(2);
 let flag_spam = 0;
-
 if(Object.seal) {
   // fill array with some value because
   // empty slots can not be changed after calling Object.seal
@@ -48,6 +48,7 @@ if(Object.seal) {
   Object.seal(lista_spam);
   // now lista_spam is a fixed-size array with mutable entries
 }
+
 
 // Listening to all incoming messages
 client.on('message_create', async message => {

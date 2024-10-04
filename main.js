@@ -40,48 +40,34 @@ async function Comandos(message) {
     }
 }
 
-let lista_spam = new Array(2);
+let lista_spam = [];
 let flag_spam = 0;
-if(Object.seal) {
-  // fill array with some value because
-  // empty slots can not be changed after calling Object.seal
-  lista_spam.fill(999);
-
-  Object.seal(lista_spam);
-  // now lista_spam is a fixed-size array with mutable entries
-}
 
 // Listening to all incoming messages
 client.on('message_create', async message => {
-	//console.log(message.body);
     const chat = await message.getChat();
-
+    
     let usuario = await message.getContact();
 
-    if(message.author === usuario.id._serialized){  // modificar parametros para tratar somente na lista de comandos
-        //console.log('Contato de quem mandou a mensagem: ' + message.author);
+    if(message.author === usuario.id._serialized){
         if (lista_comandos.includes(message.body)) {
             let msg1 = message.timestamp;
             lista_spam[flag_spam] = msg1;
     
-            //console.log(lista_spam + '\n');
+            console.log(lista_spam + '\n');
             flag_spam++;
     
             if(flag_spam == 2){
                 flag_spam = 0;
             }
-    
-            if (!lista_spam.includes(999)) {
 
-                if(Math.abs(lista_spam[1] - lista_spam[0]) < 3){
-                    console.log('spam detectado!');
-                }else{
-                    await Comandos(message);
-                }
+            if(Math.abs(lista_spam[1] - lista_spam[0]) < 3){
+                console.log('spam detectado!');
+            }else{
+                await Comandos(message);
             }
         }
     }
-    
 });
 
 // Start your client

@@ -16,6 +16,8 @@ client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
 });
 
+let lista_comandos = ['/formigas', '/2', '/1'];
+
 const fs = require('fs');
 
 // Carrega o arquivo JSON
@@ -49,34 +51,33 @@ if(Object.seal) {
   // now lista_spam is a fixed-size array with mutable entries
 }
 
-
 // Listening to all incoming messages
 client.on('message_create', async message => {
 	//console.log(message.body);
     const chat = await message.getChat();
 
-    await Comandos(message);
-
     let usuario = await message.getContact();
 
     if(message.author === usuario.id._serialized){  // modificar parametros para tratar somente na lista de comandos
         //console.log('Contato de quem mandou a mensagem: ' + message.author);
-        
-        let msg1 = message.timestamp;
-        lista_spam[flag_spam] = msg1;
+        if (lista_comandos.includes(message.body)) {
+            let msg1 = message.timestamp;
+            lista_spam[flag_spam] = msg1;
+    
+            //console.log(lista_spam + '\n');
+            flag_spam++;
+    
+            if(flag_spam == 2){
+                flag_spam = 0;
+            }
+    
+            if (!lista_spam.includes(999)) {
 
-        console.log(lista_spam + '\n');
-        flag_spam++;
-
-        if(flag_spam == 2){
-            flag_spam = 0;
-        }
-
-        if (lista_spam.includes(999)) {
-            
-            if(lista_spam[1] - lista_spam[0] <= 2){
-                console.log('spam detectado!');
-
+                if(Math.abs(lista_spam[1] - lista_spam[0]) < 3){
+                    console.log('spam detectado!');
+                }else{
+                    await Comandos(message);
+                }
             }
         }
     }

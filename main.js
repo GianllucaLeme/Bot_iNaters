@@ -1,3 +1,5 @@
+/*---Sincronização do bot com o WhatsApp---*/
+
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 
@@ -16,11 +18,14 @@ client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
 });
 
+
+/*---Funcionalidades do bot ---*/
+
+
 let lista_comandos = ['/formigas', '/2', '/1'];
 
-const fs = require('fs');
-
 // Carrega o arquivo JSON
+const fs = require('fs');
 const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
 
 async function Comandos(message) {
@@ -40,21 +45,23 @@ async function Comandos(message) {
     }
 }
 
+// Spam handling
 let lista_spam = [];
 let flag_spam = 0;
 
-// Listening to all incoming messages
+// Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
     const chat = await message.getChat();
     
     let usuario = await message.getContact();
 
+    // Spam handling antes de detectar os comandos
     if(message.author === usuario.id._serialized){
         if (lista_comandos.includes(message.body)) {
             let msg1 = message.timestamp;
             lista_spam[flag_spam] = msg1;
     
-            console.log(lista_spam + '\n');
+            //console.log(lista_spam + '\n');
             flag_spam++;
     
             if(flag_spam == 2){
@@ -62,7 +69,7 @@ client.on('message_create', async message => {
             }
 
             if(Math.abs(lista_spam[1] - lista_spam[0]) < 3){
-                console.log('spam detectado!');
+                //console.log('spam detectado!');
             }else{
                 await Comandos(message);
             }
@@ -70,5 +77,5 @@ client.on('message_create', async message => {
     }
 });
 
-// Start your client
+// Ligar o bot
 client.initialize();

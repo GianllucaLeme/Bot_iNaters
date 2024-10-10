@@ -28,6 +28,26 @@ let lista_comandos = ['/help', '/aranhas', '/aranhas2', '/borboletas', '/formiga
 const fs = require('fs');
 const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
 
+// Função que determina a chance do usuário Enrico ser marcado em algum dos comandos
+async function chanceEnrico(prob) {
+    if (Math.random() < prob) {
+        return c.enrico;
+    } else {
+        return null;
+    }
+}
+
+// Função que adiciona o usuário Enrico para ser propriamente marcado na mensagem
+async function marcarEnrico(lista, pessoas, chance) {
+    const marcacao = await chanceEnrico(chance);
+    if(marcacao){
+        lista.push(marcacao + '@c.us');
+        return pessoas + `, @${marcacao}`;
+    }else{
+        return pessoas;
+    }
+}
+
 async function Comandos(message) {
     if (message.body === '/help'){
         await client.sendMessage(message.from, 
@@ -110,12 +130,15 @@ async function Comandos(message) {
     }
 
     if (message.body === '/opiliões'){
-        await client.sendMessage(message.from, `@${c.opilioes.lohan}, @${c.opilioes.luis_cla}`, 
-            
-            {mentions: [
-                c.opilioes.lohan + '@c.us',
-                c.opilioes.luis_cla + '@c.us',
-            ]});
+        let lista = [
+            c.opilioes.lohan + '@c.us',
+            c.opilioes.luis_cla + '@c.us'
+        ]
+        let pessoas = `@${c.opilioes.lohan}, @${c.opilioes.luis_cla}`;
+
+        pessoas = await marcarEnrico(lista, pessoas, 0.5)
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 }
 

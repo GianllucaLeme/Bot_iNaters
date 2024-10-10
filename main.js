@@ -22,13 +22,26 @@ client.on('qr', (qr) => {
 /*---Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/aranhas', '/aranhas2', '/formigas', '/1'];
+let lista_comandos = ['/help', '/aranhas', '/aranhas2', '/borboletas', '/formigas', '/mariposas', '/opiliões'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
 const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
 
 async function Comandos(message) {
+    if (message.body === '/help'){
+        await client.sendMessage(message.from, 
+            `Olá! Esses são os comandos disponíveis até o momento: \n` +
+            `* /help\n` +
+            `* /aranhas\n` +
+            `* /aranhas2\n` +
+            `* /borboletas\n` +
+            `* /formigas\n` +
+            `* /mariposas\n` +
+            `* /opiliões`
+        );
+    }
+
     if (message.body === '/aranhas'){
         await client.sendMessage(message.from, 
             `@${c.aranhas.celio}, @${c.aranhas.fernando}, @${c.aranhas.gianlluca}, @${c.aranhas.isaac}, @${c.aranhas.jean}, @${c.aranhas.leonardo}, @${c.aranhas.lucas_gusso}, @${c.aranhas.ryan}, @${c.aranhas.victor}`, 
@@ -61,20 +74,48 @@ async function Comandos(message) {
             ]});
     }
 
-    if (message.body === '/formigas'){
-        await client.sendMessage(message.from, `@${c.formigas.felipe_santos}, @${c.formigas.gabriel_rogerio}, @${c.formigas.guilherme_cardoso}, @${c.formigas.joao_paulo}, @${c.formigas.maycon}`, 
+    if (message.body === '/borboletas'){
+        await client.sendMessage(message.from, `@${c.borboletas.andre_nog}, @${c.borboletas.pedro_souza}, @${c.borboletas.rafaela}, @${c.borboletas.tiago}`, 
             
             {mentions: [
+                c.borboletas.andre_nog + '@c.us',
+                c.borboletas.pedro_souza + '@c.us',
+                c.borboletas.rafaela + '@c.us',
+                c.borboletas.tiago + '@c.us'
+            ]});
+    }
+
+    if (message.body === '/formigas'){
+        await client.sendMessage(message.from, `@${c.formigas.davi}, @${c.formigas.felipe_santos}, @${c.formigas.gabriel_rogerio}, @${c.formigas.guilherme_cardoso}, @${c.formigas.joao_paulo}, @${c.formigas.maycon}, @${c.formigas.vankan}`, 
+            
+            {mentions: [
+                c.formigas.davi + '@c.us',
                 c.formigas.felipe_santos + '@c.us',
                 c.formigas.gabriel_rogerio + '@c.us',
                 c.formigas.guilherme_cardoso + '@c.us',
                 c.formigas.joao_paulo + '@c.us',
                 c.formigas.maycon + '@c.us',
+                c.formigas.vankan + '@c.us'
             ]});
     }
 
-    if (message.body === '/1'){
-        await client.sendMessage(message.from, 'teste de mensagem');
+    if (message.body === '/mariposas'){
+        await client.sendMessage(message.from, `@${c.mariposas.fischer}, @${c.mariposas.luis_eduardo}, @${c.mariposas.yasmin}`, 
+            
+            {mentions: [
+                c.mariposas.fischer + '@c.us',
+                c.mariposas.luis_eduardo + '@c.us',
+                c.mariposas.yasmin + '@c.us'
+            ]});
+    }
+
+    if (message.body === '/opiliões'){
+        await client.sendMessage(message.from, `@${c.opilioes.lohan}, @${c.opilioes.luis_cla}`, 
+            
+            {mentions: [
+                c.opilioes.lohan + '@c.us',
+                c.opilioes.luis_cla + '@c.us',
+            ]});
     }
 }
 
@@ -94,7 +135,6 @@ client.on('message_create', async message => {
             let msg1 = message.timestamp;
             lista_spam[flag_spam] = msg1;
     
-            //console.log(lista_spam + '\n');
             flag_spam++;
     
             if(flag_spam == 2){
@@ -102,7 +142,6 @@ client.on('message_create', async message => {
             }
 
             if(Math.abs(lista_spam[1] - lista_spam[0]) < 3){
-                //console.log('spam detectado!');
             }else{
                 await Comandos(message);
             }

@@ -50,93 +50,67 @@ async function marcarEnrico(lista, pessoas, chance) {
 
 async function Comandos(message) {
     if (message.body === '/help'){
+        const comandos = lista_comandos.map(comando => `* ${comando}`).join('\n');
         await client.sendMessage(message.from, 
-            `Olá! Esses são os comandos disponíveis até o momento: \n` +
-            `* /help\n` +
-            `* /aranhas\n` +
-            `* /aranhas2\n` +
-            `* /borboletas\n` +
-            `* /formigas\n` +
-            `* /mariposas\n` +
-            `* /opiliões`
-        );
+            `Olá! Esses são os comandos disponíveis até o momento:\n${comandos}`);
     }
 
     if (message.body === '/aranhas'){
-        await client.sendMessage(message.from, 
-            `@${c.aranhas.celio}, @${c.aranhas.fernando}, @${c.aranhas.gianlluca}, @${c.aranhas.isaac}, @${c.aranhas.jean}, @${c.aranhas.leonardo}, @${c.aranhas.lucas_gusso}, @${c.aranhas.ryan}, @${c.aranhas.victor}`, 
-    
-            { mentions: [
-                c.aranhas.celio + '@c.us', 
-                c.aranhas.fernando + '@c.us', 
-                c.aranhas.gianlluca + '@c.us',
-                c.aranhas.isaac + '@c.us',
-                c.aranhas.jean + '@c.us',
-                c.aranhas.leonardo + '@c.us',
-                c.aranhas.lucas_gusso + '@c.us',
-                c.aranhas.ryan + '@c.us',
-                c.aranhas.victor + '@c.us'
-            ]});
+        const aranhas = [c.aranhas.celio, c.aranhas.fernando, c.aranhas.gianlluca, c.aranhas.isaac, c.aranhas.jean, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.ryan, c.aranhas.victor];
+        let lista = aranhas.map(user => `${user}@c.us`);
+        let pessoas = aranhas.map(user => `@${user}`).join(', ');
+        
+        pessoas = await marcarEnrico(lista, pessoas, 0.5);
+
+        await client.sendMessage(message.from, pessoas, { mentions: lista});
     }
 
     if (message.body === '/aranhas2'){
-        await client.sendMessage(message.from, 
-            `@${c.aranhas2.adolfo}, @${c.aranhas2.claudia}, @${c.aranhas2.dayvson}, @${c.aranhas2.gabriel_costa}, @${c.aranhas2.michelotto}, @${c.aranhas2.pedro_martins}, @${c.aranhas2.piva}`, 
-            
-            { mentions: [
-                c.aranhas2.adolfo + '@c.us',
-                c.aranhas2.claudia + '@c.us',
-                c.aranhas2.dayvson + '@c.us',
-                c.aranhas2.gabriel_costa + '@c.us',
-                c.aranhas2.michelotto + '@c.us',
-                c.aranhas2.pedro_martins + '@c.us',
-                c.aranhas2.piva + '@c.us'
-            ]});
+        const aranhas2 = [c.aranhas2.adolfo, c.aranhas2.claudia, c.aranhas2.dayvson, c.aranhas2.gabriel_costa, c.aranhas2.michelotto, c.aranhas2.pedro_martins, c.aranhas2.piva];
+        let lista = aranhas2.map(user => `${user}@c.us`);
+        let pessoas = aranhas2.map(user => `@${user}`).join(', ');
+        
+        pessoas = await marcarEnrico(lista, pessoas, 0.5);
+
+        await client.sendMessage(message.from, pessoas, { mentions: lista});
     }
 
     if (message.body === '/borboletas'){
-        await client.sendMessage(message.from, `@${c.borboletas.andre_nog}, @${c.borboletas.pedro_souza}, @${c.borboletas.rafaela}, @${c.borboletas.tiago}`, 
-            
-            {mentions: [
-                c.borboletas.andre_nog + '@c.us',
-                c.borboletas.pedro_souza + '@c.us',
-                c.borboletas.rafaela + '@c.us',
-                c.borboletas.tiago + '@c.us'
-            ]});
+        const borboletas =  [c.borboletas.andre_nog, c.borboletas.pedro_souza, c.borboletas.rafaela, c.borboletas.tiago];
+        let lista = borboletas.map(user => `${user}@c.us`);
+        let pessoas = borboletas.map(user => `@${user}`).join(', ');
+        
+        pessoas = await marcarEnrico(lista, pessoas, 0.5);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
     if (message.body === '/formigas'){
-        await client.sendMessage(message.from, `@${c.formigas.davi}, @${c.formigas.felipe_santos}, @${c.formigas.gabriel_rogerio}, @${c.formigas.guilherme_cardoso}, @${c.formigas.joao_paulo}, @${c.formigas.maycon}, @${c.formigas.vankan}`, 
-            
-            {mentions: [
-                c.formigas.davi + '@c.us',
-                c.formigas.felipe_santos + '@c.us',
-                c.formigas.gabriel_rogerio + '@c.us',
-                c.formigas.guilherme_cardoso + '@c.us',
-                c.formigas.joao_paulo + '@c.us',
-                c.formigas.maycon + '@c.us',
-                c.formigas.vankan + '@c.us'
-            ]});
+        const formigas = [c.formigas.davi, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, c.formigas.guilherme_cardoso, c.formigas.joao_paulo, c.formigas.maycon, c.formigas.vankan];
+        let lista = formigas.map(user => `${user}@c.us`);
+        let pessoas = formigas.map(user => `@${user}`).join(', ');
+        
+        pessoas = await marcarEnrico(lista, pessoas, 0.5);
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
     if (message.body === '/mariposas'){
-        await client.sendMessage(message.from, `@${c.mariposas.fischer}, @${c.mariposas.luis_eduardo}, @${c.mariposas.yasmin}`, 
-            
-            {mentions: [
-                c.mariposas.fischer + '@c.us',
-                c.mariposas.luis_eduardo + '@c.us',
-                c.mariposas.yasmin + '@c.us'
-            ]});
+        const mariposas = [c.mariposas.fischer, c.mariposas.luis_eduardo, c.mariposas.yasmin];
+        let lista = mariposas.map(user => `${user}@c.us`);
+        let pessoas = mariposas.map(user => `@${user}`).join(', ');
+        
+        pessoas = await marcarEnrico(lista, pessoas, 0.5);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/opiliões'){
-        let lista = [
-            c.opilioes.lohan + '@c.us',
-            c.opilioes.luis_cla + '@c.us'
-        ]
-        let pessoas = `@${c.opilioes.lohan}, @${c.opilioes.luis_cla}`;
-
-        pessoas = await marcarEnrico(lista, pessoas, 0.5)
+    if (message.body === '/opiliões') {
+        const opilioes = [c.opilioes.lohan, c.opilioes.luis_cla];
+        let lista = opilioes.map(user => `${user}@c.us`);
+        let pessoas = opilioes.map(user => `@${user}`).join(', ');
+    
+        pessoas = await marcarEnrico(lista, pessoas, 0.5);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }

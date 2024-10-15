@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
 /*---Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/aranhas', '/aranhas2', '/borboletas', '/formigas', '/mariposas', '/opiliões'];
+let lista_comandos = ['/help', '/aranhas', '/borboletas', '/formigas', '/mariposas', '/opiliões'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -48,6 +48,15 @@ async function mencionarUsuario(lista, pessoas, usuario, chance) {
     }
 }
 
+// Função para embaralhar a lista de contatos
+async function embaralharContatos(contatos) {
+    for (let i = contatos.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [contatos[i], contatos[j]] = [contatos[j], contatos[i]];  // Troca os elementos
+    }
+    return contatos;
+}
+
 async function Comandos(message) {
     if (message.body === '/help'){
         const comandos = lista_comandos.map(comando => `* ${comando}`).join('\n');
@@ -56,9 +65,12 @@ async function Comandos(message) {
     }
 
     if (message.body === '/aranhas'){
-        const aranhas = [c.aranhas.celio, c.aranhas.fernando, c.aranhas.gianlluca, c.aranhas.isaac, c.aranhas.jean, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.ryan, c.aranhas.victor];
+        let aranhas = [c.aranhas.celio, c.aranhas.fernando, c.aranhas.gianlluca, c.aranhas.isaac, c.aranhas.jean, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.ryan, c.aranhas.victor];
+
+        aranhas = (await embaralharContatos(aranhas)).slice(0, 5);
+
         let lista = aranhas.map(user => `${user}@c.us`);
-        let pessoas = aranhas.map(user => `@${user}`).join(', ');
+        let pessoas = `@${aranhas.join(', @')}`;
         
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
 
@@ -66,7 +78,7 @@ async function Comandos(message) {
     }
 
     if (message.body === '/aranhas2'){
-        const aranhas2 = [c.aranhas2.adolfo, c.aranhas2.claudia, c.aranhas2.dayvson, c.aranhas2.gabriel_costa, c.aranhas2.michelotto, c.aranhas2.pedro_martins, c.aranhas2.piva];
+        const aranhas2 = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.gabriel_costa, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.piva];
         let lista = aranhas2.map(user => `${user}@c.us`);
         let pessoas = aranhas2.map(user => `@${user}`).join(', ');
         

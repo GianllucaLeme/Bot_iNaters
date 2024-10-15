@@ -65,13 +65,18 @@ async function Comandos(message) {
     }
 
     if (message.body === '/aranhas'){
-        let aranhas = [c.aranhas.adolfo, c.aranhas.celio, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.gianlluca, c.aranhas.isaac, c.aranhas.jean, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.piva, c.aranhas.ryan, c.aranhas.victor];
+        let aranhas = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.piva, c.aranhas.victor];
+        let prioridade = [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan];
 
-        aranhas = (await embaralharContatos(aranhas)).slice(0, 5);
+        aranhas = (await embaralharContatos(aranhas)).slice(0, 3);
 
         let lista = aranhas.map(user => `${user}@c.us`);
         let pessoas = `@${aranhas.join(', @')}`;
         
+        for (let i = 0; i < prioridade.length; i++) {
+            pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 0.633975);
+        }
+
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
 
         await client.sendMessage(message.from, pessoas, { mentions: lista});
@@ -80,17 +85,19 @@ async function Comandos(message) {
     if (message.body === '/borboletas'){
         const borboletas =  [c.borboletas.andre_nog, c.borboletas.pedro_souza, c.borboletas.rafaela, c.borboletas.tiago];
         let lista = borboletas.map(user => `${user}@c.us`);
-        let pessoas = borboletas.map(user => `@${user}`).join(', ');
+        let pessoas = `@${borboletas.join(', @')}`;
         
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.15);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
     if (message.body === '/formigas'){
-        const formigas = [c.formigas.davi, c.formigas.didobola, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, c.formigas.guilherme_cardoso, c.formigas.joao_paulo, c.formigas.maycon, c.formigas.vankan];
+        let formigas = [c.formigas.davi, c.formigas.didobola, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, c.formigas.guilherme_cardoso, c.formigas.joao_paulo, c.formigas.maycon, c.formigas.vankan];
+        
         let lista = formigas.map(user => `${user}@c.us`);
-        let pessoas = formigas.map(user => `@${user}`).join(', ');
+        let pessoas = `@${formigas.join(', @')}`;
         
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
 
@@ -100,7 +107,7 @@ async function Comandos(message) {
     if (message.body === '/mariposas'){
         const mariposas = [c.mariposas.fischer, c.mariposas.luis_eduardo, c.mariposas.yasmin];
         let lista = mariposas.map(user => `${user}@c.us`);
-        let pessoas = mariposas.map(user => `@${user}`).join(', ');
+        let pessoas = `@${mariposas.join(', @')}`;
         
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
         
@@ -110,9 +117,9 @@ async function Comandos(message) {
     if (message.body === '/opiliões') {
         const opilioes = [c.opilioes.lohan, c.opilioes.luis_cla];
         let lista = opilioes.map(user => `${user}@c.us`);
-        let pessoas = opilioes.map(user => `@${user}`).join(', ');
+        let pessoas = `@${opilioes.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }

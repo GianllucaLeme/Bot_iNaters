@@ -65,22 +65,12 @@ async function Comandos(message) {
     }
 
     if (message.body === '/aranhas'){
-        let aranhas = [c.aranhas.celio, c.aranhas.fernando, c.aranhas.gianlluca, c.aranhas.isaac, c.aranhas.jean, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.ryan, c.aranhas.victor];
+        let aranhas = [c.aranhas.adolfo, c.aranhas.celio, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.gianlluca, c.aranhas.isaac, c.aranhas.jean, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.piva, c.aranhas.ryan, c.aranhas.victor];
 
         aranhas = (await embaralharContatos(aranhas)).slice(0, 5);
 
         let lista = aranhas.map(user => `${user}@c.us`);
         let pessoas = `@${aranhas.join(', @')}`;
-        
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
-
-        await client.sendMessage(message.from, pessoas, { mentions: lista});
-    }
-
-    if (message.body === '/aranhas2'){
-        const aranhas2 = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.gabriel_costa, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.piva];
-        let lista = aranhas2.map(user => `${user}@c.us`);
-        let pessoas = aranhas2.map(user => `@${user}`).join(', ');
         
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
 

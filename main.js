@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
 /*---Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/aranhas', '/borboletas', '/formigas', '/mariposas', '/opiliões'];
+let lista_comandos = ['/help', '/aranhas', '/bicho', '/borboletas', '/formigas', '/mariposas', '/opiliões'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -64,6 +64,14 @@ async function Comandos(message) {
             `Olá! Esses são os comandos disponíveis até o momento:\n${comandos}`);
     }
 
+    if (message.body === '/bicho'){
+        const bicho = [c.enrico, c.aranhas.celio, c.phasma.edgar];
+        let lista = bicho.map(user => `${user}@c.us`);
+        let pessoas = `@${bicho.join(', @')}`;
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
     if (message.body === '/aranhas'){
         let aranhas = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.piva, c.aranhas.victor];
         let prioridade = [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan];
@@ -94,12 +102,18 @@ async function Comandos(message) {
     }
 
     if (message.body === '/formigas'){
-        let formigas = [c.formigas.davi, c.formigas.didobola, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, c.formigas.guilherme_cardoso, c.formigas.joao_paulo, c.formigas.maycon, c.formigas.vankan];
-        
+        let formigas = [c.formigas.davi, c.formigas.vankan];
+        let prioridade = [c.formigas.felipe_santos, c.formigas.gabriel_rogerio, c.formigas.joao_paulo, c.formigas.maycon];
+
         let lista = formigas.map(user => `${user}@c.us`);
         let pessoas = `@${formigas.join(', @')}`;
         
+        for (let i = 0; i < prioridade.length; i++) {
+            pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 0.577896);
+        }
+
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        pessoas = await mencionarUsuario(lista, pessoas, c.formigas.didobola, 0.25);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }

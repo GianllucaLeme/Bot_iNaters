@@ -22,11 +22,13 @@ client.on('qr', (qr) => {
 /*---Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/aranhas', '/bicho', '/borboletas', '/formigas', '/mariposas', '/opiliões'];
+let lista_comandos = ['/help', '/aranhas', '/bicho', '/borboletas', '/formigas', '/mariposas', '/opiliões', '/stop'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
 const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
+
+let lista_admins = [c.phasma.edgar, c.enrico, c.mariposas.fischer, c.aranhas.jean, c.aranhas.michelotto, c.aranhas.gianlluca];
 
 // Função que determina a chance do usuário ser marcado
 async function chanceUsuario(usuario, chance) {
@@ -136,6 +138,20 @@ async function Comandos(message) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/stop') {
+        let admin = await message.getContact();
+
+        if (lista_admins.includes(admin.id.user)) {
+            await client.sendMessage(message.from, 'Bot desligando...');
+            
+            // Espera de 1s para que a mensagem seja enviada no WhatsApp
+            setTimeout(async () => {
+                console.log('Bot está desligando...');
+                await client.destroy();
+            }, 1000);
+        }
     }
 }
 

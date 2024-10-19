@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
 /*---Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/aranhas', '/bicho', '/borboletas', '/formigas', '/mariposas', '/opiliões', '/stop'];
+let lista_comandos = ['/help', '/aranhas', '/bicho', '/borboletas', '/formigas', '/mariposas', '/opiliões', '/temp_stop', '/stop', '/all'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -144,13 +144,45 @@ async function Comandos(message) {
         let admin = await message.getContact();
 
         if (lista_admins.includes(admin.id.user)) {
-            await client.sendMessage(message.from, 'Bot desligando...');
+            await client.sendMessage(message.from, '> Bot desligando...');
             
-            // Espera de 1s para que a mensagem seja enviada no WhatsApp
+            // Espera 1 s para que a mensagem seja enviada no WhatsApp
             setTimeout(async () => {
-                console.log('Bot está desligando...');
                 await client.destroy();
             }, 1000);
+        }else{
+            await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
+        }
+    }
+
+    if (message.body === '/temp_stop') {
+        let admin = await message.getContact();
+
+        if (lista_admins.includes(admin.id.user)) {
+            await client.sendMessage(message.from, `Por quanto tempo?\n` + `* [x] h\n` + `* [x] min\n` + `* [x] s`);
+            
+            setTimeout(async () => {
+                await client.sendMessage(message.from, '> Bot ligou novamente');
+            }, 5000);
+        }else{
+            await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
+        }
+    }
+
+    if (message.body === '/all') {
+        let admin = await message.getContact();
+
+        if (lista_admins.includes(admin.id.user)) {
+            const chat = await message.getChat();
+            let mentions = [];
+        
+            for (let participantes of chat.participants) {
+                mentions.push(`${participantes.id.user}@c.us`);
+            }
+        
+            await chat.sendMessage('> Marcando todo mundo...', {mentions});
+        }else{
+            await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
         }
     }
 }

@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
 /*---Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/aranhas', '/bicho', '/borboletas', '/formigas', '/mariposas', '/opiliões', '/temp_stop', '/stop', '/all'];
+let lista_comandos = ['/help', '/aranhas', '/aves', '/besouros', '/bicho', '/borboletas', '/formigas', '/louva', '/mariposas', '/moscas', '/opiliões', '/phasma', '/plantas', '/stop', '/all'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -59,6 +59,7 @@ async function embaralharContatos(contatos) {
     return contatos;
 }
 
+// Função principal que rege todos os comandos
 async function Comandos(message) {
     if (message.body === '/help'){
         const comandos = lista_comandos.map(comando => `* ${comando}`).join('\n');
@@ -92,6 +93,26 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, { mentions: lista});
     }
 
+    if (message.body === '/aves') {
+        const aves = [c.aves.matheus_santos, c.aves.ruan];
+        let lista = aves.map(user => `${user}@c.us`);
+        let pessoas = `@${aves.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.95);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/besouros') {
+        const besouros = [c.besouros.lorenne, c.besouros.vincenzo];
+        let lista = besouros.map(user => `${user}@c.us`);
+        let pessoas = `@${besouros.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.336);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
     if (message.body === '/borboletas'){
         const borboletas =  [c.borboletas.andre_nog, c.borboletas.pedro_souza, c.borboletas.rafaela, c.borboletas.tiago];
         let lista = borboletas.map(user => `${user}@c.us`);
@@ -120,12 +141,38 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
+    if (message.body === '/louva') {
+        const louva = [c.louva.cesar, c.louva.savio];
+        let lista = louva.map(user => `${user}@c.us`);
+        let pessoas = `@${louva.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.02);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
     if (message.body === '/mariposas'){
-        const mariposas = [c.mariposas.fischer, c.mariposas.luis_eduardo, c.mariposas.yasmin];
+        const mariposas = [c.mariposas.fischer, c.mariposas.luis_eduardo, c.mariposas.nicolas, c.mariposas.yasmin];
         let lista = mariposas.map(user => `${user}@c.us`);
         let pessoas = `@${mariposas.join(', @')}`;
         
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/moscas') {
+        const moscas = [c.moscas.matheus, c.moscas.rodrigo];
+        let prioridade = [c.moscas.lais, c.moscas.laura, c.moscas.luan]
+
+        let lista = moscas.map(user => `${user}@c.us`);
+        let pessoas = `@${moscas.join(', @')}`;
+
+        for (let i = 0; i < prioridade.length; i++) {
+            pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 0.35);
+        }
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
@@ -136,6 +183,27 @@ async function Comandos(message) {
         let pessoas = `@${opilioes.join(', @')}`;
     
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/phasma') {
+        const phasma = [c.phasma.edgar, c.phasma.pedro_alvaro, c.phasma.pedro_sisnando, c.phasma.phil];
+        let lista = phasma.map(user => `${user}@c.us`);
+        let pessoas = `@${phasma.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.01);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/plantas') {
+        const plantas = [c.plantas.edvandro];
+        let lista = plantas.map(user => `${user}@c.us`);
+        let pessoas = `@${plantas.join(', @')}`;
+        
+        pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.1);
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, -0.336);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
@@ -154,21 +222,7 @@ async function Comandos(message) {
             await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
         }
     }
-
-    if (message.body === '/temp_stop') {
-        let admin = await message.getContact();
-
-        if (lista_admins.includes(admin.id.user)) {
-            await client.sendMessage(message.from, `Por quanto tempo?\n` + `* [x] h\n` + `* [x] min\n` + `* [x] s`);
-            
-            setTimeout(async () => {
-                await client.sendMessage(message.from, '> Bot ligou novamente');
-            }, 5000);
-        }else{
-            await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
-        }
-    }
-
+    
     if (message.body === '/all') {
         let admin = await message.getContact();
 
@@ -194,7 +248,6 @@ let flag_spam = 0;
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
     const chat = await message.getChat();
-    
     let usuario = await message.getContact();
 
     // Spam handling antes de detectar os comandos

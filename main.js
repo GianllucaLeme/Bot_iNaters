@@ -1,7 +1,7 @@
 /*---Sincronização do bot com o WhatsApp---*/
 
 const qrcode = require('qrcode-terminal');
-const { Client, LocalAuth } = require('whatsapp-web.js');
+const { Client, LocalAuth, MessageMedia} = require('whatsapp-web.js');
 
 // Create a new client instance
 const client = new Client({
@@ -19,10 +19,11 @@ client.on('qr', (qr) => {
 });
 
 
-/*---Funcionalidades do bot ---*/
+/*--- Funcionalidades do bot ---*/
 
 
 let lista_comandos = ['/help', '/aranhas', '/aves', '/besouros', '/bicho', '/borboletas', '/formigas', '/louva', '/mariposas', '/moscas', '/opiliões', '/phasma', '/plantas', '/stop', '/all'];
+let lista_easter = ['/meriva'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -239,6 +240,14 @@ async function Comandos(message) {
             await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
         }
     }
+
+    /*--- Comandos Easter Eggs ---*/
+
+    if (message.body === '/meriva'){
+        let random_meriva = Math.floor(Math.random()*11);
+        const media = MessageMedia.fromFilePath(`./Merivas/meriva${random_meriva}.png`);
+        await client.sendMessage(message.from, media);
+    }
 }
 
 // Spam handling
@@ -247,12 +256,11 @@ let flag_spam = 0;
 
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
-    const chat = await message.getChat();
     let usuario = await message.getContact();
 
     // Spam handling antes de detectar os comandos
     if(message.author === usuario.id._serialized){
-        if (lista_comandos.includes(message.body)) {
+        if (lista_comandos.includes(message.body) || lista_easter.includes(message.body)) {
             let msg1 = message.timestamp;
             lista_spam[flag_spam] = msg1;
     
@@ -262,8 +270,7 @@ client.on('message_create', async message => {
                 flag_spam = 0;
             }
 
-            if(Math.abs(lista_spam[1] - lista_spam[0]) < 3){
-            }else{
+            if(!(Math.abs(lista_spam[1] - lista_spam[0]) < 3)){
                 await Comandos(message);
             }
         }

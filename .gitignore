@@ -81,3 +81,6 @@ typings/
 
 # Contact list
 contacts.json
+
+# Meriva pictures
+.Merivas/

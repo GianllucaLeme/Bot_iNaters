@@ -82,5 +82,5 @@ typings/
 # Contact list
 contacts.json
 
-# Meriva pictures
-.Merivas/
+# Random media files
+.pictures/

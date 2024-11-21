@@ -23,7 +23,7 @@ client.on('qr', (qr) => {
 
 
 let lista_comandos = ['/help', '/aranhas', '/aves', '/besouros', '/bicho', '/borboletas', '/formigas', '/louva', '/mariposas', '/moscas', '/opiliões', '/phasma', '/plantas', '/stop', '/all'];
-let lista_easter = ['/meriva'];
+let lista_easter = ['/bloisinho', '/cladoFSM', '/cladofsm', '/cladoPCM', '/cladopcm', '/mateiro', '/meriva', '/vermoidea'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -243,10 +243,43 @@ async function Comandos(message) {
 
     /*--- Comandos Easter Eggs ---*/
 
+    if (message.body === '/bloisinho'){
+        let random_blois = Math.floor(Math.random()*3);
+        const media = MessageMedia.fromFilePath(`./pictures/bloisinhos/blois${random_blois}.png`);
+        await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+    }
+
+    if (['/cladoPCM', '/cladopcm'].includes(message.body)) {
+        const clado_pcm = [c.aranhas.piva, c.aranhas.gabriel_costa, c.aranhas.adolfo];
+        let lista = clado_pcm.map(user => `${user}@c.us`);
+        let pessoas = `@${clado_pcm.join(', @')}`;
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (['/cladoFSM', '/cladofsm'].includes(message.body)) {
+        const clado_fsm = [c.mariposas.fischer, c.shiva, c.formigas.maycon];
+        let lista = clado_fsm.map(user => `${user}@c.us`);
+        let pessoas = `@${clado_fsm.join(', @')}`;
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/mateiro'){
+        let random_malta = Math.floor(Math.random()*3);
+        const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
+        await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+    }
+
     if (message.body === '/meriva'){
         let random_meriva = Math.floor(Math.random()*11);
-        const media = MessageMedia.fromFilePath(`./Merivas/meriva${random_meriva}.png`);
+        const media = MessageMedia.fromFilePath(`./pictures/merivas/meriva${random_meriva}`);
         await client.sendMessage(message.from, media);
+    }
+
+    if (message.body === '/vermoidea'){
+        const vermoidea = [c.mariposas.fischer, c.shiva, c.formigas.maycon, c.aranhas.piva, c.aranhas.gabriel_costa, c.aranhas.adolfo];
+        let lista = vermoidea.map(user => `${user}@c.us`);
+        let pessoas = `@${vermoidea.join(', @')}`;
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 }
 
@@ -260,7 +293,7 @@ client.on('message_create', async message => {
 
     // Spam handling antes de detectar os comandos
     if(message.author === usuario.id._serialized){
-        if (lista_comandos.includes(message.body) || lista_easter.includes(message.body)) {
+        if ([...lista_comandos, ...lista_easter].includes(message.body)) {
             let msg1 = message.timestamp;
             lista_spam[flag_spam] = msg1;
     

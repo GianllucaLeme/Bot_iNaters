@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
 /*--- Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/aranhas', '/aves', '/besouros', '/bicho', '/borboletas', '/formigas', '/louva', '/mariposas', '/moscas', '/opiliões', '/phasma', '/plantas', '/stop', '/all'];
+let lista_comandos = ['/help', '/admin', '/bicho', '/milicia', '/aranhas', '/aves', '/besouros', '/borboletas', '/formigas', '/louva', '/mariposas', '/moscas', '/opiliões', '/phasma', '/plantas', '/stop', '/all'];
 let lista_easter = ['/bloisinho', '/cladoFSM', '/cladofsm', '/cladoPCM', '/cladopcm', '/mateiro', '/meriva', '/vermoidea'];
 
 // Carrega o arquivo JSON
@@ -62,10 +62,22 @@ async function embaralharContatos(contatos) {
 
 // Função principal que rege todos os comandos
 async function Comandos(message) {
+    /*--- Comandos Ajuda ---*/
+    
     if (message.body === '/help'){
         const comandos = lista_comandos.map(comando => `* ${comando}`).join('\n');
         await client.sendMessage(message.from, 
             `Olá! Esses são os comandos disponíveis até o momento:\n${comandos}`);
+    }
+
+    if (message.body === '/admin'){
+        lista_admins_filtered = lista_admins.filter(admin => admin !== c.aranhas.gianlluca)
+        lista_admins_filtered = (await embaralharContatos(lista_admins_filtered)).slice(0, 2)
+
+        let lista = lista_admins_filtered.map(user => `${user}@c.us`);
+        let pessoas = `@${lista_admins_filtered.join(', @')}`;
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
     if (message.body === '/bicho'){
@@ -75,6 +87,18 @@ async function Comandos(message) {
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
+
+    if (message.body === '/milicia'){
+        let ajudantes = [c.aranhas.celio, c.mariposas.fischer, c.mariposas.luis_eduardo, c.formigas.maycon, c.formigas.vankan, c.phasma.edgar, c.enrico, c.shiva, c.jose_valerio];
+        ajudantes = (await embaralharContatos(ajudantes)).slice(0, 4)
+
+        let lista = ajudantes.map(user => `${user}@c.us`);
+        let pessoas = `@${ajudantes.join(', @')}`;
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    /*--- Comandos Principais ---*/
 
     if (message.body === '/aranhas'){
         let aranhas = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.piva, c.aranhas.victor];
@@ -143,7 +167,7 @@ async function Comandos(message) {
     }
 
     if (message.body === '/louva') {
-        const louva = [c.louva.cesar, c.louva.savio];
+        const louva = [c.louva.cesar, c.louva.lorena, c.louva.savio];
         let lista = louva.map(user => `${user}@c.us`);
         let pessoas = `@${louva.join(', @')}`;
     
@@ -208,6 +232,8 @@ async function Comandos(message) {
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
+
+    /*--- Comandos Admin ---*/
 
     if (message.body === '/stop') {
         let admin = await message.getContact();

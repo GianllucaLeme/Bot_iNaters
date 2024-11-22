@@ -64,10 +64,28 @@ async function embaralharContatos(contatos) {
 async function Comandos(message) {
     /*--- Comandos Ajuda ---*/
     
-    if (message.body === '/help'){
-        const comandos = lista_comandos.map(comando => `* ${comando}`).join('\n');
-        await client.sendMessage(message.from, 
-            `Olá! Esses são os comandos disponíveis até o momento:\n${comandos}`);
+    if (message.body === '/help') {
+        const usuario_duvida = message.author || message.from;
+        
+        const comandosAjuda = [
+            { comando: '/help', descricao: 'Mostra os comandos atuais do bot;' },
+            { comando: '/admin', descricao: 'Marca dois admins aleatórios;' },
+            { comando: '/bicho', descricao: 'Usar quando não souber quem marcar;' },
+            { comando: '/milicia', descricao: 'Usar quando precisar de ajuda para virar IDs no iNat.' }
+        ];
+
+        let comandos_removidos = ['/help', '/admin', '/bicho', '/milicia', '/stop', '/all'];
+        let comandosPrincipais = lista_comandos.filter(comando => !comandos_removidos.includes(comando));
+
+        let mensagem = `Olá! Esses são os comandos disponíveis até o momento:\n\n`;
+        
+        mensagem += `> Comandos de Ajuda\n`;
+        mensagem += comandosAjuda.map(cmd_help => `* \`${cmd_help.comando}\` - ${cmd_help.descricao}`).join('\n') + '\n\n';
+
+        mensagem += `> Comandos Principais - marcam os membros que trabalham em seus respectivos grupos\n`;
+        mensagem += comandosPrincipais.map(cmd_main => cmd_main === '/phasma' ? `* \`${cmd_main}\` - bicho-pau` : `* \`${cmd_main}\``).join('\n');
+
+        await client.sendMessage(usuario_duvida, mensagem);
     }
 
     if (message.body === '/admin'){
@@ -89,7 +107,7 @@ async function Comandos(message) {
     }
 
     if (message.body === '/milicia'){
-        let ajudantes = [c.aranhas.celio, c.mariposas.fischer, c.mariposas.luis_eduardo, c.formigas.maycon, c.formigas.vankan, c.phasma.edgar, c.enrico, c.shiva, c.jose_valerio];
+        let ajudantes = [c.aranhas.celio, c.aranhas.gianlluca, c.mariposas.fischer, c.mariposas.luis_eduardo, c.formigas.maycon, c.formigas.vankan, c.phasma.edgar, c.enrico, c.shiva, c.jose_valerio];
         ajudantes = (await embaralharContatos(ajudantes)).slice(0, 4)
 
         let lista = ajudantes.map(user => `${user}@c.us`);
@@ -177,11 +195,12 @@ async function Comandos(message) {
     }
 
     if (message.body === '/mariposas'){
-        const mariposas = [c.mariposas.fischer, c.mariposas.luis_eduardo, c.mariposas.nicolas, c.mariposas.yasmin];
+        const mariposas = [c.mariposas.fischer, c.mariposas.luis_eduardo, c.mariposas.nicolas];
         let lista = mariposas.map(user => `${user}@c.us`);
         let pessoas = `@${mariposas.join(', @')}`;
         
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.yasmin, 0.15);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }

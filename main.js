@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
 /*--- Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/aranhas', '/abelhas', '/aves', '/besouros', '/borboletas', '/cigarras', '/diplopoda', '/escorpiões', '/formigas', '/geoplanaria', '/louva', '/mariposas', '/moscas', '/opiliões', '/percevejos', '/phasma', '/plantas', '/stop', '/all'];
+let lista_comandos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', '/aranhas', '/abelhas', '/aves', '/besouros', '/borboletas', '/cigarras', '/diplopoda', '/escorpiões', '/formigas', '/geoplanaria', '/louva', '/mariposas', '/moscas', '/opiliões', '/percevejos', '/phasma', '/plantas', '/stop', '/all'];
 let lista_easter = ['/bloisinho', '/cladoFSM', '/cladofsm', '/cladoPCM', '/cladopcm', '/mateiro', '/meriva', '/vermoidea'];
 
 // Carrega o arquivo JSON
@@ -72,10 +72,11 @@ async function Comandos(message) {
             { comando: '/admin', descricao: 'Marca dois admins aleatórios;' },
             { comando: '/bicho', descricao: 'Usar quando não souber quem marcar;' },
             { comando: '/milicia', descricao: 'Usar quando precisar de ajuda para virar IDs no iNat;' },
-            { comando: '/sobre', descricao: 'Mostra informações sobre o bot.'}
+            { comando: '/sobre', descricao: 'Mostra informações sobre o bot;'},
+            { comando: '/tirar_nome', descricao: 'Abre um requerimento para retirar seu nome das marcações.'}
         ];
 
-        let comandos_removidos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/stop', '/all'];
+        let comandos_removidos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', '/stop', '/all'];
         let comandosPrincipais = lista_comandos.filter(comando => !comandos_removidos.includes(comando));
 
         let mensagem = `Olá! Esses são os comandos disponíveis até o momento:\n\n`;
@@ -133,14 +134,26 @@ async function Comandos(message) {
         let mensagem = 'O \`iMark\` foi criado para facilitar o processo de identificação de animais, permitindo a marcação automática de membros especializados em seus grupos taxonômicos.\n\n';
 
         mensagem += 'Com essa funcionalidade, elimina-se a necessidade de saber exatamente quem marcar, sendo especialmente útil para quem não conhece muitas pessoas do grupo. Além disso, esse bot promove uma interação melhor e mais dinâmica entre os antigos e novos membros do grupo.\n\n';
-
+        
+        mensagem += 'Sugestões mandar no privado do autor! 👇\n\n'
+        
         mensagem += `Desenvolvedor: @${c.aranhas.gianlluca}\n`;
-        mensagem += 'Versão atual: \`1.0.0\`\n';
-        mensagem += 'GitHub: github.com/GianllucaLeme/Bot_iNaters';
+        mensagem += 'Versão atual: \`\`\`1.0.0\`\`\`\n';
+        mensagem += 'GitHub: https://github.com/GianllucaLeme/Bot_iNaters';
 
         await client.sendMessage(usuario_curioso, mensagem, {mentions: c.aranhas.gianlluca + '@c.us'});
     }
 
+    if (message.body === '/tirar_nome') {
+        let usuario_tirar = await message.getContact();
+
+        await client.sendMessage(message.from, '> Requerimento enviado.');
+        
+        setTimeout(async () => {
+            await client.sendMessage(c.aranhas.gianlluca + '@c.us', `O @${usuario_tirar.id.user} quer retirar a marcação!`, {mentions: usuario_tirar.id.user + '@c.us'});
+        }, 3000);
+    }
+    
     /*--- Comandos Principais ---*/
 
     if (message.body === '/abelhas') {
@@ -208,7 +221,7 @@ async function Comandos(message) {
         let pessoas = `@${cigarras.join(', @')}`;
     
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
-        pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.4);
+        pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.15);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }

@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
 /*--- Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/admin', '/bicho', '/milicia', '/aranhas', '/abelhas', '/aves', '/besouros', '/borboletas', '/cigarras', '/diplopoda', '/formigas', '/geoplanaria', '/louva', '/mariposas', '/moscas', '/opiliões', '/percevejos', '/phasma', '/plantas', '/stop', '/all'];
+let lista_comandos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/aranhas', '/abelhas', '/aves', '/besouros', '/borboletas', '/cigarras', '/diplopoda', '/escorpiões', '/formigas', '/geoplanaria', '/louva', '/mariposas', '/moscas', '/opiliões', '/percevejos', '/phasma', '/plantas', '/stop', '/all'];
 let lista_easter = ['/bloisinho', '/cladoFSM', '/cladofsm', '/cladoPCM', '/cladopcm', '/mateiro', '/meriva', '/vermoidea'];
 
 // Carrega o arquivo JSON
@@ -71,10 +71,11 @@ async function Comandos(message) {
             { comando: '/help', descricao: 'Mostra os comandos atuais do bot;' },
             { comando: '/admin', descricao: 'Marca dois admins aleatórios;' },
             { comando: '/bicho', descricao: 'Usar quando não souber quem marcar;' },
-            { comando: '/milicia', descricao: 'Usar quando precisar de ajuda para virar IDs no iNat.' }
+            { comando: '/milicia', descricao: 'Usar quando precisar de ajuda para virar IDs no iNat;' },
+            { comando: '/sobre', descricao: 'Mostra informações sobre o bot.'}
         ];
 
-        let comandos_removidos = ['/help', '/admin', '/bicho', '/milicia', '/stop', '/all'];
+        let comandos_removidos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/stop', '/all'];
         let comandosPrincipais = lista_comandos.filter(comando => !comandos_removidos.includes(comando));
 
         let mensagem = `Olá! Esses são os comandos disponíveis até o momento:\n\n`;
@@ -83,7 +84,17 @@ async function Comandos(message) {
         mensagem += comandosAjuda.map(cmd_help => `* \`${cmd_help.comando}\` - ${cmd_help.descricao}`).join('\n') + '\n\n';
 
         mensagem += `> Comandos Principais - marcam os membros que trabalham em seus respectivos grupos\n`;
-        mensagem += comandosPrincipais.map(cmd_main => cmd_main === '/phasma' ? `* \`${cmd_main}\` - bicho-pau` : `* \`${cmd_main}\``).join('\n');
+        mensagem += comandosPrincipais.map(cmd_main => {
+            if (cmd_main === '/phasma') {
+                return `* \`${cmd_main}\` - bicho-pau`;
+            } else if (cmd_main === '/geoplanaria') {
+                return `* \`${cmd_main}\` - planária terrestre`;
+            } else if (cmd_main === '/diplopoda') {
+                return `* \`${cmd_main}\` - piolho-de-cobra`;
+            } else {
+                return `* \`${cmd_main}\``;
+            }
+        }).join('\n');       
 
         await client.sendMessage(usuario_duvida, mensagem);
     }
@@ -114,6 +125,20 @@ async function Comandos(message) {
         let pessoas = `@${ajudantes.join(', @')}`;
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/sobre') {
+        const usuario_curioso = message.author || message.from;
+
+        let mensagem = 'O \`iMark\` foi criado para facilitar o processo de identificação de animais, permitindo a marcação automática de membros especializados em seus grupos taxonômicos.\n\n';
+
+        mensagem += 'Com essa funcionalidade, elimina-se a necessidade de saber exatamente quem marcar, sendo especialmente útil para quem não conhece muitas pessoas do grupo. Além disso, esse bot promove uma interação melhor e mais dinâmica entre os antigos e novos membros do grupo.\n\n';
+
+        mensagem += `Desenvolvedor: @${c.aranhas.gianlluca}\n`;
+        mensagem += 'Versão atual: \`1.0.0\`\n';
+        mensagem += 'GitHub: github.com/GianllucaLeme/Bot_iNaters';
+
+        await client.sendMessage(usuario_curioso, mensagem, {mentions: c.aranhas.gianlluca + '@c.us'});
     }
 
     /*--- Comandos Principais ---*/
@@ -196,6 +221,24 @@ async function Comandos(message) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/escorpiões'){
+        let escorpioes = [c.aranhas.adolfo, c.aranhas.fernando, c.aranhas.gianlluca, c.aranhas.lucas_gusso, c.aranhas.pedro_martins];
+        let prioridade = [c.aranhas.celio, c.aranhas.jean, c.aranhas.michelotto, c.aranhas.victor];
+
+        escorpioes = (await embaralharContatos(escorpioes)).slice(0, 3);
+
+        let lista = escorpioes.map(user => `${user}@c.us`);
+        let pessoas = `@${escorpioes.join(', @')}`;
+        
+        for (let i = 0; i < prioridade.length; i++) {
+            pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 0.633975);
+        }
+
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+
+        await client.sendMessage(message.from, pessoas, { mentions: lista});
     }
 
     if (message.body === '/formigas'){

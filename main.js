@@ -1,4 +1,4 @@
-/*---Sincronização do bot com o WhatsApp---*/
+/*--- Sincronização do bot com o WhatsApp ---*/
 
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth, MessageMedia} = require('whatsapp-web.js');
@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
 /*--- Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/admin', '/bicho', '/milicia', '/aranhas', '/aves', '/besouros', '/borboletas', '/formigas', '/louva', '/mariposas', '/moscas', '/opiliões', '/phasma', '/plantas', '/stop', '/all'];
+let lista_comandos = ['/help', '/admin', '/bicho', '/milicia', '/aranhas', '/abelhas', '/aves', '/besouros', '/borboletas', '/cigarras', '/diplopoda', '/formigas', '/geoplanaria', '/louva', '/mariposas', '/moscas', '/opiliões', '/percevejos', '/phasma', '/plantas', '/stop', '/all'];
 let lista_easter = ['/bloisinho', '/cladoFSM', '/cladofsm', '/cladoPCM', '/cladopcm', '/mateiro', '/meriva', '/vermoidea'];
 
 // Carrega o arquivo JSON
@@ -118,6 +118,16 @@ async function Comandos(message) {
 
     /*--- Comandos Principais ---*/
 
+    if (message.body === '/abelhas') {
+        const abelhas = [c.abelhas.bruno_aranda, c.abelhas.beatriz];
+        let lista = abelhas.map(user => `${user}@c.us`);
+        let pessoas = `@${abelhas.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
     if (message.body === '/aranhas'){
         let aranhas = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.piva, c.aranhas.victor];
         let prioridade = [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan];
@@ -167,6 +177,27 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
+    if (message.body === '/cigarras') {
+        const cigarras = [c.cigarras.bruno];
+        let lista = cigarras.map(user => `${user}@c.us`);
+        let pessoas = `@${cigarras.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.4);
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/diplopoda') {
+        const diplopoda = [c.diplopoda.rodrigo_bouzan];
+        let lista = diplopoda.map(user => `${user}@c.us`);
+        let pessoas = `@${diplopoda.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
     if (message.body === '/formigas'){
         let formigas = [c.formigas.davi, c.formigas.vankan];
         let prioridade = [c.formigas.felipe_santos, c.formigas.gabriel_rogerio, c.formigas.joao_paulo, c.formigas.maycon];
@@ -180,6 +211,16 @@ async function Comandos(message) {
 
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
         pessoas = await mencionarUsuario(lista, pessoas, c.formigas.didobola, 0.25);
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/geoplanaria') {
+        const geoplanaria = [c.geoplanaria.piter];
+        let lista = geoplanaria.map(user => `${user}@c.us`);
+        let pessoas = `@${geoplanaria.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
@@ -228,6 +269,16 @@ async function Comandos(message) {
     
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
         
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/percevejos') {
+        const percevejos = [c.percevejos.guilherme_lopez];
+        let lista = percevejos.map(user => `${user}@c.us`);
+        let pessoas = `@${percevejos.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
+
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 

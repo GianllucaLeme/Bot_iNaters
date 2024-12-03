@@ -22,7 +22,7 @@ client.on('qr', (qr) => {
 /*--- Funcionalidades do bot ---*/
 
 
-let lista_comandos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', '/aranhas', '/abelhas', '/aves', '/besouros', '/borboletas', '/cigarras', '/diplopoda', '/escorpiões', '/formigas', '/geoplanaria', '/louva', '/mariposas', '/moscas', '/opiliões', '/percevejos', '/phasma', '/plantas', '/stop', '/all'];
+let lista_comandos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', '/aranhas', '/abelhas', '/aves', '/besouros', '/borboletas', '/cigarras', '/diplopoda', '/escorpioes', '/escorpiões', '/formigas', '/geoplanaria', '/geoplanária', '/louva', '/mariposas', '/moscas', '/opilioes','/opiliões', '/percevejos', '/phasma', '/plantas', '/stop', '/all'];
 let lista_easter = ['/bloisinho', '/cladoFSM', '/cladofsm', '/cladoPCM', '/cladopcm', '/mateiro', '/meriva', '/vermoidea'];
 
 // Carrega o arquivo JSON
@@ -76,7 +76,7 @@ async function Comandos(message) {
             { comando: '/tirar_nome', descricao: 'Abre um requerimento para retirar seu nome das marcações.'}
         ];
 
-        let comandos_removidos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', '/stop', '/all'];
+        let comandos_removidos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', '/stop', '/all', '/escorpiões', '/geoplanária', '/opiliões'];
         let comandosPrincipais = lista_comandos.filter(comando => !comandos_removidos.includes(comando));
 
         let mensagem = `Olá! Esses são os comandos disponíveis até o momento:\n\n`;
@@ -86,12 +86,16 @@ async function Comandos(message) {
 
         mensagem += `> Comandos Principais - marcam os membros que trabalham em seus respectivos grupos\n`;
         mensagem += comandosPrincipais.map(cmd_main => {
-            if (cmd_main === '/phasma') {
-                return `* \`${cmd_main}\` - bicho-pau`;
-            } else if (cmd_main === '/geoplanaria') {
-                return `* \`${cmd_main}\` - planária terrestre`;
-            } else if (cmd_main === '/diplopoda') {
+            if (cmd_main === '/diplopoda') {
                 return `* \`${cmd_main}\` - piolho-de-cobra`;
+            } else if (cmd_main === '/escorpioes') {
+                return `* \`${cmd_main}\` ou \`/escorpiões\``;
+            } else if (cmd_main === '/geoplanaria') {
+                return `* \`${cmd_main}\` ou \`/geoplanária\` - planária terrestre`;
+            } else if (cmd_main === '/opilioes'){
+                return `* \`${cmd_main}\` ou \`/opiliões\``;
+            } else if (cmd_main === '/phasma'){
+                return `* \`${cmd_main}\` - bicho-pau`;
             } else {
                 return `* \`${cmd_main}\``;
             }
@@ -236,7 +240,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/escorpiões'){
+    if (['/escorpioes', '/escorpiões'].includes(message.body)){
         let escorpioes = [c.aranhas.adolfo, c.aranhas.fernando, c.aranhas.gianlluca, c.aranhas.lucas_gusso, c.aranhas.pedro_martins];
         let prioridade = [c.aranhas.celio, c.aranhas.jean, c.aranhas.michelotto, c.aranhas.victor];
 
@@ -246,7 +250,7 @@ async function Comandos(message) {
         let pessoas = `@${escorpioes.join(', @')}`;
         
         for (let i = 0; i < prioridade.length; i++) {
-            pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 0.633975);
+            pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 0.2);
         }
 
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
@@ -271,7 +275,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/geoplanaria') {
+    if (['/geoplanaria', '/geoplanária'].includes(message.body)) {
         const geoplanaria = [c.geoplanaria.piter];
         let lista = geoplanaria.map(user => `${user}@c.us`);
         let pessoas = `@${geoplanaria.join(', @')}`;
@@ -318,7 +322,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/opiliões') {
+    if (['/opilioes', '/opiliões'].includes(message.body)) {
         const opilioes = [c.opilioes.lohan, c.opilioes.luis_cla];
         let lista = opilioes.map(user => `${user}@c.us`);
         let pessoas = `@${opilioes.join(', @')}`;
@@ -396,7 +400,7 @@ async function Comandos(message) {
     /*--- Comandos Easter Eggs ---*/
 
     if (message.body === '/bloisinho'){
-        let random_blois = Math.floor(Math.random()*3);
+        let random_blois = Math.floor(Math.random()*4);
         const media = MessageMedia.fromFilePath(`./pictures/bloisinhos/blois${random_blois}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
     }
@@ -416,14 +420,14 @@ async function Comandos(message) {
     }
 
     if (message.body === '/mateiro'){
-        let random_malta = Math.floor(Math.random()*3);
+        let random_malta = Math.floor(Math.random()*4);
         const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
     }
 
     if (message.body === '/meriva'){
         let random_meriva = Math.floor(Math.random()*11);
-        const media = MessageMedia.fromFilePath(`./pictures/merivas/meriva${random_meriva}`);
+        const media = MessageMedia.fromFilePath(`./pictures/merivas/meriva${random_meriva}.png`);
         await client.sendMessage(message.from, media);
     }
 

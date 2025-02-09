@@ -161,7 +161,7 @@ async function Comandos(message) {
     /*--- Comandos Principais ---*/
 
     if (message.body === '/abelhas') {
-        const abelhas = [c.abelhas.bruno_aranda, c.abelhas.beatriz];
+        const abelhas = [c.abelhas.bruno_aranda, c.abelhas.beatriz, c.abelhas.abelhero_misterioso];
         let lista = abelhas.map(user => `${user}@c.us`);
         let pessoas = `@${abelhas.join(', @')}`;
     
@@ -171,7 +171,7 @@ async function Comandos(message) {
     }
 
     if (message.body === '/aranhas'){
-        let aranhas = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.leonardo, c.aranhas.lucas_gusso, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.piva, c.aranhas.victor];
+        let aranhas = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.lucas_gusso, c.aranhas.pedro_martins, c.aranhas.piva, c.aranhas.victor];
         let prioridade = [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan];
 
         aranhas = (await embaralharContatos(aranhas)).slice(0, 3);
@@ -199,7 +199,7 @@ async function Comandos(message) {
     }
 
     if (message.body === '/besouros') {
-        const besouros = [c.besouros.lorenne, c.besouros.vincenzo];
+        const besouros = [c.besouros.lorenne, c.besouros.vincenzo, c.besouros.bruno_begha];
         let lista = besouros.map(user => `${user}@c.us`);
         let pessoas = `@${besouros.join(', @')}`;
     
@@ -260,7 +260,7 @@ async function Comandos(message) {
 
     if (message.body === '/formigas'){
         let formigas = [c.formigas.davi, c.formigas.vankan];
-        let prioridade = [c.formigas.felipe_santos, c.formigas.gabriel_rogerio, c.formigas.joao_paulo, c.formigas.maycon];
+        let prioridade = [c.formigas.felipe_santos, c.formigas.gabriel_rogerio, c.formigas.joao_paulo, c.formigas.maycon, c.formigas.diego];
 
         let lista = formigas.map(user => `${user}@c.us`);
         let pessoas = `@${formigas.join(', @')}`;
@@ -420,7 +420,7 @@ async function Comandos(message) {
     }
 
     if (message.body === '/mateiro'){
-        let random_malta = Math.floor(Math.random()*4);
+        let random_malta = Math.floor(Math.random()*9);
         const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
     }

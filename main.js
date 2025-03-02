@@ -171,7 +171,7 @@ async function Comandos(message) {
     }
 
     if (message.body === '/aranhas'){
-        let aranhas = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.lucas_gusso, c.aranhas.pedro_martins, c.aranhas.piva, c.aranhas.victor];
+        let aranhas = [c.aranhas.adolfo, c.aranhas.claudia, c.aranhas.dayvson, c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.lucas_gusso, c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.victor];
         let prioridade = [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan];
 
         aranhas = (await embaralharContatos(aranhas)).slice(0, 3);
@@ -405,13 +405,6 @@ async function Comandos(message) {
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
     }
 
-    if (['/cladoPCM', '/cladopcm'].includes(message.body)) {
-        const clado_pcm = [c.aranhas.piva, c.aranhas.gabriel_costa, c.aranhas.adolfo];
-        let lista = clado_pcm.map(user => `${user}@c.us`);
-        let pessoas = `@${clado_pcm.join(', @')}`;
-        await client.sendMessage(message.from, pessoas, {mentions: lista});
-    }
-
     if (['/cladoFSM', '/cladofsm'].includes(message.body)) {
         const clado_fsm = [c.mariposas.fischer, c.shiva, c.formigas.maycon];
         let lista = clado_fsm.map(user => `${user}@c.us`);
@@ -432,7 +425,7 @@ async function Comandos(message) {
     }
 
     if (message.body === '/vermoidea'){
-        const vermoidea = [c.mariposas.fischer, c.shiva, c.formigas.maycon, c.aranhas.piva, c.aranhas.gabriel_costa, c.aranhas.adolfo];
+        const vermoidea = [c.mariposas.fischer, c.shiva, c.formigas.maycon, c.aranhas.gabriel_costa, c.aranhas.adolfo];
         let lista = vermoidea.map(user => `${user}@c.us`);
         let pessoas = `@${vermoidea.join(', @')}`;
         await client.sendMessage(message.from, pessoas, {mentions: lista});

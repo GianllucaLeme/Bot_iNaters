@@ -1,7 +1,7 @@
 {
   "name": "bot_inaters",
   "version": "1.0.0",
-  "main": "main_local_side.js",
+  "main": "main.js",
   "scripts": {
     "test": "node --watch .",
     "start": "node ."

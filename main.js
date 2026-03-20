@@ -32,7 +32,8 @@ let lista_comandos = [
     '/gafanhotos', '/esperanças', '/orthoptera', '/louva', '/louva_deus', '/mantis', 
     '/mantodea','/mariposas', '/mollusca', '/concha', '/caranguejo', '/moscas', 
     '/mosquitos', '/opilioes', '/opiliões', '/percevejos', '/phasma', '/plantas', 
-    '/sapo', '/anura', '/soldadinho', '/cigarrinhas', '/membracidae', '/staph', 
+    '/monocot', '/monocotiledôneas', '/dicot', '/dicotiledôneas', '/sapo', 
+    '/anura', '/soldadinho', '/cigarrinhas', '/membracidae', '/staph', 
     '/staphylinidae', '/traça', '/zygentoma', '/tripe', '/thysanoptera', '/vespa', 
     '/vespidae', '/maribondo', '/marimbondo',
     
@@ -95,8 +96,8 @@ async function Comandos(message) {
         let comandos_removidos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', '/stop', '/all', 
                                   '/escorpiões', '/geoplanária', '/gafanhotos', '/esperanças', '/orthoptera', '/opiliões', 
                                   '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/formiga_leão', '/neuroptera', 
-                                  '/cogumelos', '/fungi', '/cigarrinhas', '/membracidae', '/staphylinidae', '/anura', 
-                                  '/thysanoptera', '/vespidae', '/maribondo', '/marimbondo', '/zygentoma'];
+                                  '/cogumelos', '/fungi', '/cigarrinhas', '/membracidae', '/staphylinidae', '/monocotiledôneas', 
+                                  '/dicotiledôneas', '/anura', '/thysanoptera', '/vespidae', '/maribondo', '/marimbondo', '/zygentoma'];
         
         let comandosPrincipais = lista_comandos.filter(comando => !comandos_removidos.includes(comando));
 
@@ -129,7 +130,14 @@ async function Comandos(message) {
                 return `* \`${cmd_main}\` ou \`/opiliões\``;
             } else if (cmd_main === '/phasma'){
                 return `* \`${cmd_main}\` - bicho-pau`;
-            } else if (cmd_main === '/sapo'){
+            } else if (cmd_main === '/monocot'){
+                return `* \`${cmd_main}\` ou \`/monocotiledôneas\``;
+            } else if (cmd_main === '/dicot'){
+                return `* \`${cmd_main}\` ou \`/dicotiledôneas\``;
+            }
+            
+            
+            else if (cmd_main === '/sapo'){
                 return `* \`${cmd_main}\` ou \`/anura\` - sapos e pererecas`;
             } else if (cmd_main === '/soldadinho') {
                 return `* \`${cmd_main}\`, \`/cigarrinhas\` ou \`/membracidae\``;
@@ -500,13 +508,29 @@ async function Comandos(message) {
     }
 
     if (message.body === '/plantas') {
-        const plantas = [c.plantas.edvandro];
+        const plantas = [c.plantas.edvandro, c.mariposas.fischer, c.plantas.thomaz_ricardo];
         
         let lista = plantas.map(user => `${user}@c.us`);
         let pessoas = `@${plantas.join(', @')}`;
         
-        pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.1);
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, -0.336);
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (['/monocot', '/monocotiledôneas'].includes(message.body)) {
+        const monocot = [c.mariposas.fischer, c.formigas.joao_paulo, c.plantas.marcos];
+        
+        let lista = monocot.map(user => `${user}@c.us`);
+        let pessoas = `@${monocot.join(', @')}`;
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (['/dicot', '/dicotiledôneas'].includes(message.body)) {
+        const dicot = [c.plantas.angelo_correa, c.plantas.bruno_santos, 
+                       c.plantas.edvandro, c.opilioes.luis_cla];
+        
+        let lista = dicot.map(user => `${user}@c.us`);
+        let pessoas = `@${dicot.join(', @')}`;
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }

@@ -25,28 +25,32 @@ client.on('qr', (qr) => {
 let lista_comandos = [
     '/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', 
     
-    '/rbn', '/aranhas', '/abelhas', '/aves', '/baratas', '/besouros', 
-    '/borboletas', '/cigarras', '/cobras', '/serpentes', '/diplopoda', 
-    '/escorpioes', '/escorpiões', '/formigas', '/formiga', '/formiga_leao', 
+    '/rbn', '/aranhas', '/abelhas', '/aves', '/baratas', '/barbeiro?', '/barbeiro', 
+    '/besouros', '/borboletas', '/cigarras', '/cobras', '/serpentes', '/cupim', '/isoptera', 
+    '/diplopoda', '/escorpioes', '/escorpiões', '/formigas', '/formiga', '/formiga_leao', 
     '/formiga_leão', '/fungos','/cogumelos', '/fungi', '/neuroptera', '/geoplanaria', 
-    '/geoplanária', '/grilos', '/gafanhotos', '/esperanças', '/orthoptera', '/louva', 
-    '/louva_deus', '/mantis', '/mantodea','/mariposas', '/mollusca', '/concha', 
-    '/caranguejo', '/moscas', '/mosquitos', '/opilioes', '/opiliões', '/percevejos', 
-    '/phasma', '/bicho_pau', '/plantas', '/monocot', '/monocotiledôneas', '/dicot', 
-    '/dicotiledôneas', '/sapo', '/anura', '/soldadinho', '/cigarrinhas', '/membracidae', 
-    '/staph', '/staphylinidae', '/strep', '/strepsiptera', '/traça', '/zygentoma', 
-    '/tripe', '/thysanoptera', '/vespa', '/vespidae', '/maribondo', '/marimbondo',
+    '/geoplanária', '/grilos', '/gafanhotos', '/esperanças', '/orthoptera', '/lagartos', 
+    '/calangos', '/gekkota', '/louva', '/louva_deus', '/mantis', '/mantodea','/mariposas', 
+    '/mollusca', '/concha', '/caranguejo', '/morcegos', '/moscas', '/mosquitos', '/opilioes', 
+    '/opiliões', '/percevejos', '/percevejo_aq', '/gerromorpha', '/phasma', '/bicho_pau', 
+    '/plantas', '/monocot', '/monocotiledôneas', '/dicot', '/dicotiledôneas', '/sapo', 
+    '/anura', '/soldadinho', '/cigarrinhas', '/membracidae', '/staph', '/staphylinidae', 
+    '/strep', '/strepsiptera', '/tipula', '/tipulomorpha', '/traça', '/zygentoma', '/tripe', 
+    '/thysanoptera', '/vespa', '/vespidae', '/maribondo', '/marimbondo',
     
     '/stop', '/all'];
 
-let lista_easter = ['/bloisinho', '/cladoFSM', '/cladofsm', 
-    '/cladoPCM', '/cladopcm', '/mateiro', '/meriva', '/vermoidea'];
+let lista_easter = [
+    '/bloisinho', '/cladoFSM', '/cladofsm', '/cladoPCM', '/cladopcm', '/mateiro', 
+    '/meriva', '/vermoidea'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
 const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
 
-let lista_admins = [c.louva.cesar, c.phasma.edgar, c.mariposas.fischer, c.enrico, c.besouros.lorenne, c.aranhas.jean, c.carlos, c.aranhas.gianlluca];
+let lista_admins = [c.louva.cesar, c.phasma.edgar, c.mariposas.fischer, 
+                    c.enrico, c.besouros.lorenne, c.aranhas.jean, 
+                    c.carlos_adm, c.aranhas.gianlluca];
 
 // Função que determina a chance do usuário ser marcado
 async function chanceUsuario(usuario, chance) {
@@ -94,12 +98,13 @@ async function Comandos(message) {
         ];
 
         let comandos_removidos = ['/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', '/stop', '/all', 
-                                  '/serpentes', '/escorpiões', '/geoplanária', '/gafanhotos', '/esperanças', 
-                                  '/orthoptera', '/opiliões', '/bicho_pau' , '/louva_deus', '/mantis', '/mantodea', 
-                                  '/concha', '/caranguejo', '/formiga', '/formiga_leão', '/neuroptera', '/cogumelos', 
-                                  '/fungi', '/cigarrinhas', '/membracidae', '/staphylinidae', '/strepsiptera', 
-                                  '/monocotiledôneas', '/dicotiledôneas', '/anura', '/thysanoptera', '/vespidae', 
-                                  '/maribondo', '/marimbondo', '/zygentoma'];
+                                  '/barbeiro', '/serpentes', '/isoptera', '/escorpiões', '/geoplanária', '/gafanhotos', 
+                                  '/esperanças', '/orthoptera', '/opiliões', '/gerromorpha', '/bicho_pau' , '/calangos', 
+                                  '/gekkota', '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/formiga', 
+                                  '/formiga_leão', '/neuroptera', '/cogumelos', '/fungi', '/cigarrinhas', '/membracidae', 
+                                  '/staphylinidae', '/strepsiptera', '/tipulomorpha', '/monocotiledôneas', 
+                                  '/dicotiledôneas', '/anura', '/thysanoptera', '/vespidae', '/maribondo', '/marimbondo', 
+                                  '/zygentoma'];
         
         let comandosPrincipais = lista_comandos.filter(comando => !comandos_removidos.includes(comando));
 
@@ -112,8 +117,12 @@ async function Comandos(message) {
         mensagem += comandosPrincipais.map(cmd_main => {
             if (cmd_main === '/rbn') {
                 return `* \`${cmd_main}\` - Rede Brasileira de Naturalistas`;
+            } else if (cmd_main === '/barbeiro?') {
+                return `* \`${cmd_main}\` ou \`/barbeiro\``;
             } else if (cmd_main === '/cobras') {
                 return `* \`${cmd_main}\` ou \`/serpentes\``;
+            } else if (cmd_main === '/cupim') {
+                return `* \`${cmd_main}\` ou \`/isoptera\``;
             } else if (cmd_main === '/diplopoda') {
                 return `* \`${cmd_main}\` - piolho-de-cobra`;
             } else if (cmd_main === '/escorpioes') {
@@ -128,12 +137,16 @@ async function Comandos(message) {
                 return `* \`${cmd_main}\` ou \`/geoplanária\` - planária terrestre`;          
             } else if (cmd_main === '/grilos') {
                 return `* \`${cmd_main}\`, \`/gafanhotos\`, \`/esperanças\` ou \`/orthoptera\``;          
+            } else if (cmd_main === '/lagartos') {
+                return `* \`${cmd_main}\`, \`/calangos\` ou \`/gekkota\``;
             } else if (cmd_main === '/louva') {
                 return `* \`${cmd_main}\`, \`/louva_deus\`, \`/mantis\` ou \`/mantodea\``;
             } else if (cmd_main === '/mollusca') {
                 return `* \`${cmd_main}\`, \`/concha\` ou \`/caranguejo\``;
             } else if (cmd_main === '/opilioes'){
                 return `* \`${cmd_main}\` ou \`/opiliões\``;
+            } else if (cmd_main === '/percevejo_aq') {
+                return `* \`${cmd_main}\` ou \`/gerromorpha\` - percevejos aquáticos`;
             } else if (cmd_main === '/phasma'){
                 return `* \`${cmd_main}\` ou \`/bicho_pau\``;
             } else if (cmd_main === '/monocot'){
@@ -148,6 +161,8 @@ async function Comandos(message) {
                 return `* \`${cmd_main}\` ou \`/staphylinidae\``;
             } else if (cmd_main === '/strep') {
                 return `* \`${cmd_main}\` ou \`/strepsiptera\``;
+            } else if (cmd_main === '/tipula') {
+                return `* \`${cmd_main}\` ou \`/tipulomorpha\``;
             } else if (cmd_main === '/traça') {
                 return `* \`${cmd_main}\` ou \`/zygentoma\``;
             } else if (cmd_main === '/tripe') {
@@ -282,6 +297,17 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
+    if (['/barbeiro?', '/barbeiro'].includes(message.body)) {
+        const barbeiro = [c.carlos_adm, c.aranhas.celio];
+        
+        let lista = barbeiro.map(user => `${user}@c.us`);
+        let pessoas = `@${barbeiro.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.6);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
     if (message.body === '/besouros') {
         const besouros = [c.besouros.glauco, c.besouros.lorenne, 
                           c.besouros.vincenzo, c.besouros.bruno_begha];
@@ -329,7 +355,18 @@ async function Comandos(message) {
         let pessoas = `@${cobras.join(', @')}`;
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
-    }    
+    }
+
+    if (['/cupim', '/isoptera'].includes(message.body)) {
+        const cupim = [c.cupim.karina_lima];
+        
+        let lista = cupim.map(user => `${user}@c.us`);
+        let pessoas = `@${cupim.join(', @')}`;
+
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
 
     if (message.body === '/diplopoda') {
         const diplopoda = [c.diplopoda.rodrigo_bouzan];
@@ -422,6 +459,17 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
+    if (['/lagartos', '/calangos', '/gekkota'].includes(message.body)) {
+        const lagarto = [c.lagartos.dani_alcantara, c.lagartos.joao_alcantara];
+        
+        let lista = lagarto.map(user => `${user}@c.us`);
+        let pessoas = `@${lagarto.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.6);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
     if (['/louva', '/louva_deus', '/mantis', '/mantodea'].includes(message.body)) {
         let louva = [c.louva.bruno_louva, c.louva.cesar, 
                        c.louva.gabriel_gomes, c.louva.leo, 
@@ -479,6 +527,17 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
+    if (message.body === '/morcegos') {
+        const morcegos = [c.aranhas.lucas_gusso];
+        
+        let lista = morcegos.map(user => `${user}@c.us`);
+        let pessoas = `@${morcegos.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
     if (message.body === '/moscas') {
         const moscas = [c.moscas.daniel_schelesky, c.moscas.lais, 
                         c.moscas.leonardo_breder, c.moscas.luan, 
@@ -519,6 +578,17 @@ async function Comandos(message) {
         
         let lista = percevejos.map(user => `${user}@c.us`);
         let pessoas = `@${percevejos.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (['/percevejo_aq', '/gerromorpha'].includes(message.body)) {
+        const aquatico = [c.percevejos.taoso];
+        
+        let lista = aquatico.map(user => `${user}@c.us`);
+        let pessoas = `@${aquatico.join(', @')}`;
     
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
 
@@ -613,6 +683,17 @@ async function Comandos(message) {
         
         let lista = strep.map(user => `${user}@c.us`);
         let pessoas = `@${strep.join(', @')}`;
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (['/tipula', '/tipulomorpha'].includes(message.body)) {
+        const tipula = [c.mosquitos.walther];
+        
+        let lista = tipula.map(user => `${user}@c.us`);
+        let pessoas = `@${tipula.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }

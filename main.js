@@ -25,7 +25,7 @@ client.on('qr', (qr) => {
 let lista_comandos = [
     '/help', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', 
     
-    '/rbn', '/aranhas', '/abelhas', '/aves', '/besouros', '/baratas', 
+    '/rbn', '/aranhas', '/abelhas', '/aves', '/baratas', '/besouros', 
     '/borboletas', '/cigarras', '/cobras', '/serpentes', '/diplopoda', 
     '/escorpioes', '/escorpiões', '/formigas', '/formiga', '/formiga_leao', 
     '/formiga_leão', '/fungos','/cogumelos', '/fungi', '/neuroptera', '/geoplanaria', 
@@ -222,8 +222,8 @@ async function Comandos(message) {
     /*--- Comandos Principais ---*/
 
     if (message.body === '/abelhas') {
-        const abelhas = [c.abelhas.bruno_aranda, c.abelhas.beatriz, 
-                         c.staph.pedro_staph, c.abelhas.abelhero_misterioso];
+        const abelhas = [c.abelhas.bruno_abelha, c.abelhas.bruno_aranda, 
+                         c.abelhas.beatriz, c.staph.pedro_staph];
         
         let lista = abelhas.map(user => `${user}@c.us`);
         let pessoas = `@${abelhas.join(', @')}`;
@@ -269,19 +269,9 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/besouros') {
-        const besouros = [c.besouros.lorenne, c.besouros.vincenzo, c.besouros.bruno_begha];
-        
-        let lista = besouros.map(user => `${user}@c.us`);
-        let pessoas = `@${besouros.join(', @')}`;
-    
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.336);
-        
-        await client.sendMessage(message.from, pessoas, {mentions: lista});
-    }
-
     if (message.body === '/baratas') {
-        const baratas = [c.mariposas.fischer, c.phasma.pedro_alvaro];
+        const baratas = [c.mariposas.fischer, c.baratas.matheus_dora,
+                         c.phasma.pedro_alvaro];
         
         let lista = baratas.map(user => `${user}@c.us`);
         let pessoas = `@${baratas.join(', @')}`;
@@ -292,15 +282,29 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
+    if (message.body === '/besouros') {
+        const besouros = [c.besouros.glauco, c.besouros.lorenne, 
+                          c.besouros.vincenzo, c.besouros.bruno_begha];
+        
+        let lista = besouros.map(user => `${user}@c.us`);
+        let pessoas = `@${besouros.join(', @')}`;
+    
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.336);
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
     if (message.body === '/borboletas'){
-        const borboletas =  [c.borboletas.andre_nog, c.borboletas.pedro_souza, 
-                             c.borboletas.rafaela, c.borboletas.tiago];
+        const borboletas =  [c.borboletas.andre_nog, c.mariposas.jhonatan, 
+                             c.borboletas.pedro_souza, c.borboletas.rafaela, 
+                             c.borboletas.tiago];
 
         let lista = borboletas.map(user => `${user}@c.us`);
         let pessoas = `@${borboletas.join(', @')}`;
         
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
         pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.15);
+        pessoas = await mencionarUsuario(lista, pessoas, c.borboletas.guilherme_augusto, 0.1);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
@@ -419,23 +423,31 @@ async function Comandos(message) {
     }
 
     if (['/louva', '/louva_deus', '/mantis', '/mantodea'].includes(message.body)) {
-        const louva = [c.louva.cesar, c.louva.gabriel_gomes, 
-                       c.louva.leo, c.louva.lorena, c.louva.savio];
+        let louva = [c.louva.bruno_louva, c.louva.cesar, 
+                       c.louva.gabriel_gomes, c.louva.leo, 
+                       c.louva.lorena, c.louva.lorram, 
+                       c.louva.savio];
+
+        louva = (await embaralharContatos(louva)).slice(0, 4);
 
         let lista = louva.map(user => `${user}@c.us`);
         let pessoas = `@${louva.join(', @')}`;
     
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.02);
+
+        if(!pessoas.includes('@' + c.louva.gabriel_gomes)){
+            pessoas = await mencionarUsuario(lista, pessoas, c.louva.gabriel_gomes, 1);
+        }
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
     if (message.body === '/mariposas'){
-        let mariposas = [c.mariposas.miguel, c.phasma.pedro_alvaro, 
-                         c.mariposas.pedro_lafin];
+        let mariposas = [c.mariposas.jhonatan, c.mariposas.miguel, 
+                         c.phasma.pedro_alvaro, c.mariposas.pedro_lafin];
         
-        let prioridade = [c.mariposas.fischer, c.mariposas.laila, c.mariposas.luis_eduardo, 
-                          c.mariposas.nicolas];
+        let prioridade = [c.mariposas.fischer, c.mariposas.laila, 
+                          c.mariposas.luis_eduardo, c.mariposas.nicolas];
         
         mariposas = (await embaralharContatos(mariposas)).slice(0, 2);
         prioridade = (await embaralharContatos(prioridade)).slice(0, 2);
@@ -456,7 +468,8 @@ async function Comandos(message) {
     }
 
     if (['/mollusca', '/concha', '/caranguejo'].includes(message.body)) {
-        const mollusca = [c.mollusca.carlos_sigma, c.aranhas.celio, c.mosquitos.walther];
+        const mollusca = [c.mollusca.carlos_sigma, c.aranhas.celio, 
+                          c.mollusca.rafael_masson, c.mosquitos.walther];
         
         let lista = mollusca.map(user => `${user}@c.us`);
         let pessoas = `@${mollusca.join(', @')}`;
@@ -467,7 +480,9 @@ async function Comandos(message) {
     }
 
     if (message.body === '/moscas') {
-        const moscas = [c.moscas.matheus, c.moscas.rodrigo, c.moscas.lais, c.moscas.luan];
+        const moscas = [c.moscas.daniel_schelesky, c.moscas.lais, 
+                        c.moscas.leonardo_breder, c.moscas.luan, 
+                        c.moscas.matheus, c.moscas.rodrigo];
 
         let lista = moscas.map(user => `${user}@c.us`);
         let pessoas = `@${moscas.join(', @')}`;

@@ -118,6 +118,8 @@ async function Comandos(message) {
         mensagem += comandosPrincipais.map(cmd_main => {
             if (cmd_main === '/rbn') {
                 return `* \`${cmd_main}\` - Rede Brasileira de Naturalistas`;
+            } else if (cmd_main === '/barbeiro?') {
+                return `* \`${cmd_main}\` - *percevejo de importância médica*`;
             } else if (cmd_main === '/cigarrinha') {
                 return `* \`${cmd_main}\` - soldadinhos e membracídeos`;
             } else if (cmd_main === '/cobras') {
@@ -160,6 +162,51 @@ async function Comandos(message) {
                 return `* \`${cmd_main}\` - thysanoptera`;
             } else if (cmd_main === '/vespa') {
                 return `* \`${cmd_main}\` ou \`/maribondo\``;
+            } else {
+                return `* \`${cmd_main}\``;
+            }
+        }).join('\n');       
+
+        await client.sendMessage(usuario_duvida, mensagem);
+    }
+    
+    if (message.body === '/help2') {
+        const usuario_duvida = message.author || message.from;
+
+        let comandos_avancados = ['/anura', '/barbeiro', '/calangos', '/caranguejo', '/cogumelos', 
+                                  '/dicotiledôneas', '/escorpiões', '/esperanças', '/formiga', 
+                                  '/formiga_leão', '/geoplanária', '/gerromorpha', '/isoptera', 
+                                  '/marimbondo', '/opiliões', '/staphylinidae', '/strepsiptera', 
+                                  '/thysanoptera', '/tipulomorpha', '/zygentoma'];
+
+        let mensagem = `> Comandos Avançados - variações dos comandos básicos *[ordem alfabética]*\n`;
+        mensagem += comandos_avancados.map(cmd_main => {
+            if (cmd_main === '/anura') {
+                return `* \`${cmd_main}\` - sapos e pererecas`;
+            } else if (cmd_main === '/calangos') {
+                return `* \`${cmd_main}\` ou \`/gekkota\``;
+            } else if (cmd_main === '/caranguejo') {
+                return `* \`${cmd_main}\` ou \`/concha\``;
+            } else if (cmd_main === '/cogumelos') {
+                return `* \`${cmd_main}\` ou \`/fungi\``;
+            } else if (cmd_main === '/dicotiledôneas') {
+                return `* \`${cmd_main}\` ou \`/monocotiledôneas\``;
+            } else if (cmd_main === '/esperanças') {
+                return `* \`${cmd_main}\`, \`/gafanhotos\` ou \`/orthoptera\``;
+            } else if (cmd_main === '/formiga_leão') {
+                return `* \`${cmd_main}\` ou \`/neuroptera\``;
+            } else if (cmd_main === '/gerromorpha') {
+                return `* \`${cmd_main}\` - percevejos aquáticos`;
+            } else if (cmd_main === '/isoptera') {
+                return `* \`${cmd_main}\` - cupins`;
+            } else if (cmd_main === '/marimbondo') {
+                return `* \`${cmd_main}\` ou \`/vespidae\``;
+            } else if (cmd_main === '/thysanoptera') {
+                return `* \`${cmd_main}\` - tripes`;
+            } else if (cmd_main === '/tipulomorpha') {
+                return `* \`${cmd_main}\` - típulas e afins`;
+            } else if (cmd_main === '/zygentoma') {
+                return `* \`${cmd_main}\` - traças`;
             } else {
                 return `* \`${cmd_main}\``;
             }
@@ -798,7 +845,7 @@ let flag_spam = 0;
 
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
-    
+
     // Spam handling antes de detectar os comandos
     if ([...lista_comandos, ...lista_easter].includes(message.body)) {
         let msg1 = message.timestamp;

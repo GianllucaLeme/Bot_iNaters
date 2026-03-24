@@ -25,15 +25,15 @@ client.on('qr', (qr) => {
 let lista_comandos = [
     '/help', '/help2', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', 
     
-    '/rbn', '/aranhas', '/abelhas', '/aves', '/baratas', '/barbeiro?', '/barbeiro', 
-    '/besouros', '/borboletas', '/cigarras', '/cigarrinha','/cobras', '/serpentes', '/cupim', '/isoptera', 
-    '/diplopoda', '/escorpioes', '/escorpiões', '/formigas', '/formiga', '/formiga_leao', 
-    '/formiga_leão', '/fungos','/cogumelos', '/fungi', '/neuroptera', '/geoplanaria', 
-    '/geoplanária', '/grilos', '/gafanhotos', '/esperanças', '/orthoptera', '/lagartos', 
-    '/calangos', '/gekkota', '/louva', '/louva_deus', '/mantis', '/mantodea','/mariposas', 
-    '/mollusca', '/concha', '/caranguejo', '/morcegos', '/moscas', '/mosquitos', '/opilioes', 
-    '/opiliões', '/percevejos', '/percevejo_aq', '/gerromorpha', '/phasma', '/bicho_pau', 
-    '/plantas', '/monocot', '/monocotiledôneas', '/dicot', '/dicotiledôneas', '/sapo', 
+    '/rbn', '/aranha', '/abelha', '/ave', '/barata', '/barbeiro?', '/barbeiro', 
+    '/besouro', '/borboleta', '/cigarra', '/cigarrinha','/cobra', '/serpente', '/cupim', '/isoptera', 
+    '/diplopoda', '/escorpioes', '/escorpiões', '/formiga', '/formiga_leao', 
+    '/formiga_leão', '/fungo','/cogumelo', '/fungi', '/neuroptera', '/geoplanaria', 
+    '/geoplanária', '/grilo', '/gafanhoto', '/esperança', '/orthoptera', '/lagarto', 
+    '/calango', '/gekkota', '/louva', '/louva_deus', '/mantis', '/mantodea','/mariposa', 
+    '/mollusca', '/concha', '/caranguejo', '/morcego', '/mosca', '/mosquito', '/opilioes', 
+    '/opiliões', '/percevejo', '/percevejo_aq', '/gerromorpha', '/phasma', '/bicho_pau', 
+    '/planta', '/monocot', '/monocotiledôneas', '/dicot', '/dicotiledôneas', '/sapo', 
     '/anura', '/soldadinho', '/membracidae', '/staph', '/staphylinidae', 
     '/strep', '/strepsiptera', '/tipula', '/tipulomorpha', '/traça', '/zygentoma', '/tripe', 
     '/thysanoptera', '/vespa', '/vespidae', '/maribondo', '/marimbondo',
@@ -41,8 +41,7 @@ let lista_comandos = [
     '/stop', '/all'];
 
 let lista_easter = [
-    '/bloisinho', '/cladoFSM', '/cladofsm', '/cladoPCM', '/cladopcm', '/mateiro', 
-    '/meriva', '/vermoidea'];
+    '/bloisinho', '/cladofsm', '/mateiro', '/meriva', '/vermoidea'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -81,8 +80,20 @@ async function embaralharContatos(contatos) {
     return contatos;
 }
 
+// Função para tratar variações de comandos do usuário, como pluralização, espaços etc.
+function normalizarComando(message) {
+    let comando = message.toLowerCase().trim();
+
+    // remove plural simples
+    if (comando.endsWith('s')) {
+        comando = comando.slice(0, -1);
+    }
+
+    return comando;
+}
+
 // Função principal que rege todos os comandos
-async function Comandos(message) {
+async function Comandos(message, mensagem_normalizada) {
     /*--- Comandos Ajuda ---*/
     
     if (message.body === '/help') {
@@ -274,7 +285,7 @@ async function Comandos(message) {
     
     /*--- Comandos Principais ---*/
 
-    if (message.body === '/abelhas') {
+    if (mensagem_normalizada === '/abelha') {
         const abelhas = [c.abelhas.bruno_abelha, c.abelhas.bruno_aranda, 
                          c.abelhas.beatriz, c.staph.pedro_staph];
         
@@ -286,7 +297,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/aranhas'){
+    if (mensagem_normalizada === '/aranha'){
         let aranhas = [c.aranhas.adolfo, c.aranhas.alfredo, c.aranhas.claudia, c.aranhas.dayvson, 
                        c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.lucas_gusso, 
                        c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.victor];
@@ -307,7 +318,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, { mentions: lista});
     }
 
-    if (message.body === '/aves') {
+    if (mensagem_normalizada === '/ave') {
         let aves = [c.plantas.edvandro, c.aves.jose_valerio, c.aves.matheus_santos, 
                     c.aves.miguel_malta, c.aves.henrique_stranz, c.aves.ruan];
        
@@ -322,7 +333,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/baratas') {
+    if (mensagem_normalizada === '/barata') {
         const baratas = [c.mariposas.fischer, c.baratas.matheus_dora,
                          c.phasma.pedro_alvaro];
         
@@ -346,7 +357,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/besouros') {
+    if (mensagem_normalizada === '/besouro') {
         const besouros = [c.besouros.glauco, c.besouros.lorenne, 
                           c.besouros.vincenzo, c.besouros.bruno_begha];
         
@@ -358,7 +369,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/borboletas'){
+    if (mensagem_normalizada === '/borboleta'){
         const borboletas =  [c.borboletas.andre_nog, c.mariposas.jhonatan, 
                              c.borboletas.pedro_souza, c.borboletas.rafaela, 
                              c.borboletas.tiago];
@@ -373,7 +384,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/cigarras') {
+    if (mensagem_normalizada === '/cigarra') {
         const cigarras = [c.cigarras.bruno];
         
         let lista = cigarras.map(user => `${user}@c.us`);
@@ -385,7 +396,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/cigarrinha', '/soldadinho', '/membracidae'].includes(message.body)) {
+    if (['/cigarrinha', '/soldadinho', '/membracidae'].includes(mensagem_normalizada)) {
         const cigarrinha = [c.cigarrinha.aline, c.cigarrinha.andre_cigarrinha, 
                             c.cigarrinha.eduardo_henrique];
         
@@ -397,7 +408,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/cobras', '/serpentes'].includes(message.body)) {
+    if (['/cobra', '/serpente'].includes(mensagem_normalizada)) {
         const cobras = [c.enrico, c.aves.jose_valerio, 
                         c.cobras.leonardo_conversano];
         
@@ -407,7 +418,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/cupim', '/isoptera'].includes(message.body)) {
+    if (['/cupim', '/isoptera'].includes(mensagem_normalizada)) {
         const cupim = [c.cupim.karina_lima];
         
         let lista = cupim.map(user => `${user}@c.us`);
@@ -418,7 +429,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/diplopoda') {
+    if (mensagem_normalizada === '/diplopoda') {
         const diplopoda = [c.diplopoda.rodrigo_bouzan];
         
         let lista = diplopoda.map(user => `${user}@c.us`);
@@ -448,7 +459,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, { mentions: lista});
     }
 
-    if (['/formigas', '/formiga'].includes(message.body)){
+    if (mensagem_normalizada === '/formiga'){
         let formigas = [c.formigas.davi, c.formigas.felipe_santos, 
                         c.formigas.gabriel_rogerio, c.formigas.maycon];
 
@@ -476,7 +487,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/fungos','/cogumelos', '/fungi'].includes(message.body)) {
+    if (['/fungo','/cogumelo', '/fungi'].includes(mensagem_normalizada)) {
         const fungos = [c.fungos.mateus_ribeiro];
         
         let lista = fungos.map(user => `${user}@c.us`);
@@ -487,7 +498,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/geoplanaria', '/geoplanária'].includes(message.body)) {
+    if (['/geoplanaria', '/geoplanária'].includes(mensagem_normalizada)) {
         const geoplanaria = [c.geoplanaria.piter];
         
         let lista = geoplanaria.map(user => `${user}@c.us`);
@@ -498,7 +509,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/grilos', '/gafanhotos', '/esperanças', '/orthoptera'].includes(message.body)) {
+    if (['/grilo', '/gafanhoto', '/esperança', '/orthoptera'].includes(mensagem_normalizada)) {
         const grilos = [c.phasma.phil];
         
         let lista = grilos.map(user => `${user}@c.us`);
@@ -509,7 +520,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/lagartos', '/calangos', '/gekkota'].includes(message.body)) {
+    if (['/lagarto', '/calango', '/gekkota'].includes(mensagem_normalizada)) {
         const lagarto = [c.lagartos.dani_alcantara, c.lagartos.joao_alcantara];
         
         let lista = lagarto.map(user => `${user}@c.us`);
@@ -540,7 +551,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/mariposas'){
+    if (mensagem_normalizada === '/mariposa'){
         let mariposas = [c.mariposas.jhonatan, c.mariposas.miguel, 
                          c.phasma.pedro_alvaro, c.mariposas.pedro_lafin];
         
@@ -565,7 +576,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/mollusca', '/concha', '/caranguejo'].includes(message.body)) {
+    if (['/mollusca', '/concha', '/caranguejo'].includes(mensagem_normalizada)) {
         const mollusca = [c.mollusca.carlos_sigma, c.aranhas.celio, 
                           c.mollusca.rafael_masson, c.mosquitos.walther];
         
@@ -577,7 +588,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/morcegos') {
+    if (mensagem_normalizada === '/morcego') {
         const morcegos = [c.aranhas.lucas_gusso];
         
         let lista = morcegos.map(user => `${user}@c.us`);
@@ -588,7 +599,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/moscas') {
+    if (mensagem_normalizada === '/mosca') {
         const moscas = [c.moscas.daniel_schelesky, c.moscas.lais, 
                         c.moscas.leonardo_breder, c.moscas.luan, 
                         c.moscas.matheus, c.moscas.rodrigo];
@@ -601,7 +612,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/mosquitos') {
+    if (mensagem_normalizada === '/mosquito') {
         const mosquitos = [c.mosquitos.walther];
         
         let lista = mosquitos.map(user => `${user}@c.us`);
@@ -623,7 +634,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/percevejos') {
+    if (mensagem_normalizada === '/percevejo') {
         const percevejos = [c.percevejos.guilherme_lopez];
         
         let lista = percevejos.map(user => `${user}@c.us`);
@@ -657,7 +668,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/plantas') {
+    if (mensagem_normalizada === '/planta') {
         const plantas = [c.plantas.edvandro, c.mariposas.fischer, c.plantas.thomaz_ricardo];
         
         let lista = plantas.map(user => `${user}@c.us`);
@@ -695,7 +706,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/sapo', '/anura'].includes(message.body)) {
+    if (['/sapo', '/anura'].includes(mensagem_normalizada)) {
         const sapo = [c.sapo.allanis, c.sapo.catarina, c.sapo.shiva];
         
         let lista = sapo.map(user => `${user}@c.us`);
@@ -706,7 +717,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/staph', '/staphylinidae'].includes(message.body)) {
+    if (['/staph', '/staphylinidae'].includes(mensagem_normalizada)) {
         const staph = [c.staph.pedro_staph];
         
         let lista = staph.map(user => `${user}@c.us`);
@@ -717,7 +728,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/strep', '/strepsiptera'].includes(message.body)) {
+    if (['/strep', '/strepsiptera'].includes(mensagem_normalizada)) {
         const strep = [c.formigas.gabriel_rogerio];
         
         let lista = strep.map(user => `${user}@c.us`);
@@ -726,7 +737,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/tipula', '/tipulomorpha'].includes(message.body)) {
+    if (['/tipula', '/tipulomorpha'].includes(mensagem_normalizada)) {
         const tipula = [c.mosquitos.walther];
         
         let lista = tipula.map(user => `${user}@c.us`);
@@ -737,7 +748,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/traça', '/zygentoma'].includes(message.body)) {
+    if (['/traça', '/zygentoma'].includes(mensagem_normalizada)) {
         const traca = [c.sapo.shiva];
         
         let lista = traca.map(user => `${user}@c.us`);
@@ -748,7 +759,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/tripe', '/thysanoptera'].includes(message.body)) {
+    if (['/tripe', '/thysanoptera'].includes(mensagem_normalizada)) {
         const tripe = [c.tripe.marina];
         
         let lista = tripe.map(user => `${user}@c.us`);
@@ -759,7 +770,7 @@ async function Comandos(message) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (['/vespa', '/vespidae', '/maribondo', '/marimbondo'].includes(message.body)) {
+    if (['/vespa', '/vespidae', '/maribondo', '/marimbondo'].includes(mensagem_normalizada)) {
         const vespa = [c.aranhas.celio, c.mariposas.laila];
         
         let lista = vespa.map(user => `${user}@c.us`);
@@ -806,32 +817,32 @@ async function Comandos(message) {
 
     /*--- Comandos Easter Eggs ---*/
 
-    if (message.body === '/bloisinho'){
+    if (mensagem_normalizada === '/bloisinho'){
         let random_blois = Math.floor(Math.random()*4);
         const media = MessageMedia.fromFilePath(`./pictures/bloisinhos/blois${random_blois}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
     }
 
-    if (['/cladoFSM', '/cladofsm'].includes(message.body)) {
+    if (mensagem_normalizada === '/cladofsm') {
         const clado_fsm = [c.mariposas.fischer, c.sapo.shiva, c.formigas.maycon];
         let lista = clado_fsm.map(user => `${user}@c.us`);
         let pessoas = `@${clado_fsm.join(', @')}`;
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
-    if (message.body === '/mateiro'){
+    if (mensagem_normalizada === '/mateiro'){
         let random_malta = Math.floor(Math.random()*9);
         const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
     }
 
-    if (message.body === '/meriva'){
+    if (mensagem_normalizada === '/meriva'){
         let random_meriva = Math.floor(Math.random()*11);
         const media = MessageMedia.fromFilePath(`./pictures/merivas/meriva${random_meriva}.png`);
         await client.sendMessage(message.from, media);
     }
 
-    if (message.body === '/vermoidea'){
+    if (mensagem_normalizada === '/vermoidea'){
         const vermoidea = [c.mariposas.fischer, c.sapo.shiva, c.formigas.maycon, c.aranhas.gabriel_costa, c.aranhas.adolfo];
         let lista = vermoidea.map(user => `${user}@c.us`);
         let pessoas = `@${vermoidea.join(', @')}`;
@@ -845,9 +856,10 @@ let flag_spam = 0;
 
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
+    const mensagem_normalizada = normalizarComando(message.body);
 
     // Spam handling antes de detectar os comandos
-    if ([...lista_comandos, ...lista_easter].includes(message.body)) {
+    if ([...lista_comandos, ...lista_easter].includes(mensagem_normalizada)) {
         let msg1 = message.timestamp;
         lista_spam[flag_spam] = msg1;
 
@@ -858,7 +870,7 @@ client.on('message_create', async message => {
         }
 
         if(!(Math.abs(lista_spam[1] - lista_spam[0]) < 3)){
-            await Comandos(message);
+            await Comandos(message, mensagem_normalizada);
         }
     }
 });

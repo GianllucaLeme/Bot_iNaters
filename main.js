@@ -42,9 +42,10 @@ let lista_comandos = [
     '/stop', '/all'];
 
 let lista_easter = [
-    '/bloisinho', '/bot', '/cladofsm', '/mateiro', '/meriva', '/plankoidea', 
-    '/planklep', '/reh_csif', '/rehcsif', '/dobra', '/tarrafer', '/fischer', 
-    '/vermoidea'];
+    '/bloisinho', '/blois', '/bloisin', '/crispinin', '/bot', '/cladofsm', 
+    '/douglas', '/kratos', '/kratosrbn', '/kratos_rbn', '/mateiro', '/melga', 
+    '/melguinha', '/melgaço', '/adolfo', '/meriva', '/plankoidea', '/planklep', 
+    '/reh_csif', '/rehcsif', '/dobra', '/tarrafer', '/fischer', '/vermoidea'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -835,8 +836,8 @@ async function Comandos(message, mensagem_normalizada) {
 
     /*--- Comandos Easter Eggs ---*/
 
-    if (mensagem_normalizada === '/bloisinho'){
-        let random_blois = Math.floor(Math.random()*4);
+    if (['/bloisinho', '/blois', '/bloisin', '/crispinin'].includes(mensagem_normalizada)){
+        let random_blois = Math.floor(Math.random()*6);
         const media = MessageMedia.fromFilePath(`./pictures/bloisinhos/blois${random_blois}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
     }
@@ -854,10 +855,38 @@ async function Comandos(message, mensagem_normalizada) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
+    if (mensagem_normalizada === '/douglas'){
+        let random_douglas = Math.floor(Math.random()*7);
+        const media = MessageMedia.fromFilePath(`./pictures/douglas/douglas${random_douglas}.png`);
+        await client.sendMessage(message.from, media);
+    }
+
+    if (['/kratos', '/kratosrbn', '/kratos_rbn'].includes(mensagem_normalizada)){
+        let random_kratos = Math.floor(Math.random()*2);
+
+        if(random_kratos == 1){
+            let texto_kratos = `> Sereessss! 💪\n`;
+            texto_kratos += `> Doem para a vila 🏘️ e o templo 🏛️ da RBN ⚔️, fomentem 💵 tudo e todos 🙌, vamos saudar 🙇 nossa senhora RBN 🩸🛡️, vamos seres ⚔️, ajudem com tudo 👊👊!!`
+
+            await client.sendMessage(message.from, texto_kratos);
+        } else {
+            const media = MessageMedia.fromFilePath(`./pictures/kratos_rbn/kratos${random_kratos}.mp3`);
+            await client.sendMessage(message.from, media);
+        }
+    }
+
     if (mensagem_normalizada === '/mateiro'){
         let random_malta = Math.floor(Math.random()*10);
         const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+    }
+
+    if (['/melga', '/melguinha', '/melgaço', '/adolfo'].includes(mensagem_normalizada)){
+        let random_melga = Math.floor(Math.random()*14);
+        const media = MessageMedia.fromFilePath(`./pictures/melgas/melga${random_melga}.png`);
+        await client.sendMessage(message.from, media, { sendMediaAsSticker: true , 
+                                                        stickerAuthor: "AracnoGian", 
+                                                        stickerName: "🤗 Irrita_Melgaço.exe 🤗" });
     }
 
     if (mensagem_normalizada === '/meriva'){

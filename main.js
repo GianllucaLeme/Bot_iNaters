@@ -23,7 +23,7 @@ client.on('qr', (qr) => {
 
 
 let lista_comandos = [
-    '/help', '/help2', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', 
+    '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', 
     
     '/rbn', '/aranha', '/abelha', '/ave', '/barata', '/barbeiro?', '/barbeiro', 
     '/besouro', '/borboleta', '/cigarra', '/cigarrinha','/cobra', '/serpente', '/cupim', '/isoptera', 
@@ -43,10 +43,10 @@ let lista_comandos = [
 
 let lista_easter = [
     '/bloisinho', '/blois', '/bloisin', '/crispinin', '/bot', '/caf', '/cladofsm', 
-    '/douglas', '/kratos', '/kratosrbn', '/kratos_rbn', '/mateiro', '/melga', 
-    '/melguinha', '/melgaço', '/adolfo', '/meriva', '/plankoidea', '/planklep', 
-    '/prancheta', '/prancha', '/26', '/reh_csif', '/rehcsif', '/dobra', 
-    '/tarrafer', '/fischer', '/vermoidea'];
+    '/curse', '/trader', '/golpe', '/douglas', '/kratos', '/kratosrbn', '/kratos_rbn', 
+    '/mateiro', '/melga', '/melguinha', '/melgaço', '/adolfo', '/meriva', '/metaflora', 
+    '/metazooa', '/metazoa', '/plankoidea', '/planklep', '/prancheta', '/prancha', 
+    '/26', '/reh_csif', '/rehcsif', '/dobra', '/tarrafer', '/fischer', '/vermoidea'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -110,11 +110,12 @@ async function Comandos(message, mensagem_normalizada) {
             { comando: '/admin', descricao: 'Marca dois admins aleatórios;' },
             { comando: '/bicho', descricao: 'Usar quando não souber quem marcar;' },
             { comando: '/milicia', descricao: 'Usar quando precisar de ajuda para virar IDs no iNat;' },
+            { comando: '/sac', descricao: 'Fornece o link para o *SAC - iNaturalist*;' },
             { comando: '/sobre', descricao: 'Mostra informações sobre o bot;'},
             { comando: '/tirar_nome', descricao: 'Abre um requerimento para retirar seu nome das marcações.'}
         ];
 
-        let comandos_removidos = ['/help', '/help2', '/admin', '/bicho', '/milicia', '/sobre', '/tirar_nome', '/stop', 
+        let comandos_removidos = ['/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', '/stop', 
                                   '/all', '/barbeiro', '/serpentes', '/isoptera', '/escorpiões', '/geoplanária', '/gafanhotos', 
                                   '/esperanças', '/orthoptera', '/opiliões', '/gerromorpha', '/bicho_pau', '/pseudoescorpioes', 
                                   '/pseudoescorpiões', '/calangos', '/gekkota', '/louva_deus', '/mantis', '/mantodea', '/concha', 
@@ -264,6 +265,23 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${ajudantes.join(', @')}`;
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+    }
+
+    if (message.body === '/sac') {
+        if (!(Math.random() < 0.01)) {
+            let sac_inat = 'Viu algo fora de ordem?\n';
+    
+            sac_inat += 'Táxon ausente, desatualizado ou bagunçado?\n\n';
+            
+            sac_inat += 'Envie seu pedido para o *SAC - iNaturalist* e algum dos curadores poderá corrigir isso futuramente 🙂‍↕️👇\n\n'
+        
+            sac_inat += 'https://docs.google.com/spreadsheets/d/16rAPrTKesmjMDcxU4GoRyCTU9eHIgkGHZVUw3m5p0zY/edit?usp=sharing';
+    
+            await client.sendMessage(message.from, sac_inat);
+        } else {
+            const media = MessageMedia.fromFilePath(`./pictures/bloisinhos/blois${2}.png`);
+            await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+        }
     }
 
     if (message.body === '/sobre') {
@@ -862,6 +880,12 @@ async function Comandos(message, mensagem_normalizada) {
         await client.sendMessage(message.from, pessoas, {mentions: lista});
     }
 
+    if (['/curse', '/trader', '/golpe'].includes(mensagem_normalizada)){
+        let random_curse = Math.floor(Math.random()*2);
+        const media = MessageMedia.fromFilePath(`./pictures/curses/curse${random_curse}.png`);
+        await client.sendMessage(message.from, media);
+    }
+
     if (mensagem_normalizada === '/douglas'){
         let random_douglas = Math.floor(Math.random()*7);
         const media = MessageMedia.fromFilePath(`./pictures/douglas/douglas${random_douglas}.png`);
@@ -883,9 +907,22 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     if (mensagem_normalizada === '/mateiro'){
-        let random_malta = Math.floor(Math.random()*10);
-        const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
-        await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+        const hoje = new Date();
+
+        const natal = (
+            hoje.getMonth() === 11 &&
+            hoje.getDate() >= 24 &&
+            hoje.getDate() <= 25
+        );
+
+        if(natal){
+            const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${7}.png`);
+            await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+        } else {
+            let random_malta = Math.floor(Math.random()*10);
+            const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
+            await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+        }
     }
 
     if (['/melga', '/melguinha', '/melgaço', '/adolfo'].includes(mensagem_normalizada)){
@@ -900,6 +937,22 @@ async function Comandos(message, mensagem_normalizada) {
         let random_meriva = Math.floor(Math.random()*11);
         const media = MessageMedia.fromFilePath(`./pictures/merivas/meriva${random_meriva}.png`);
         await client.sendMessage(message.from, media);
+    }
+
+    if (mensagem_normalizada === '/metaflora') {
+        let mensagem_flora = 'Qual a planta do dia? 👀\n\n';
+
+        mensagem_flora += 'https://flora.metazooa.com';
+
+        await client.sendMessage(message.from, mensagem_flora);
+    }
+
+    if (['/metazooa', '/metazoa'].includes(mensagem_normalizada)) {
+        let mensagem_zooa = 'Qual o bicho do dia? 👀\n\n';
+
+        mensagem_zooa += 'https://metazooa.com';
+
+        await client.sendMessage(message.from, mensagem_zooa);
     }
 
     if (['/plankoidea', '/planklep'].includes(mensagem_normalizada)){

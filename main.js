@@ -42,10 +42,11 @@ let lista_comandos = [
     '/stop', '/all'];
 
 let lista_easter = [
-    '/bloisinho', '/blois', '/bloisin', '/crispinin', '/bot', '/cladofsm', 
+    '/bloisinho', '/blois', '/bloisin', '/crispinin', '/bot', '/caf', '/cladofsm', 
     '/douglas', '/kratos', '/kratosrbn', '/kratos_rbn', '/mateiro', '/melga', 
     '/melguinha', '/melgaço', '/adolfo', '/meriva', '/plankoidea', '/planklep', 
-    '/reh_csif', '/rehcsif', '/dobra', '/tarrafer', '/fischer', '/vermoidea'];
+    '/prancheta', '/prancha', '/26', '/reh_csif', '/rehcsif', '/dobra', 
+    '/tarrafer', '/fischer', '/vermoidea'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -837,7 +838,7 @@ async function Comandos(message, mensagem_normalizada) {
     /*--- Comandos Easter Eggs ---*/
 
     if (['/bloisinho', '/blois', '/bloisin', '/crispinin'].includes(mensagem_normalizada)){
-        let random_blois = Math.floor(Math.random()*6);
+        let random_blois = Math.floor(Math.random()*9);
         const media = MessageMedia.fromFilePath(`./pictures/bloisinhos/blois${random_blois}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
     }
@@ -846,6 +847,12 @@ async function Comandos(message, mensagem_normalizada) {
         let random_patada = Math.floor(Math.random()*3);
         const media = MessageMedia.fromFilePath(`./pictures/bot_patadas/patada${random_patada}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+    }
+
+    if (mensagem_normalizada === '/caf'){
+        let random_certidao = Math.floor(Math.random()*1);
+        const media = MessageMedia.fromFilePath(`./pictures/certidao_caf/caf${random_certidao}.png`);
+        await client.sendMessage(message.from, media);
     }
 
     if (mensagem_normalizada === '/cladofsm') {
@@ -898,6 +905,12 @@ async function Comandos(message, mensagem_normalizada) {
     if (['/plankoidea', '/planklep'].includes(mensagem_normalizada)){
         let random_plank = Math.floor(Math.random()*1);
         const media = MessageMedia.fromFilePath(`./pictures/plankoidea/plank${random_plank}.png`);
+        await client.sendMessage(message.from, media);
+    }
+
+    if (['/prancheta', '/prancha', '/26'].includes(mensagem_normalizada)){
+        let random_prancha = Math.floor(Math.random()*2);
+        const media = MessageMedia.fromFilePath(`./pictures/pranchetas/prancha${random_prancha}.png`);
         await client.sendMessage(message.from, media);
     }
 

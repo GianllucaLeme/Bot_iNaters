@@ -252,7 +252,7 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     if (mensagem_normalizada === '/admin'){
-        lista_admins_filtered = lista_admins.filter(admin => admin !== c.aranhas.gianlluca)
+        let lista_admins_filtered = lista_admins.filter(admin => admin !== c.aranhas.gianlluca)
         lista_admins_filtered = (await embaralharContatos(lista_admins_filtered)).slice(0, 2)
 
         let lista = lista_admins_filtered.map(user => `${user}@c.us`);
@@ -522,7 +522,6 @@ async function Comandos(message, mensagem_normalizada) {
 
         pessoas = await mencionarUsuario(lista, pessoas, c.formigas.joao_paulo, 0.1);
         pessoas = await mencionarUsuario(lista, pessoas, c.formigas.diego, 0.05);
-        pessoas = await mencionarUsuario(lista, pessoas, c.formigas.didobola, 1e-8);
         pessoas = await mencionarUsuario(lista, pessoas, c.formigas.vankan, 0.03);
         
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.05);
@@ -986,7 +985,7 @@ async function Comandos(message, mensagem_normalizada) {
         let random_reh = Math.floor(Math.random()*1);
 
         let conhecimento = fs.openSync(`./pictures/reh_csif/conhecimento${random_reh}.txt`, 'r');
-        let texto_conhecimento = fs.readFileSync(conhecimento, 'utf-8');
+        let texto_conhecimento = await fs.promises.readFile(caminho, 'utf-8');
         fs.closeSync(conhecimento);
         
         await client.sendMessage(message.from, texto_conhecimento);
@@ -1052,7 +1051,7 @@ client.on('message_create', async message => {
             flag_spam = 0;
         }
 
-        if(!(Math.abs(lista_spam[1] - lista_spam[0]) < 3)){
+        if (lista_spam.length < 2 || !(Math.abs(lista_spam[1] - lista_spam[0]) < 3)) {
             await Comandos(message, mensagem_normalizada);
         }
     }

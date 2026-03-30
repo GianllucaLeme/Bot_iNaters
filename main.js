@@ -205,6 +205,7 @@ async function Comandos(message, mensagem_normalizada) {
         }).join('\n');       
 
         await client.sendMessage(usuario_duvida, mensagem);
+        return;
     }
     
     if (mensagem_normalizada === '/help2') {
@@ -249,6 +250,7 @@ async function Comandos(message, mensagem_normalizada) {
         }).join('\n');       
 
         await client.sendMessage(usuario_duvida, mensagem);
+        return;
     }
 
     if (mensagem_normalizada === '/admin'){
@@ -259,6 +261,7 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${lista_admins_filtered.join(', @')}`;
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/bicho'){
@@ -267,12 +270,13 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${bicho.join(', @')}`;
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/milicia'){
         let ajudantes = [c.aranhas.celio, c.aranhas.gianlluca, c.mariposas.fischer, 
                          c.mariposas.luis_eduardo, c.formigas.davi, c.formigas.gabriel_rogerio, 
-                         c.formigas.maycon, c.phasma.edgar, c.enrico, c.shiva, c.jose_valerio];
+                         c.formigas.maycon, c.phasma.edgar, c.enrico, c.sapo.shiva, c.jose_valerio];
         
         ajudantes = (await embaralharContatos(ajudantes)).slice(0, 5)
 
@@ -280,6 +284,7 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${ajudantes.join(', @')}`;
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/sac') {
@@ -297,6 +302,7 @@ async function Comandos(message, mensagem_normalizada) {
             const media = MessageMedia.fromFilePath(`./pictures/bloisinhos/blois${2}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         }
+        return;
     }
 
     if (mensagem_normalizada === '/sobre') {
@@ -313,6 +319,7 @@ async function Comandos(message, mensagem_normalizada) {
         mensagem += 'GitHub: https://github.com/GianllucaLeme/Bot_iNaters';
 
         await client.sendMessage(usuario_curioso, mensagem, {mentions: c.aranhas.gianlluca + '@c.us'});
+        return;
     }
 
     if (mensagem_normalizada === '/tirar_nome') {
@@ -323,6 +330,7 @@ async function Comandos(message, mensagem_normalizada) {
         setTimeout(async () => {
             await client.sendMessage(c.aranhas.gianlluca + '@c.us', `O @${usuario_tirar.id.user} quer retirar a marcação!`, {mentions: usuario_tirar.id.user + '@c.us'});
         }, 3000);
+        return;
     }
     
     /*--- Comandos Principais ---*/
@@ -337,6 +345,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/aranha'){
@@ -358,6 +367,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
 
         await client.sendMessage(message.from, pessoas, { mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/ave') {
@@ -373,6 +383,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.aves.victor_aves, 0.3)
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/barata') {
@@ -386,6 +397,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.louva.lorena, 0.2);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/barbeiro?', '/barbeiro'].includes(mensagem_normalizada)) {
@@ -397,6 +409,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.6);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/besouro') {
@@ -409,6 +422,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.336);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/bichopau', '/bicho_pau', '/phasma'].includes(mensagem_normalizada)) {
@@ -421,6 +435,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.01);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/borboleta'){
@@ -436,6 +451,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.borboletas.guilherme_augusto, 0.1);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/cigarra') {
@@ -448,6 +464,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.15);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/cigarrinha', '/soldadinho', '/membracidae'].includes(mensagem_normalizada)) {
@@ -460,6 +477,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/cobra', '/serpente'].includes(mensagem_normalizada)) {
@@ -470,6 +488,7 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${cobras.join(', @')}`;
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/cupim', '/cupins', '/isoptera'].includes(mensagem_normalizada)) {
@@ -481,6 +500,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/diplopoda') {
@@ -492,6 +512,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/escorpiao', '/escorpioes'].includes(mensagem_normalizada)){
@@ -511,6 +532,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
 
         await client.sendMessage(message.from, pessoas, { mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/formiga'){
@@ -527,6 +549,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.05);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/formiga_leao', '/neuroptera'].includes(mensagem_normalizada)) {
@@ -538,6 +561,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/fungo','/cogumelo', '/fungi'].includes(mensagem_normalizada)) {
@@ -549,6 +573,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/geoplanaria') {
@@ -560,6 +585,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/grilo', '/gafanhoto', '/esperanca', '/orthoptera'].includes(mensagem_normalizada)) {
@@ -571,6 +597,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/lagarto', '/calango', '/gekkota'].includes(mensagem_normalizada)) {
@@ -582,6 +609,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.6);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/louva', '/louva_deus', '/mantis', '/mantodea'].includes(mensagem_normalizada)) {
@@ -602,6 +630,7 @@ async function Comandos(message, mensagem_normalizada) {
         }
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/mariposa'){
@@ -627,6 +656,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/mollusca', '/concha', '/caranguejo'].includes(mensagem_normalizada)) {
@@ -639,6 +669,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/morcego') {
@@ -650,6 +681,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/mosca') {
@@ -663,6 +695,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/mosquito') {
@@ -674,6 +707,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/opiliao', '/opilioes'].includes(mensagem_normalizada)) {
@@ -685,6 +719,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/percevejo') {
@@ -696,6 +731,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/percevejo_aq', '/gerromorpha'].includes(mensagem_normalizada)) {
@@ -707,6 +743,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/planta') {
@@ -716,6 +753,7 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${plantas.join(', @')}`;
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/pseudo', '/pseudoescorpiao', '/pseudoescorpioes'].includes(mensagem_normalizada)) {
@@ -727,6 +765,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/monocot', '/monocotiledonea'].includes(mensagem_normalizada)) {
@@ -736,6 +775,7 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${monocot.join(', @')}`;
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/dicot', '/dicotiledonea'].includes(mensagem_normalizada)) {
@@ -746,6 +786,7 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${dicot.join(', @')}`;
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (mensagem_normalizada === '/rbn') {
@@ -756,6 +797,7 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${rbn.join(', @')}`;
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/sapo', '/anura'].includes(mensagem_normalizada)) {
@@ -767,6 +809,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/staph', '/staphylinidae'].includes(mensagem_normalizada)) {
@@ -778,6 +821,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/strep', '/strepsiptera'].includes(mensagem_normalizada)) {
@@ -787,6 +831,7 @@ async function Comandos(message, mensagem_normalizada) {
         let pessoas = `@${strep.join(', @')}`;
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/tipula', '/tipulomorpha'].includes(mensagem_normalizada)) {
@@ -798,6 +843,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/traca', '/zygentoma'].includes(mensagem_normalizada)) {
@@ -809,6 +855,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/tripe', '/thysanoptera'].includes(mensagem_normalizada)) {
@@ -820,6 +867,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/vespa', '/vespidae', '/maribondo', '/marimbondo'].includes(mensagem_normalizada)) {
@@ -831,6 +879,7 @@ async function Comandos(message, mensagem_normalizada) {
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     /*--- Comandos Admin ---*/
@@ -865,6 +914,7 @@ async function Comandos(message, mensagem_normalizada) {
         }else{
             await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
         }
+        return;
     }
 
     /*--- Comandos Easter Eggs ---*/
@@ -873,18 +923,21 @@ async function Comandos(message, mensagem_normalizada) {
         let random_blois = Math.floor(Math.random()*9);
         const media = MessageMedia.fromFilePath(`./pictures/bloisinhos/blois${random_blois}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+        return
     }
     
     if (mensagem_normalizada === '/bot'){
         let random_patada = Math.floor(Math.random()*3);
         const media = MessageMedia.fromFilePath(`./pictures/bot_patadas/patada${random_patada}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+        return;
     }
 
     if (mensagem_normalizada === '/caf'){
         let random_certidao = Math.floor(Math.random()*1);
         const media = MessageMedia.fromFilePath(`./pictures/certidao_caf/caf${random_certidao}.png`);
         await client.sendMessage(message.from, media);
+        return;
     }
 
     if (mensagem_normalizada === '/cladofsm') {
@@ -892,18 +945,21 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = clado_fsm.map(user => `${user}@c.us`);
         let pessoas = `@${clado_fsm.join(', @')}`;
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 
     if (['/curse', '/trader', '/golpe'].includes(mensagem_normalizada)){
         let random_curse = Math.floor(Math.random()*2);
         const media = MessageMedia.fromFilePath(`./pictures/curses/curse${random_curse}.png`);
         await client.sendMessage(message.from, media);
+        return;
     }
 
     if (mensagem_normalizada === '/douglas'){
         let random_douglas = Math.floor(Math.random()*7);
         const media = MessageMedia.fromFilePath(`./pictures/douglas/douglas${random_douglas}.png`);
         await client.sendMessage(message.from, media);
+        return;
     }
 
     if (['/kratos', '/kratosrbn', '/kratos_rbn'].includes(mensagem_normalizada)){
@@ -918,6 +974,7 @@ async function Comandos(message, mensagem_normalizada) {
             const media = MessageMedia.fromFilePath(`./pictures/kratos_rbn/kratos${random_kratos}.mp3`);
             await client.sendMessage(message.from, media);
         }
+        return;
     }
 
     if (mensagem_normalizada === '/mateiro'){
@@ -937,6 +994,7 @@ async function Comandos(message, mensagem_normalizada) {
             const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         }
+        return;
     }
 
     if (['/melga', '/melguinha', '/melgaco', '/adolfo'].includes(mensagem_normalizada)){
@@ -945,12 +1003,14 @@ async function Comandos(message, mensagem_normalizada) {
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true , 
                                                         stickerAuthor: "AracnoGian", 
                                                         stickerName: "🤗 Irrita_Melgaço.exe 🤗" });
+        return;
     }
 
     if (mensagem_normalizada === '/meriva'){
         let random_meriva = Math.floor(Math.random()*11);
         const media = MessageMedia.fromFilePath(`./pictures/merivas/meriva${random_meriva}.png`);
         await client.sendMessage(message.from, media);
+        return;
     }
 
     if (mensagem_normalizada === '/metaflora') {
@@ -959,6 +1019,7 @@ async function Comandos(message, mensagem_normalizada) {
         mensagem_flora += 'https://flora.metazooa.com';
 
         await client.sendMessage(message.from, mensagem_flora);
+        return;
     }
 
     if (['/metazooa', '/metazoa'].includes(mensagem_normalizada)) {
@@ -967,18 +1028,21 @@ async function Comandos(message, mensagem_normalizada) {
         mensagem_zooa += 'https://metazooa.com';
 
         await client.sendMessage(message.from, mensagem_zooa);
+        return;
     }
 
     if (['/plankoidea', '/planklep'].includes(mensagem_normalizada)){
         let random_plank = Math.floor(Math.random()*1);
         const media = MessageMedia.fromFilePath(`./pictures/plankoidea/plank${random_plank}.png`);
         await client.sendMessage(message.from, media);
+        return;
     }
 
     if (['/prancheta', '/prancha', '/26'].includes(mensagem_normalizada)){
         let random_prancha = Math.floor(Math.random()*2);
         const media = MessageMedia.fromFilePath(`./pictures/pranchetas/prancha${random_prancha}.png`);
         await client.sendMessage(message.from, media);
+        return;
     }
 
     if (['/reh_csif', '/rehcsif', '/dobra'].includes(mensagem_normalizada)){
@@ -989,6 +1053,7 @@ async function Comandos(message, mensagem_normalizada) {
         fs.closeSync(conhecimento);
         
         await client.sendMessage(message.from, texto_conhecimento);
+        return;
     }
 
     if (['/tarrafer', '/fischer'].includes(mensagem_normalizada)){
@@ -1020,7 +1085,8 @@ async function Comandos(message, mensagem_normalizada) {
             
             const media = MessageMedia.fromFilePath(`./pictures/tarraferes/tarrafer${random_tarrafer}.mp3`);
             await client.sendMessage(message.from, media);
-        } 
+        }
+        return;
     }
 
     if (mensagem_normalizada === '/vermoidea'){
@@ -1029,6 +1095,7 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = vermoidea.map(user => `${user}@c.us`);
         let pessoas = `@${vermoidea.join(', @')}`;
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
     }
 }
 

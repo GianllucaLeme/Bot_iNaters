@@ -2,6 +2,7 @@
   "name": "bot_inaters",
   "version": "1.0.0",
   "main": "main.js",
+  "bin": "watchdog.js",
   "scripts": {
     "test": "node --watch .",
     "start": "node ."

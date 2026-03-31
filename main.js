@@ -5,7 +5,30 @@ const { Client, LocalAuth, MessageMedia} = require('whatsapp-web.js');
 
 // Create a new client instance
 const client = new Client({
-    authStrategy: new LocalAuth()
+    authStrategy: new LocalAuth(),
+    puppeteer: {
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--single-process'
+        ]
+    }
+});
+
+// Evento disparado para guardar o PID do processo do Chrome
+client.on('ready', async () => {
+    //console.log('Bot pronto!');
+
+    const browser = client.pupBrowser || client.browser;
+
+    if (browser?.process()) {
+        const pid = browser.process().pid;
+
+        fs.writeFileSync('chrome_pid.txt', String(pid));
+        //console.log(`Chrome PID salvo: ${pid}`);
+    }
 });
 
 // When the client is ready, run this code (only once)
@@ -49,6 +72,9 @@ let lista_easter = [
 // Carrega o arquivo JSON
 const fs = require('fs');
 const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
+
+//Permite a criação do arquivo STOP para pausar o bot
+const path = require('path');
 
 let lista_admins = [c.louva.cesar, c.phasma.edgar, c.mariposas.fischer, 
                     c.enrico, c.besouros.lorenne, c.aranhas.jean, 
@@ -888,15 +914,22 @@ async function Comandos(message, mensagem_normalizada) {
         let admin = await message.getContact();
 
         if (lista_admins.includes(admin.id.user)) {
-            await client.sendMessage(message.from, '> Bot desligando...');
+            fs.writeFileSync(path.join(__dirname, 'STOP'), 'stopped');
+
+            mensagem_stop = '> Bot desligando manualmente...'
+            await client.sendMessage(message.from, mensagem_stop);
             
             // Espera 1 s para que a mensagem seja enviada no WhatsApp
             setTimeout(async () => {
                 await client.destroy();
+                process.exit(0);
             }, 1000);
-        }else{
+
+        } else {
             await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
         }
+
+        return;
     }
     
     if (mensagem_normalizada === '/all') {

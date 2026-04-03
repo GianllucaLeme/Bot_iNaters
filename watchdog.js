@@ -2,10 +2,20 @@ const { exec, execSync, spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const stopFile = path.join(__dirname, 'STOP');
 
 let botProcess = null;
 let contadorReinicio = 0; // Mandar mensagem de aviso de reinicialização do bot
+
+// Limpa arquivos de controle antigos
+const killrestartNotice = path.join(__dirname, 'RESTART_NOTICE');
+const killStop = path.join(__dirname, 'STOP');
+
+if (fs.existsSync(killStop)) {
+    fs.unlinkSync(killStop);
+}
+if (fs.existsSync(killrestartNotice)) {
+    fs.unlinkSync(killrestartNotice);
+}
 
 // Verifica se há conexão com a internet [para conexões instáveis e host local]
 function temInternet() {
@@ -72,13 +82,6 @@ async function rotina() {
 
         if (internet) {
             
-            // Pausar o bot através do arquivo STOP
-            if (fs.existsSync(stopFile)) {
-                console.log('[BOT] Arquivo STOP detectado. Watchdog pausado.');
-                await new Promise(resolve => setTimeout(resolve, 60 * 1000));
-                continue;
-            }
-            
             console.log('[NET] Internet detectada.');
             
             deletarCache();
@@ -93,7 +96,7 @@ async function rotina() {
             // Espera um tempo para o bot reiniciar (ajustar conforme necessário)
             let horas_extras = 1;
             let horas = 1; // converter em minutos
-            let minutos = 30; // converter em segundos
+            let minutos = 60 * 10; // converter em segundos
 
             await new Promise(resolve => setTimeout(resolve, horas_extras * horas * minutos * 1000));
 
@@ -109,12 +112,12 @@ async function rotina() {
             }
             
             // Tempo de aviso para o início do próximo ciclo
-            let tempo_reinicio = 20;
+            let tempo_reinicio = 10;
             console.log(`[BOT] Reiniciando em ${tempo_reinicio} segundos...`);
             await new Promise(resolve => setTimeout(resolve, tempo_reinicio * 1000));
 
         } else {
-            let tempo_sem_internet = 20;
+            let tempo_sem_internet = 10;
             console.log(`[NET] Sem internet. Tentando novamente em ${tempo_sem_internet} segundos...`);
             await new Promise(resolve => setTimeout(resolve, tempo_sem_internet * 1000));
         }

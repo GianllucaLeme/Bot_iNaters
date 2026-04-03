@@ -17,6 +17,23 @@ const client = new Client({
     }
 });
 
+// Verifica se há conexão com a internet [para conexões instáveis e host local]
+const https = require('https');
+function temInternet() {
+    return new Promise((resolve) => {
+        const req = https.get('https://www.google.com', (res) => {
+            resolve(res.statusCode >= 200 && res.statusCode < 400);
+        });
+
+        req.on('error', () => resolve(false));
+
+        req.setTimeout(5000, () => {
+            req.destroy();
+            resolve(false);
+        });
+    });
+}
+
 // Evento disparado para guardar o PID do processo do Chrome
 client.on('ready', async () => {
     //console.log('Bot pronto!');
@@ -28,6 +45,25 @@ client.on('ready', async () => {
 
         fs.writeFileSync('chrome_pid.txt', String(pid));
         //console.log(`Chrome PID salvo: ${pid}`);
+    }
+
+    // Reinicia o bot após uma queda de conexão inesperada
+    setInterval(async () => {
+        const testa_conexao = await temInternet();
+
+        if (!testa_conexao) {
+            console.log('[BOT] Queda de conexão, reiniciando bot...');
+            process.exit(1);
+        }
+    }, 30 * 1000); // Checa a cada 30 segundos
+
+    // Mandar mensagem de aviso de reinicialização do bot
+    const restartNotice = path.join(__dirname, 'RESTART_NOTICE');
+
+    if (fs.existsSync(restartNotice)) {
+        await client.sendMessage(c.grupo_bot_iNaters + '@g.us', '> Reiniciando o bot...');
+
+        fs.unlinkSync(restartNotice);
     }
 });
 
@@ -1084,7 +1120,7 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     if (['/tarrafer', '/fischer'].includes(mensagem_normalizada)){
-        let random_tarrafer = Math.floor(Math.random()*15);
+        let random_tarrafer = Math.floor(Math.random()*17);
 
         if(random_tarrafer < 9){ //aumentar em cascata caso tenha mais .pngs
             const media = MessageMedia.fromFilePath(`./pictures/tarraferes/tarrafer${random_tarrafer}.png`);
@@ -1103,7 +1139,7 @@ async function Comandos(message, mensagem_normalizada) {
             texto_sabio += quotes[random_tarrafer - 10];
 
             await client.sendMessage(message.from, texto_sabio, {mentions: contatinho});
-        } else if([13, 14].includes(random_tarrafer)){
+        } else if([13, 14, 15, 16].includes(random_tarrafer)){
             const contatinho = [`${c.mariposas.fischer}@c.us`];
 
             let texto_sabio2 = `Áudio supremo do nosso amigo @${c.mariposas.fischer}:`;
@@ -1154,7 +1190,7 @@ client.on('message_create', async message => {
     }
 
     // Spam handling antes de detectar os comandos
-    if ([...lista_comandos, ...lista_easter].includes(mensagem_normalizada)) {
+    if ([...lista_comandos, ...lista_easter, '/start'].includes(mensagem_normalizada)) {
         let msg1 = message.timestamp;
         lista_spam[flag_spam] = msg1;
 

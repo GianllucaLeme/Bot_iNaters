@@ -5,6 +5,7 @@ const https = require('https');
 const stopFile = path.join(__dirname, 'STOP');
 
 let botProcess = null;
+let contadorReinicio = 0; // Mandar mensagem de aviso de reinicialização do bot
 
 // Verifica se há conexão com a internet [para conexões instáveis e host local]
 function temInternet() {
@@ -62,7 +63,7 @@ async function rotina() {
 
     while (true) {
         // Arquivo de parada caso tenha mais de um processo do watchdog rodando em segundo plano
-        if (fs.existsSync(path.join(__dirname, 'KILL_WATCHDOG'))) {
+        if (fs.existsSync(path.join(__dirname, 'KILL'))) {
             console.log('[WATCHDOG] Encerrando watchdog...');
             process.exit(0);
         } 
@@ -82,6 +83,12 @@ async function rotina() {
             
             deletarCache();
             iniciarBot();
+
+            // Aviso a cada 3 reinícios
+            contadorReinicio++;
+            if (contadorReinicio % 3 === 0) {
+                fs.writeFileSync(path.join(__dirname, 'RESTART_NOTICE'), '1');
+            }
 
             // Espera um tempo para o bot reiniciar (ajustar conforme necessário)
             let horas_extras = 1;

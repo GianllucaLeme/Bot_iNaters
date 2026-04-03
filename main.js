@@ -909,22 +909,16 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     /*--- Comandos Admin ---*/
+    const stopPath = path.join(__dirname, 'STOP');
 
     if (mensagem_normalizada === '/stop') {
         let admin = await message.getContact();
 
         if (lista_admins.includes(admin.id.user)) {
-            fs.writeFileSync(path.join(__dirname, 'STOP'), 'stopped');
+            fs.writeFileSync(stopPath, 'stopped');
 
-            mensagem_stop = '> Bot desligando manualmente...'
-            await client.sendMessage(message.from, mensagem_stop);
-            
-            // Espera 1 s para que a mensagem seja enviada no WhatsApp
-            setTimeout(async () => {
-                await client.destroy();
-                process.exit(0);
-            }, 1000);
-
+            await client.sendMessage(message.from, '> Bot pausado. Use /start para reativá-lo.');
+    
         } else {
             await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
         }
@@ -1139,6 +1133,25 @@ let flag_spam = 0;
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
     const mensagem_normalizada = normalizarComando(message.body);
+
+    // Comando para despausar o bot
+    const stopPath = path.join(__dirname, 'STOP');
+    if (fs.existsSync(stopPath)) {
+
+        if (mensagem_normalizada === '/start') {
+            let admin = await message.getContact();
+
+            if (lista_admins.includes(admin.id.user)) {
+                fs.unlinkSync(stopPath); // Remove o arquivo STOP
+
+                await client.sendMessage(message.from, '> Bot despausando...');
+            } else {
+                await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
+            }
+        }
+
+        return;
+    }
 
     // Spam handling antes de detectar os comandos
     if ([...lista_comandos, ...lista_easter].includes(mensagem_normalizada)) {

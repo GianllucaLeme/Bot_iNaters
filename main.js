@@ -34,12 +34,29 @@ function temInternet() {
     });
 }
 
-// Evento disparado para guardar o PID do processo do Chrome
 client.on('ready', async () => {
-    //console.log('Bot pronto!');
+    
+    // Loop para permitir que as pessoas do grupo permitido possam mandar os comandos no privado também
+    for (const grupoId of gruposPermitidos) {
+        try {
+            const chat = await client.getChatById(grupoId);
 
+            if (chat.isGroup) {
+                for (const participante of chat.participants) {
+                    permitidos.push(participante.id._serialized);
+                }
+            }
+        } catch (erro) {
+            console.log(`Erro ao ler participantes de ${grupoId}:`, erro);
+        }
+    }
+
+    // remove duplicados
+    permitidos = [...new Set(permitidos)];
+    //console.log('IDs permitidos:', permitidos);
+
+    // Evento disparado para guardar o PID do processo do Chrome
     const browser = client.pupBrowser || client.browser;
-
     if (browser?.process()) {
         const pid = browser.process().pid;
 
@@ -57,9 +74,8 @@ client.on('ready', async () => {
         }
     }, 30 * 1000); // Checa a cada 30 segundos
 
-    // Mandar mensagem de aviso de reinicialização do bot
+    // Manda mensagem de aviso de reinicialização do bot
     const restartNotice = path.join(__dirname, 'RESTART_NOTICE');
-
     if (fs.existsSync(restartNotice)) {
         await client.sendMessage(c.grupo_bot_iNaters + '@g.us', '> Reiniciando o bot...');
 
@@ -115,6 +131,15 @@ const path = require('path');
 let lista_admins = [c.louva.cesar, c.phasma.edgar, c.mariposas.fischer, 
                     c.enrico, c.besouros.lorenne, c.aranhas.jean, 
                     c.carlos_adm, c.aranhas.gianlluca];
+
+// Lista de grupos permitidos para leitura dos comandos
+const gruposPermitidos = [
+    `${c.grupo_bot_iNaters}@g.us`,
+    `${c.grupo_teste}@g.us`,
+    `${c.grupo_aga}@g.us`
+];
+
+let permitidos = [...gruposPermitidos];
 
 // Função que determina a chance do usuário ser marcado
 async function chanceUsuario(usuario, chance) {
@@ -1111,9 +1136,8 @@ async function Comandos(message, mensagem_normalizada) {
     if (['/reh_csif', '/rehcsif', '/dobra'].includes(mensagem_normalizada)){
         let random_reh = Math.floor(Math.random()*1);
 
-        let conhecimento = fs.openSync(`./pictures/reh_csif/conhecimento${random_reh}.txt`, 'r');
+        const caminho = `./pictures/reh_csif/conhecimento${random_reh}.txt`;
         let texto_conhecimento = await fs.promises.readFile(caminho, 'utf-8');
-        fs.closeSync(conhecimento);
         
         await client.sendMessage(message.from, texto_conhecimento);
         return;
@@ -1189,19 +1213,24 @@ client.on('message_create', async message => {
         return;
     }
 
-    // Spam handling antes de detectar os comandos
-    if ([...lista_comandos, ...lista_easter, '/start'].includes(mensagem_normalizada)) {
-        let msg1 = message.timestamp;
-        lista_spam[flag_spam] = msg1;
+    // Evita que os comandos sejam mandados para pessoas de fora dos grupos
+    pessoa_privado = await message.getContact();
 
-        flag_spam++;
-
-        if(flag_spam == 2){
-            flag_spam = 0;
-        }
-
-        if (lista_spam.length < 2 || !(Math.abs(lista_spam[1] - lista_spam[0]) < 3)) {
-            await Comandos(message, mensagem_normalizada);
+    if (permitidos.includes(message.from) || permitidos.includes(pessoa_privado.id._serialized)) {
+        // Spam handling antes de detectar os comandos
+        if ([...lista_comandos, ...lista_easter, '/start'].includes(mensagem_normalizada)) {
+            let msg1 = message.timestamp;
+            lista_spam[flag_spam] = msg1;
+    
+            flag_spam++;
+    
+            if(flag_spam == 2){
+                flag_spam = 0;
+            }
+    
+            if (lista_spam.length < 2 || !(Math.abs(lista_spam[1] - lista_spam[0]) < 3)) {
+                await Comandos(message, mensagem_normalizada);
+            }
         }
     }
 });

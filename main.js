@@ -1247,12 +1247,12 @@ async function Comandos(message, mensagem_normalizada) {
 }
 
 // Spam handling
-let lista_spam = [];
-let flag_spam = 0;
+const ultimoComando = new Map();
 
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
     const mensagem_normalizada = normalizarComando(message.body);
+    let contato = await message.getContact();
 
     // Comando para despausar o bot
     const stopPath = path.join(__dirname, 'STOP');
@@ -1279,22 +1279,31 @@ client.on('message_create', async message => {
     }
 
     // Evita que os comandos sejam mandados para pessoas de fora dos grupos
-    pessoa_privado = await message.getContact();
-
-    if (permitidos.includes(message.from) || permitidos.includes(pessoa_privado.id._serialized)) {
+    if (permitidos.includes(message.from) || permitidos.includes(contato.id._serialized)) {
         // Spam handling antes de detectar os comandos
         if ([...lista_comandos, ...lista_easter, '/start'].includes(mensagem_normalizada)) {
-            let msg1 = message.timestamp;
-            lista_spam[flag_spam] = msg1;
-    
-            flag_spam++;
-    
-            if(flag_spam == 2){
-                flag_spam = 0;
+            
+            // Obtém o par usuário-timestamp do último comando enviado
+            const usuario = message.from;
+            const agora = Date.now(); // em milissegundos
+            const ultimo = ultimoComando.get(usuario);
+
+            // bloqueia apenas se a MESMA pessoa mandar outro comando em menos de 3 s
+            if (ultimo && (agora - ultimo) < 3000) {
+                return;
             }
-    
-            if (lista_spam.length < 2 || !(Math.abs(lista_spam[1] - lista_spam[0]) < 3)) {
+
+            ultimoComando.set(usuario, agora);
+
+            try {
                 await Comandos(message, mensagem_normalizada);
+            } finally {
+                // limpa o usuário da lista depois de 2 s
+                setTimeout(() => {
+                    if (ultimoComando.get(usuario) === agora) {
+                        ultimoComando.delete(usuario);
+                    }
+                }, 2000);
             }
         }
     }

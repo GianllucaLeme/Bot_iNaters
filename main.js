@@ -129,10 +129,6 @@ const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
 //Permite a criação do arquivo STOP para pausar o bot
 const path = require('path');
 
-let lista_admins = [c.louva.cesar, c.phasma.edgar, c.mariposas.fischer, 
-                    c.enrico, c.besouros.lorenne, c.aranhas.jean, 
-                    c.carlos_adm, c.aranhas.gianlluca];
-
 // Lista de grupos permitidos para leitura dos comandos
 const gruposPermitidos = [
     `${c.grupo_bot_iNaters}@g.us`,
@@ -347,13 +343,33 @@ async function Comandos(message, mensagem_normalizada) {
         return;
     }
 
-    if (mensagem_normalizada === '/admin'){
-        let lista_admins_filtered = lista_admins.filter(admin => admin !== c.aranhas.gianlluca)
-        lista_admins_filtered = (await embaralharContatos(lista_admins_filtered)).slice(0, 2)
+    if (mensagem_normalizada === '/admin') {
+        const tipo_conversa = await message.getChat();
 
-        let lista = lista_admins_filtered.map(user => `${user}@c.us`);
-        let pessoas = `@${lista_admins_filtered.join(', @')}`;
-        
+        if (!tipo_conversa.isGroup) {
+            await client.sendMessage(message.from, '> Esse comando só funciona em grupos.');
+            return;
+        }
+
+        // Detecta os admins atuais do grupo
+        let adminsGrupo = tipo_conversa.participants
+            .filter(p => p.isAdmin || p.isSuperAdmin)
+            .map(p => p.id.user);
+
+        // Exceções para "admins" não oficiais
+        const extras = [
+            c.aranhas.gianlluca
+        ];
+
+        // Remoção de participantes duplicados
+        const admins = [...new Set([...adminsGrupo, ...extras])];
+
+        // Embaralha e pega até 2 pessoas, se quiser manter a lógica antiga
+        const admins_filtered = (await embaralharContatos(admins)).slice(0, 2);
+
+        let lista = admins_filtered.map(user => `${user}@c.us`);
+        let pessoas = `@${admins_filtered.join(', @')}`;
+
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
     }
@@ -989,12 +1005,18 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     /*--- Comandos Admin ---*/
+
     const stopPath = path.join(__dirname, 'STOP');
 
     if (mensagem_normalizada === '/stop') {
-        let admin = await message.getContact();
+        let is_admin = await message.getContact();
+        const tipo_conversa = await message.getChat();
 
-        if (lista_admins.includes(admin.id.user)) {
+        let lista_admins = tipo_conversa.participants
+            .filter(p => p.isAdmin || p.isSuperAdmin)
+            .map(p => p.id.user);
+
+        if (lista_admins.includes(is_admin.id.user)) {
             fs.writeFileSync(stopPath, 'stopped');
 
             await client.sendMessage(message.from, '> Bot pausado. Use /start para reativá-lo.');
@@ -1007,9 +1029,14 @@ async function Comandos(message, mensagem_normalizada) {
     }
     
     if (mensagem_normalizada === '/all') {
-        let admin = await message.getContact();
+        let is_admin = await message.getContact();
+        const tipo_conversa = await message.getChat();
 
-        if (lista_admins.includes(admin.id.user)) {
+        let lista_admins = tipo_conversa.participants
+            .filter(p => p.isAdmin || p.isSuperAdmin)
+            .map(p => p.id.user);
+
+        if (lista_admins.includes(is_admin.id.user)) {
             const chat = await message.getChat();
             let mentions = [];
         
@@ -1025,6 +1052,7 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     /*--- Comandos Easter Eggs ---*/
+
     if (['/alex', '/nos', '/noz', '/naturalista'].includes(mensagem_normalizada)){
         let random_alex = Math.floor(Math.random()*2);
         
@@ -1231,9 +1259,14 @@ client.on('message_create', async message => {
     if (fs.existsSync(stopPath)) {
 
         if (mensagem_normalizada === '/start') {
-            let admin = await message.getContact();
+            let is_admin = await message.getContact();
+            const tipo_conversa = await message.getChat();
 
-            if (lista_admins.includes(admin.id.user)) {
+            let lista_admins = tipo_conversa.participants
+                .filter(p => p.isAdmin || p.isSuperAdmin)
+                .map(p => p.id.user);
+
+            if (lista_admins.includes(is_admin.id.user)) {
                 fs.unlinkSync(stopPath); // Remove o arquivo STOP
 
                 await client.sendMessage(message.from, '> Bot despausando...');

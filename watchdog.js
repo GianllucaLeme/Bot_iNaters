@@ -5,6 +5,7 @@ const https = require('https');
 
 let botProcess = null;
 let contadorReinicio = 0; // Mandar mensagem de aviso de reinicialização do bot
+let botCaiu = false; // flag para escutar o encerramento do processo
 
 // Limpa arquivos de controle antigos
 const killrestartNotice = path.join(__dirname, 'RESTART_NOTICE');
@@ -37,9 +38,10 @@ function temInternet() {
 function iniciarBot() {
     console.log('[BOT] Iniciando main.js...');
 
-    botProcess = spawn('node', ['main.js'], {
-        stdio: 'inherit',
-        shell: true
+    const mainPath = path.join(process.cwd(), 'main.js');
+
+    botProcess = spawn('node.exe', [mainPath], {
+        stdio: 'inherit'
     });
 
     botProcess.on('close', (code) => {
@@ -47,6 +49,7 @@ function iniciarBot() {
 
         // Zera o contador caso o bot em si (main.js) dê erro inesperado
         if (code !== 0) {
+            botCaiu = true;
             contadorReinicio = 0;
         }
 
@@ -116,8 +119,21 @@ async function rotina() {
             let horas_extras = 1;
             let horas = 1; // converter em minutos
             let minutos = 60 * 30; // converter em segundos
+            
+            botCaiu = false;
+            const tempoTotal = horas_extras * horas * minutos * 1000;
+            const intervalo = 5000;
 
-            await new Promise(resolve => setTimeout(resolve, horas_extras * horas * minutos * 1000));
+            for (let tempo = 0; tempo < tempoTotal; tempo += intervalo) {
+                if (botCaiu) {
+                    console.log('[WATCHDOG] Bot caiu inesperadamente, reiniciando ciclo...');
+                    break;
+                }
+
+                await new Promise(resolve => setTimeout(resolve, intervalo));
+            }
+
+            //await new Promise(resolve => setTimeout(resolve, horas_extras * horas * minutos * 1000));
 
             pararBot();
 
@@ -133,7 +149,11 @@ async function rotina() {
                     console.log('[BOT] Não foi possível encerrar o Chrome:', err.message);
                 }
 
-                fs.unlinkSync(chromePidPath);
+                try {
+                    fs.unlinkSync(chromePidPath);
+                } catch (err) {
+                    console.log('[BOT] Não foi possível remover chrome_pid.txt:', err.message);
+                }
             }
             
             // Tempo de aviso para o início do próximo ciclo

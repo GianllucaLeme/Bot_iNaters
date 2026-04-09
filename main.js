@@ -65,14 +65,24 @@ client.on('ready', async () => {
     }
 
     // Reinicia o bot após uma queda de conexão inesperada
-    setInterval(async () => {
-        const testa_conexao = await temInternet();
+    let falhasInternet = 0;
 
-        if (!testa_conexao) {
-            console.log('[BOT] Queda de conexão, reiniciando bot...');
-            process.exit(1);
+    setInterval(async () => {
+        const conectado = await temInternet();
+
+        if (!conectado) {
+            falhasInternet++;
+
+            console.log(`[BOT] Sem internet (${falhasInternet}/3)`);
+
+            if (falhasInternet >= 3) {
+                console.log('[BOT] Queda de conexão persistente, encerrando...');
+                process.exit(1);
+            }
+        } else {
+            falhasInternet = 0;
         }
-    }, 30 * 1000); // Checa a cada 30 segundos
+    }, 20 * 1000);
 
     // Manda mensagem de aviso de reinicialização do bot
     const restartNotice = path.join(__dirname, 'RESTART_NOTICE');

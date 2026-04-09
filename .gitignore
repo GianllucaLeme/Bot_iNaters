@@ -82,5 +82,18 @@ typings/
 # Contact list
 contacts.json
 
+# future deployment files
+future_deploy/
+
 # Random media files
-.pictures/
+pictures/
+
+# Control files for routine
+KILL
+KILLt
+RESTART_NOTICE
+STOP
+chrome_pid.txt
+
+# Routine executable files
+*.exe

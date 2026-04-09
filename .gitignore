@@ -93,7 +93,6 @@ KILL
 KILLt
 RESTART_NOTICE
 STOP
-chrome_pid.txt
 
 # Routine executable files
 *.exe

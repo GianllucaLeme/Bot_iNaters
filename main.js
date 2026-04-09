@@ -51,18 +51,8 @@ client.on('ready', async () => {
         }
     }
 
-    // remove duplicados
+    // Remove duplicados
     permitidos = [...new Set(permitidos)];
-    //console.log('IDs permitidos:', permitidos);
-
-    // Evento disparado para guardar o PID do processo do Chrome
-    const browser = client.pupBrowser || client.browser;
-    if (browser?.process()) {
-        const pid = browser.process().pid;
-
-        fs.writeFileSync('chrome_pid.txt', String(pid));
-        //console.log(`Chrome PID salvo: ${pid}`);
-    }
 
     // Reinicia o bot após uma queda de conexão inesperada
     let falhasInternet = 0;
@@ -85,8 +75,12 @@ client.on('ready', async () => {
     }, 20 * 1000);
 
     // Manda mensagem de aviso de reinicialização do bot
-    const restartNotice = path.join(__dirname, 'RESTART_NOTICE');
-    if (fs.existsSync(restartNotice)) {
+    const restartNotice = path.join(process.cwd(), 'RESTART_NOTICE');
+    
+    // Não manda quando o bot estiver pausado
+    const stopPath = path.join(process.cwd(), 'STOP'); 
+
+    if (fs.existsSync(restartNotice) && !fs.existsSync(stopPath)) {
         await client.sendMessage(c.grupo_bot_iNaters + '@g.us', '> Reiniciando o bot...');
 
         fs.unlinkSync(restartNotice);
@@ -1016,7 +1010,7 @@ async function Comandos(message, mensagem_normalizada) {
 
     /*--- Comandos Admin ---*/
 
-    const stopPath = path.join(__dirname, 'STOP');
+    const stopPath = path.join(process.cwd(), 'STOP');
 
     if (mensagem_normalizada === '/stop') {
         let is_admin = await message.getContact();
@@ -1265,7 +1259,7 @@ client.on('message_create', async message => {
     let contato = await message.getContact();
 
     // Comando para despausar o bot
-    const stopPath = path.join(__dirname, 'STOP');
+    const stopPath = path.join(process.cwd(), 'STOP');
     if (fs.existsSync(stopPath)) {
 
         if (mensagem_normalizada === '/start') {

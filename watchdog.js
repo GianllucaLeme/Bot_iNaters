@@ -1,4 +1,4 @@
-const { exec, execSync, spawn } = require('child_process');
+const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
@@ -8,8 +8,8 @@ let contadorReinicio = 0; // Mandar mensagem de aviso de reinicialização do bo
 let botCaiu = false; // flag para escutar o encerramento do processo
 
 // Limpa arquivos de controle antigos
-const killrestartNotice = path.join(__dirname, 'RESTART_NOTICE');
-const killStop = path.join(__dirname, 'STOP');
+const killrestartNotice = path.join(process.cwd(), 'RESTART_NOTICE');
+const killStop = path.join(process.cwd(), 'STOP');
 
 if (fs.existsSync(killStop)) {
     fs.unlinkSync(killStop);
@@ -50,7 +50,6 @@ function iniciarBot() {
         // Zera o contador caso o bot em si (main.js) dê erro inesperado
         if (code !== 0) {
             botCaiu = true;
-            contadorReinicio = 0;
         }
 
         botProcess = null;
@@ -77,7 +76,7 @@ async function pararBot() {
 }
 
 function deletarCache() {
-    const cachePath = path.join(__dirname, '.wwebjs_cache');
+    const cachePath = path.join(process.cwd(), '.wwebjs_cache');
 
     if (fs.existsSync(cachePath)) {
         console.log('[BOT] Deletando o cache...');
@@ -90,7 +89,7 @@ async function rotina() {
 
     while (true) {
         // Arquivo de parada caso tenha mais de um processo do watchdog rodando em segundo plano
-        if (fs.existsSync(path.join(__dirname, 'KILL'))) {
+        if (fs.existsSync(path.join(process.cwd(), 'KILL'))) {
             console.log('[WATCHDOG] Encerrando watchdog...');
             process.exit(0);
         } 
@@ -108,11 +107,26 @@ async function rotina() {
                 iniciarBot();
             }
 
-            // Aviso a cada 6 reinícios
-            contadorReinicio++;
-            if (contadorReinicio == 6) {
-                fs.writeFileSync(path.join(__dirname, 'RESTART_NOTICE'), '1');
-                contadorReinicio = 0; // Reinicia o contador
+            // Condição para mandar mensagem de reinício do bot no grupo
+            const stopPath = path.join(process.cwd(), 'STOP'); // Impede a mensagem caso esteja pausado
+
+            if (fs.existsSync(stopPath)) {
+                contadorReinicio = 0;
+
+                const restartPath = path.join(process.cwd(), 'RESTART_NOTICE');
+
+                if (fs.existsSync(restartPath)) {
+                    fs.unlinkSync(restartPath);
+                }
+            } else {
+                // Aviso a cada 6 reinícios
+                contadorReinicio++;
+                console.log(contadorReinicio);
+
+                if (contadorReinicio >= 6) {
+                    fs.writeFileSync(path.join(process.cwd(), 'RESTART_NOTICE'), '1');
+                    contadorReinicio = 0;
+                }
             }
 
             // Espera um tempo para o bot reiniciar (ajustar conforme necessário)
@@ -133,28 +147,7 @@ async function rotina() {
                 await new Promise(resolve => setTimeout(resolve, intervalo));
             }
 
-            //await new Promise(resolve => setTimeout(resolve, horas_extras * horas * minutos * 1000));
-
             pararBot();
-
-            // Mata o processo do Chrome para que outra sessão seja iniciada corretamente
-            const chromePidPath = path.join(__dirname, 'chrome_pid.txt');
-
-            if (fs.existsSync(chromePidPath)) {
-                const chromePid = fs.readFileSync(chromePidPath, 'utf8').trim();
-
-                try {
-                    execSync(`taskkill /PID ${chromePid} /F /T`);
-                } catch (err) {
-                    console.log('[BOT] Não foi possível encerrar o Chrome:', err.message);
-                }
-
-                try {
-                    fs.unlinkSync(chromePidPath);
-                } catch (err) {
-                    console.log('[BOT] Não foi possível remover chrome_pid.txt:', err.message);
-                }
-            }
             
             // Tempo de aviso para o início do próximo ciclo
             let tempo_reinicio = 10;

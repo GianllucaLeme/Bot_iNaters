@@ -44,19 +44,33 @@ function iniciarBot() {
 
     botProcess.on('close', (code) => {
         console.log(`[BOT] main.js encerrado com código ${code}`);
+
+        // Zera o contador caso o bot em si (main.js) dê erro inesperado
+        if (code !== 0) {
+            contadorReinicio = 0;
+        }
+
+        botProcess = null;
     });
 }
 
-function pararBot() {
-    if (botProcess) {
-        console.log('[BOT] Encerrando main.js...');
+async function pararBot() {
+    if (!botProcess) return;
 
-        try {
-            process.kill(botProcess.pid, 'SIGKILL');
-        } catch {}
+    console.log('[BOT] Encerrando main.js...');
 
-        botProcess = null;
-    }
+    const processo = botProcess;
+
+    try {
+        process.kill(processo.pid, 'SIGKILL');
+    } catch {}
+
+    await new Promise(resolve => {
+        processo.once('close', resolve);
+        setTimeout(resolve, 5000);
+    });
+
+    botProcess = null;
 }
 
 function deletarCache() {
@@ -85,30 +99,41 @@ async function rotina() {
             console.log('[NET] Internet detectada.');
             
             deletarCache();
-            iniciarBot();
 
-            // Aviso a cada 3 reinícios
+            // Condição para evitar que duas instâncias do bot sejam iniciadas
+            if (!botProcess) {
+                iniciarBot();
+            }
+
+            // Aviso a cada 6 reinícios
             contadorReinicio++;
-            if (contadorReinicio % 3 === 0) {
+            if (contadorReinicio == 6) {
                 fs.writeFileSync(path.join(__dirname, 'RESTART_NOTICE'), '1');
+                contadorReinicio = 0; // Reinicia o contador
             }
 
             // Espera um tempo para o bot reiniciar (ajustar conforme necessário)
             let horas_extras = 1;
             let horas = 1; // converter em minutos
-            let minutos = 60 * 10; // converter em segundos
+            let minutos = 60 * 30; // converter em segundos
 
             await new Promise(resolve => setTimeout(resolve, horas_extras * horas * minutos * 1000));
 
             pararBot();
 
             // Mata o processo do Chrome para que outra sessão seja iniciada corretamente
-            const chromePid = fs.readFileSync('chrome_pid.txt', 'utf8').trim();
+            const chromePidPath = path.join(__dirname, 'chrome_pid.txt');
 
-            try {
-                execSync(`taskkill /PID ${chromePid} /F /T`);
-            } catch (err) {
-                console.log(err);
+            if (fs.existsSync(chromePidPath)) {
+                const chromePid = fs.readFileSync(chromePidPath, 'utf8').trim();
+
+                try {
+                    execSync(`taskkill /PID ${chromePid} /F /T`);
+                } catch (err) {
+                    console.log('[BOT] Não foi possível encerrar o Chrome:', err.message);
+                }
+
+                fs.unlinkSync(chromePidPath);
             }
             
             // Tempo de aviso para o início do próximo ciclo
@@ -117,6 +142,7 @@ async function rotina() {
             await new Promise(resolve => setTimeout(resolve, tempo_reinicio * 1000));
 
         } else {
+            contadorReinicio = 0;
             let tempo_sem_internet = 10;
             console.log(`[NET] Sem internet. Tentando novamente em ${tempo_sem_internet} segundos...`);
             await new Promise(resolve => setTimeout(resolve, tempo_sem_internet * 1000));

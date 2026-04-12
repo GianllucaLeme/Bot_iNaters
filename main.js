@@ -81,7 +81,14 @@ client.on('ready', async () => {
     const stopPath = path.join(process.cwd(), 'STOP'); 
 
     if (fs.existsSync(restartNotice) && !fs.existsSync(stopPath)) {
-        await client.sendMessage(c.grupo_bot_iNaters + '@g.us', '> Reiniciando o bot...');
+        const grupos = [
+            `${c.grupo_bot_iNaters}@g.us`,
+            `${c.grupo_iNaturalisters}@g.us`
+        ];
+
+        for (const grupo of grupos) {
+            await client.sendMessage(grupo, '> Reiniciando o bot...');
+        }
 
         fs.unlinkSync(restartNotice);
     }
@@ -130,14 +137,16 @@ let lista_easter = [
 const fs = require('fs');
 const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
 
-//Permite a criação do arquivo STOP para pausar o bot
+// Permite a criação do arquivo STOP para pausar o bot
 const path = require('path');
 
 // Lista de grupos permitidos para leitura dos comandos
 const gruposPermitidos = [
+    `${c.grupo_iNaturalisters}@g.us`,
     `${c.grupo_bot_iNaters}@g.us`,
     `${c.grupo_teste}@g.us`,
-    `${c.grupo_aga}@g.us`
+    `${c.grupo_aga}@g.us`,
+    `${c.grupo_nepsilon}@g.us`
 ];
 
 let permitidos = [...gruposPermitidos];
@@ -350,6 +359,7 @@ async function Comandos(message, mensagem_normalizada) {
     if (mensagem_normalizada === '/admin') {
         const tipo_conversa = await message.getChat();
 
+        // Evita que o bot quebre caso o comando seja utilizado em uma conversa privada
         if (!tipo_conversa.isGroup) {
             await client.sendMessage(message.from, '> Esse comando só funciona em grupos.');
             return;
@@ -360,7 +370,7 @@ async function Comandos(message, mensagem_normalizada) {
             .filter(p => p.isAdmin || p.isSuperAdmin)
             .map(p => p.id.user);
 
-        // Exceções para "admins" não oficiais
+        // Exceções para admins não oficiais
         const extras = [
             c.aranhas.gianlluca
         ];
@@ -368,7 +378,7 @@ async function Comandos(message, mensagem_normalizada) {
         // Remoção de participantes duplicados
         const admins = [...new Set([...adminsGrupo, ...extras])];
 
-        // Embaralha e pega até 2 pessoas, se quiser manter a lógica antiga
+        // Embaralha e pega 2 admins aleatórios para marcar
         const admins_filtered = (await embaralharContatos(admins)).slice(0, 2);
 
         let lista = admins_filtered.map(user => `${user}@c.us`);
@@ -439,7 +449,7 @@ async function Comandos(message, mensagem_normalizada) {
     if (mensagem_normalizada === '/tirar_nome') {
         let usuario_tirar = await message.getContact();
 
-        await client.sendMessage(message.from, '> Requerimento enviado.');
+        await client.sendMessage(message.from, '> Pedido enviado.');
         
         setTimeout(async () => {
             await client.sendMessage(c.aranhas.gianlluca + '@c.us', `O @${usuario_tirar.id.user} quer retirar a marcação!`, {mentions: usuario_tirar.id.user + '@c.us'});
@@ -1016,6 +1026,11 @@ async function Comandos(message, mensagem_normalizada) {
         let is_admin = await message.getContact();
         const tipo_conversa = await message.getChat();
 
+        if (!tipo_conversa.isGroup) {
+            await client.sendMessage(message.from, '> Esse comando só funciona em grupos.');
+            return;
+        }
+
         let lista_admins = tipo_conversa.participants
             .filter(p => p.isAdmin || p.isSuperAdmin)
             .map(p => p.id.user);
@@ -1035,7 +1050,12 @@ async function Comandos(message, mensagem_normalizada) {
     if (mensagem_normalizada === '/all') {
         let is_admin = await message.getContact();
         const tipo_conversa = await message.getChat();
-
+        
+        if (!tipo_conversa.isGroup) {
+            await client.sendMessage(message.from, '> Esse comando só funciona em grupos.');
+            return;
+        }
+        
         let lista_admins = tipo_conversa.participants
             .filter(p => p.isAdmin || p.isSuperAdmin)
             .map(p => p.id.user);
@@ -1049,9 +1069,10 @@ async function Comandos(message, mensagem_normalizada) {
             }
         
             await chat.sendMessage('> Marcando todo mundo...', {mentions});
-        }else{
+        } else {
             await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
         }
+        
         return;
     }
 
@@ -1260,25 +1281,38 @@ client.on('message_create', async message => {
 
     // Comando para despausar o bot
     const stopPath = path.join(process.cwd(), 'STOP');
-    if (fs.existsSync(stopPath)) {
 
-        if (mensagem_normalizada === '/start') {
-            let is_admin = await message.getContact();
-            const tipo_conversa = await message.getChat();
+    if (mensagem_normalizada === '/start') {
+        let is_admin = await message.getContact();
+        const tipo_conversa = await message.getChat();
 
-            let lista_admins = tipo_conversa.participants
-                .filter(p => p.isAdmin || p.isSuperAdmin)
-                .map(p => p.id.user);
-
-            if (lista_admins.includes(is_admin.id.user)) {
-                fs.unlinkSync(stopPath); // Remove o arquivo STOP
-
-                await client.sendMessage(message.from, '> Bot despausando...');
-            } else {
-                await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
-            }
+        if (!tipo_conversa.isGroup) {
+            await client.sendMessage(message.from, '> Esse comando só funciona em grupos.');
+            return;
         }
 
+        let lista_admins = tipo_conversa.participants
+            .filter(p => p.isAdmin || p.isSuperAdmin)
+            .map(p => p.id.user);
+
+        if (!lista_admins.includes(is_admin.id.user)) {
+            await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
+            return;
+        }
+
+        // Caso seja admin, o bot será despausado
+        if (fs.existsSync(stopPath)) {
+            fs.unlinkSync(stopPath); // Remove o arquivo STOP
+            await client.sendMessage(message.from, '> Bot despausando...');
+        } else {
+            await client.sendMessage(message.from, '> O bot já está em execução.');
+        }
+
+        return;
+    }
+
+    // Bloqueio dos comandos quando o bot estiver pausado
+    if (fs.existsSync(stopPath)) {
         return;
     }
 

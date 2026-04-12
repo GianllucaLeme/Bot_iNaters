@@ -4,8 +4,8 @@ const path = require('path');
 const https = require('https');
 
 let botProcess = null;
-let contadorReinicio = 0; // Mandar mensagem de aviso de reinicialização do bot
-let botCaiu = false; // flag para escutar o encerramento do processo
+let contadorReinicio = 0; // Flag para mandar mensagem de aviso de reinicialização do bot
+let botCaiu = false; // Flag para escutar o encerramento do processo
 
 // Limpa arquivos de controle antigos
 const killrestartNotice = path.join(process.cwd(), 'RESTART_NOTICE');
@@ -47,7 +47,6 @@ function iniciarBot() {
     botProcess.on('close', (code) => {
         console.log(`[BOT] main.js encerrado com código ${code}`);
 
-        // Zera o contador caso o bot em si (main.js) dê erro inesperado
         if (code !== 0) {
             botCaiu = true;
         }
@@ -96,6 +95,7 @@ async function rotina() {
         
         const internet = await temInternet();
 
+        // Checa conexão com a internet antes de iniciar o bot
         if (internet) {
             
             console.log('[NET] Internet detectada.');
@@ -108,7 +108,7 @@ async function rotina() {
             }
 
             // Condição para mandar mensagem de reinício do bot no grupo
-            const stopPath = path.join(process.cwd(), 'STOP'); // Impede a mensagem caso esteja pausado
+            const stopPath = path.join(process.cwd(), 'STOP'); // Impede a mensagem caso o bot esteja pausado
 
             if (fs.existsSync(stopPath)) {
                 contadorReinicio = 0;
@@ -121,7 +121,6 @@ async function rotina() {
             } else {
                 // Aviso a cada 6 reinícios
                 contadorReinicio++;
-                console.log(contadorReinicio);
 
                 if (contadorReinicio >= 6) {
                     fs.writeFileSync(path.join(process.cwd(), 'RESTART_NOTICE'), '1');
@@ -155,6 +154,7 @@ async function rotina() {
             await new Promise(resolve => setTimeout(resolve, tempo_reinicio * 1000));
 
         } else {
+            // Caso não haja internet, o contador zera e parte para o próximo ciclo
             contadorReinicio = 0;
             let tempo_sem_internet = 10;
             console.log(`[NET] Sem internet. Tentando novamente em ${tempo_sem_internet} segundos...`);

@@ -190,7 +190,7 @@ function removerAcentos(string) {
 // Função para tratar variações de comandos do usuário, como pluralização, espaços, acentos etc.
 function normalizarComando(message) {
     let comando = message.toLowerCase().trim();
-    
+
     // Remove caracteres especiais no começo e no fim (asteriscos, crases, aspas etc)
     comando = comando.replace(/^[^a-z0-9/]+|[^a-z0-9]+$/gi, '');
     
@@ -484,9 +484,9 @@ async function Comandos(message, mensagem_normalizada) {
     if (mensagem_normalizada === '/aranha'){
         let aranhas = [c.aranhas.adolfo, c.aranhas.alfredo, c.aranhas.claudia, c.aranhas.dayvson, 
                        c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.lucas_gusso, 
-                       c.aranhas.michelotto, c.aranhas.pedro_martins, c.aranhas.victor];
+                       c.aranhas.pedro_martins, c.aranhas.victor];
         
-        let prioridade = [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan];
+        let prioridade = [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan, c.aranhas.michelotto];
 
         aranhas = (await embaralharContatos(aranhas)).slice(0, 3);
 
@@ -505,15 +505,22 @@ async function Comandos(message, mensagem_normalizada) {
 
     if (mensagem_normalizada === '/ave') {
         let aves = [c.plantas.edvandro, c.aves.jose_valerio, c.aves.matheus_santos, 
-                    c.aves.miguel_malta, c.aves.henrique_stranz, c.aves.ruan];
+                    c.borboletas.pedro_souza, c.aves.ruan];
+
+        let prioridade = [c.aves.leticia_keiko, c.aves.miguel_malta, c.aves.henrique_stranz];
        
         aves = (await embaralharContatos(aves)).slice(0, 3);
+        prioridade = (await embaralharContatos(prioridade));
         
         let lista = aves.map(user => `${user}@c.us`);
         let pessoas = `@${aves.join(', @')}`;
+
+        for (let i = 0; i < prioridade.length; i++) {
+            pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 1);
+        }
     
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.95);
-        pessoas = await mencionarUsuario(lista, pessoas, c.aves.victor_aves, 0.3)
+        pessoas = await mencionarUsuario(lista, pessoas, c.aves.victor_aves, 0.3);
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1041,7 +1048,7 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     if (['/vespa', '/vespidae', '/maribondo', '/marimbondo'].includes(mensagem_normalizada)) {
-        const vespa = [c.aranhas.celio, c.mariposas.laila];
+        const vespa = [c.aranhas.celio, c.mariposas.laila, c.phasma.pedro_alvaro];
         
         let lista = vespa.map(user => `${user}@c.us`);
         let pessoas = `@${vespa.join(', @')}`;
@@ -1113,9 +1120,9 @@ async function Comandos(message, mensagem_normalizada) {
     /*--- Comandos Easter Eggs ---*/
 
     if (['/alex', '/nos', '/noz', '/naturalista'].includes(mensagem_normalizada)){
-        let random_alex = Math.floor(Math.random()*2);
+        let random_alex = Math.floor(Math.random()*6);
         
-        if(random_alex == 0){
+        if(random_alex < 5){
             const media = MessageMedia.fromFilePath(`./pictures/alexes/alex${random_alex}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         } else {
@@ -1227,7 +1234,7 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     if (['/meriva', '/sorteio'].includes(mensagem_normalizada)){
-        let random_meriva = Math.floor(Math.random()*11);
+        let random_meriva = Math.floor(Math.random()*15);
         const media = MessageMedia.fromFilePath(`./pictures/merivas/meriva${random_meriva}.png`);
         await client.sendMessage(message.from, media);
         return;

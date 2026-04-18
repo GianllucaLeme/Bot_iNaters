@@ -138,6 +138,10 @@ let lista_easter = [
 const fs = require('fs');
 const c = JSON.parse(fs.readFileSync('contacts.json', 'utf-8'));
 
+// Variáveis para evitar que o bot leia comandos antigos
+const startTime = Date.now();
+const mensagensProcessadas = new Set();
+
 // Permite a criação do arquivo STOP para pausar o bot
 const path = require('path');
 
@@ -240,7 +244,7 @@ async function Comandos(message, mensagem_normalizada) {
                                   '/all', '/barbeiro', '/serpente', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
                                   '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerromorpha', '/bichopau', '/phasma', 
                                   '/pseudoescorpiao', '/pseudoescorpioes', '/calango', '/gekkota', '/louva_deus', '/mantis', 
-                                  '/mantodea', '/concha', '/caranguejo', '/formiga', '/neuroptera', '/cogumelo', '/fungi', 
+                                  '/mantodea', '/concha', '/caranguejo', '/neuroptera', '/cogumelo', '/fungi', 
                                   '/soldadinho', '/membracidae', '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', 
                                   '/tipulomorpha', '/plecoptera', '/monocotiledonea', '/dicotiledonea', '/anura', '/thysanoptera', 
                                   '/vespidae', '/maribondo', '/marimbondo', '/zygentoma'];
@@ -448,7 +452,7 @@ async function Comandos(message, mensagem_normalizada) {
         mensagem += 'Sugestões mandar no privado do autor! 👇\n\n'
         
         mensagem += `Desenvolvedor: @${c.aranhas.gianlluca}\n`;
-        mensagem += 'Versão atual: \`\`\`1.0.0\`\`\`\n';
+        mensagem += 'Versão atual: \`\`\`1.1.0\`\`\`\n';
         mensagem += 'GitHub: https://github.com/GianllucaLeme/Bot_iNaters';
 
         await client.sendMessage(usuario_curioso, mensagem, {mentions: c.aranhas.gianlluca + '@c.us'});
@@ -1372,6 +1376,26 @@ client.on('message_create', async message => {
 
     // Evita que os comandos sejam mandados para pessoas de fora dos grupos
     if (permitidos.includes(message.from) || permitidos.includes(contato.id._serialized)) {
+        
+        // Ignora mensagens antigas e evita processar mensagens duplicadas
+        if ((message.timestamp * 1000) < startTime) {
+            //console.log('[BOT] Ignorando mensagem antiga');
+            return;
+        }
+
+        const msgId = message.id._serialized;
+
+        if (mensagensProcessadas.has(msgId)) {
+            return;
+        }
+
+        mensagensProcessadas.add(msgId);
+
+        // limpa a lista de mensagens depois de 5 minutos 
+        setTimeout(() => {
+            mensagensProcessadas.delete(msgId);
+        }, 5 * 60 * 1000);
+        
         // Spam handling antes de detectar os comandos
         if ([...lista_comandos, ...lista_easter, '/start'].includes(mensagem_normalizada)) {
             

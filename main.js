@@ -191,6 +191,9 @@ function removerAcentos(string) {
 function normalizarComando(message) {
     let comando = message.toLowerCase().trim();
     
+    // Remove caracteres especiais no começo e no fim (asteriscos, crases, aspas etc)
+    comando = comando.replace(/^[^a-z0-9/]+|[^a-z0-9]+$/gi, '');
+    
     comando = removerAcentos(comando);
 
     // Evitar a remoção do "s" para certos comandos

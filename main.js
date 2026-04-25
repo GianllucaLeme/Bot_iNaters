@@ -195,7 +195,12 @@ function removerAcentos(string) {
 function normalizarComando(message) {
     let comando = message.toLowerCase().trim();
 
-    // Remove caracteres especiais no começo e no fim (asteriscos, crases, aspas etc)
+    // Ignora comandos entre aspas ou com "> "
+    if (/^["'~].*["'~]$/.test(comando) || comando.startsWith('>')) {
+        return null;
+    }
+
+    // Remove caracteres especiais no começo e no fim (asteriscos, crases etc)
     comando = comando.replace(/^[^a-z0-9/]+|[^a-z0-9]+$/gi, '');
     
     comando = removerAcentos(comando);
@@ -1336,6 +1341,10 @@ const ultimoComando = new Map();
 client.on('message_create', async message => {
     const mensagem_normalizada = normalizarComando(message.body);
     let contato = await message.getContact();
+
+    if (!mensagem_normalizada) {
+        return;
+    }
 
     // Comando para despausar o bot
     const stopPath = path.join(process.cwd(), 'STOP');

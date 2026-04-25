@@ -83,7 +83,7 @@ client.on('ready', async () => {
     if (fs.existsSync(restartNotice) && !fs.existsSync(stopPath)) {
         const grupos = [
             `${c.grupo_bot_iNaters}@g.us`,
-            //`${c.grupo_iNaturalisters}@g.us`
+            `${c.grupo_iNaturalisters}@g.us`
         ];
 
         for (const grupo of grupos) {
@@ -126,8 +126,8 @@ let lista_comandos = [
     '/stop', '/all'];
 
 let lista_easter = [
-    '/alex', '/nos', '/noz', '/naturalista', '/bloisinho', '/blois', '/bloisin', 
-    '/crispinin', '/bot', '/caf', '/cladofsm', '/curse', '/trader', '/golpe', 
+    '/aga', '/alex', '/nos', '/noz', '/naturalista', '/bloisinho', '/blois', '/bloisin', 
+    '/crispinin', '/bot', '/caf', '/cladofsm', '/curse', '/trader', '/golpe', '/davi', 
     '/douglas', '/gareli', '/garelli', '/garelao', '/kratos', '/kratosrbn', '/kratos_rbn', 
     '/lycan', '/lycantropia', '/mateiro', '/melga', '/melguinha', '/melgaco', '/adolfo', 
     '/meriva', '/sorteio', '/metaflora', '/metazooa', '/metazoa', '/plankoidea', 
@@ -147,7 +147,7 @@ const path = require('path');
 
 // Lista de grupos permitidos para leitura dos comandos
 const gruposPermitidos = [
-    //`${c.grupo_iNaturalisters}@g.us`,
+    `${c.grupo_iNaturalisters}@g.us`,
     `${c.grupo_bot_iNaters}@g.us`,
     `${c.grupo_teste}@g.us`,
     `${c.grupo_aga}@g.us`,
@@ -457,7 +457,7 @@ async function Comandos(message, mensagem_normalizada) {
         mensagem += 'Sugestões mandar no privado do autor! 👇\n\n'
         
         mensagem += `Desenvolvedor: @${c.aranhas.gianlluca}\n`;
-        mensagem += 'Versão atual: \`\`\`1.1.0\`\`\`\n';
+        mensagem += 'Versão atual: \`\`\`1.1.1\`\`\`\n';
         mensagem += 'GitHub: https://github.com/GianllucaLeme/Bot_iNaters';
 
         await client.sendMessage(usuario_curioso, mensagem, {mentions: c.aranhas.gianlluca + '@c.us'});
@@ -492,8 +492,8 @@ async function Comandos(message, mensagem_normalizada) {
 
     if (mensagem_normalizada === '/aranha'){
         let aranhas = [c.aranhas.adolfo, c.aranhas.alfredo, c.aranhas.claudia, c.aranhas.dayvson, 
-                       c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.isaac, c.aranhas.lucas_gusso, 
-                       c.aranhas.pedro_martins, c.aranhas.victor];
+                       c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.gabriel_vianna, 
+                       c.aranhas.isaac, c.aranhas.lucas_gusso, c.aranhas.pedro_martins, c.aranhas.victor];
         
         let prioridade = [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan, c.aranhas.michelotto];
 
@@ -641,12 +641,12 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     if (['/cupim', '/cupins', '/isoptera'].includes(mensagem_normalizada)) {
-        const cupim = [c.cupim.karina_lima];
+        const cupim = [c.cupim.gustavo, c.cupim.karina_lima];
         
         let lista = cupim.map(user => `${user}@c.us`);
         let pessoas = `@${cupim.join(', @')}`;
 
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1128,6 +1128,19 @@ async function Comandos(message, mensagem_normalizada) {
 
     /*--- Comandos Easter Eggs ---*/
 
+    if (mensagem_normalizada === '/aga') {
+        const aga = [c.formigas.davi, c.aranhas.gianlluca, c.mariposas.luis_eduardo, 
+                     c.formigas.maycon, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, 
+                     c.formigas.gomide, c.staph.pedro_staph];
+
+        let lista = aga.map(user => `${user}@c.us`);
+        let pessoas = `@${aga.join(', @')}`;
+
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+
+        return;
+    }
+
     if (['/alex', '/nos', '/noz', '/naturalista'].includes(mensagem_normalizada)){
         let random_alex = Math.floor(Math.random()*6);
         
@@ -1143,7 +1156,7 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     if (['/bloisinho', '/blois', '/bloisin', '/crispinin'].includes(mensagem_normalizada)){
-        let random_blois = Math.floor(Math.random()*9);
+        let random_blois = Math.floor(Math.random()*10);
         const media = MessageMedia.fromFilePath(`./pictures/bloisinhos/blois${random_blois}.png`);
         await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         return;
@@ -1174,6 +1187,12 @@ async function Comandos(message, mensagem_normalizada) {
     if (['/curse', '/trader', '/golpe'].includes(mensagem_normalizada)){
         let random_curse = Math.floor(Math.random()*2);
         const media = MessageMedia.fromFilePath(`./pictures/curses/curse${random_curse}.png`);
+        await client.sendMessage(message.from, media);
+        return;
+    }
+
+    if (mensagem_normalizada === '/davi'){
+        const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_davi.mp3`);
         await client.sendMessage(message.from, media);
         return;
     }

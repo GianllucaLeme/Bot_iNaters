@@ -192,8 +192,31 @@ function removerAcentos(string) {
     return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
+// Função para extrair o comando de mensagens que contenham um URL
+function extrairComandodeURL(message) {
+    if (!message) return null;
+
+    // Divide a mensagem em linhas
+    const linhas = message.split('\n');
+
+    for (let linha of linhas) {
+        linha = linha.trim();
+
+        // Procura algo que comece com "/"
+        const match = linha.match(/^\/[a-zA-Z0-9_?]+/);
+
+        if (match) {
+            return match[0];
+        }
+    }
+
+    return null;
+}
+
 // Função para tratar variações de comandos do usuário, como pluralização, espaços, acentos etc.
 function normalizarComando(message) {
+    if (!message) return null;
+
     let comando = message.toLowerCase().trim();
 
     // Ignora comandos entre aspas ou com "> "
@@ -1263,7 +1286,7 @@ async function Comandos(message, mensagem_normalizada) {
             const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${7}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         } else {
-            let random_malta = Math.floor(Math.random()*11);
+            let random_malta = Math.floor(Math.random()*20);
             const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         }
@@ -1376,12 +1399,12 @@ const ultimoComando = new Map();
 
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
-    const mensagem_normalizada = normalizarComando(message.body);
-    let contato = await message.getContact();
+    const mensagem_normalizada = normalizarComando( extrairComandodeURL(message.body) );
+    const contato = await message.getContact();
 
-    if (!mensagem_normalizada) {
+    if (!mensagem_normalizada){
         return;
-    }
+    } 
 
     // Comando para despausar o bot
     const stopPath = path.join(process.cwd(), 'STOP');

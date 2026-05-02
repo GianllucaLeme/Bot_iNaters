@@ -115,13 +115,14 @@ let lista_comandos = [
     '/bicho_pau', '/phasma', '/borboleta', '/cigarra', '/cigarrinha','/cobra', '/serpente', '/cupim', 
     '/cupins', '/isoptera', '/diplopoda', '/escorpiao', '/escorpioes', '/formiga', '/formiga_leao', 
     '/fungo', '/cogumelo', '/fungi', '/neuroptera', '/geoplanaria', '/grilo', '/gafanhoto', '/esperanca', 
-    '/orthoptera', '/hemi', '/hemiptera', '/lagarto', '/calango', '/gekkota', '/louva', '/louva_deus', '/mantis', 
-    '/mantodea','/mariposa', '/mollusca', '/concha', '/caranguejo', '/morcego', '/mosca', '/mosquito', 
-    '/opiliao', '/opilioes', '/percevejo', '/percevejo_aq', '/gerromorpha', '/planta', '/plec', '/plecoptera', 
-    '/monocot', '/monocotiledonea', '/dicot', '/dicotiledonea', '/pseudo', '/pseudoescorpiao', 
-    '/pseudoescorpioes', '/sapo', '/anura', '/scoly', '/scolytinae', '/brocas', '/soldadinho', '/membracidae', 
-    '/staph', '/staphylinidae', '/strep', '/strepsiptera', '/tipula', '/tipulomorpha', '/traca', '/zygentoma', 
-    '/tripe', '/thysanoptera', '/vespa', '/vespidae', '/maribondo', '/marimbondo',
+    '/orthoptera', '/hemi', '/hemiptera', '/lagarta', '/lepi', '/lepidoptera', '/lagarto', '/calango', 
+    '/gekkota', '/louva', '/louva_deus', '/mantis', '/mantodea','/mariposa', '/mollusca', '/molusco', '/concha', 
+    '/caracol', '/caramujo', '/caranguejo', '/gastropoda', '/morcego', '/mosca', '/mosquito', '/opiliao', '/opilioes', 
+    '/percevejo', '/percevejo_aq', '/gerromorpha', '/planta', '/plec', '/plecoptera', '/monocot', '/monocotiledonea', 
+    '/dicot', '/dicotiledonea', '/pseudo', '/pseudoescorpiao', '/pseudoescorpioes', '/sapo', '/anura', '/scoly', 
+    '/scolytinae', '/brocas', '/soldadinho', '/membracidae', '/staph', '/staphylinidae', '/strep', '/strepsiptera', 
+    '/tipula', '/tipulomorpha', '/traca', '/zygentoma', '/tripe', '/thysanoptera', '/vespa', '/vespidae', '/maribondo', 
+    '/marimbondo',
     
     '/stop', '/all'];
 
@@ -248,9 +249,9 @@ async function Comandos(message, mensagem_normalizada) {
         let comandos_removidos = ['/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', '/stop', 
                                   '/all', '/barbeiro', '/serpente', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
                                   '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerromorpha', '/bichopau', '/phasma', 
-                                  '/pseudoescorpiao', '/pseudoescorpioes', '/calango', '/gekkota', '/louva_deus', '/mantis', 
-                                  '/mantodea', '/concha', '/caranguejo', '/neuroptera', '/cogumelo', '/fungi', 
-                                  '/soldadinho', '/membracidae', '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', 
+                                  '/pseudoescorpiao', '/pseudoescorpioes', '/lepi', '/lepidoptera', '/calango', '/gekkota', 
+                                  '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/neuroptera', '/cogumelo', 
+                                  '/fungi', '/soldadinho', '/membracidae', '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', 
                                   '/tipulomorpha', '/plecoptera', '/monocotiledonea', '/dicotiledonea', '/anura', '/thysanoptera', 
                                   '/vespidae', '/maribondo', '/marimbondo', '/zygentoma'];
         
@@ -285,6 +286,8 @@ async function Comandos(message, mensagem_normalizada) {
                 return `* \`${cmd_main}\` - inclui gafanhotos e esperanças tbm`;
             } else if (cmd_main === '/hemi') {
                 return `* \`${cmd_main}\` - cigarrinhas, percevejos, afídeos e afins`;
+            } else if (cmd_main === '/lagarta') {
+                return `* \`${cmd_main}\` - dúvida entre borboleta ou mariposa`;
             } else if (cmd_main === '/lagarto') {
                 return `* \`${cmd_main}\` - calangos e afins`;
             } else if (cmd_main === '/louva') {
@@ -331,7 +334,7 @@ async function Comandos(message, mensagem_normalizada) {
 
         let comandos_avancados = ['/anura', '/barbeiro', '/bichopau', '/calango', '/caranguejo', '/cogumelo', 
                                   '/cupins', '/dicotiledonea', '/escorpioes', '/esperança', '/gerromorpha', 
-                                  '/hemiptera', '/marimbondo', '/neuroptera', '/opilioes', '/plecoptera', 
+                                  '/hemiptera', '/lepi', '/marimbondo', '/neuroptera', '/opilioes', '/plecoptera', 
                                   '/pseudoescorpiao', '/scolytinae', '/staphylinidae', '/strepsiptera', 
                                   '/thysanoptera', '/tipulomorpha', '/zygentoma'];
 
@@ -342,7 +345,7 @@ async function Comandos(message, mensagem_normalizada) {
             } else if (cmd_main === '/calango') {
                 return `* \`${cmd_main}\` ou \`/gekkota\``;
             } else if (cmd_main === '/caranguejo') {
-                return `* \`${cmd_main}\` ou \`/concha\``;
+                return `* \`${cmd_main}\`, \`/molusco\`, \`/concha\`, \`/caracol\`, \`/caramujo\`, ou \`/gastropoda\``;
             } else if (cmd_main === '/cogumelo') {
                 return `* \`${cmd_main}\` ou \`/fungi\``;
             } else if (cmd_main === '/cupins') {
@@ -353,6 +356,8 @@ async function Comandos(message, mensagem_normalizada) {
                 return `* \`${cmd_main}\`, \`/gafanhoto\` ou \`/orthoptera\``;
             } else if (cmd_main === '/gerromorpha') {
                 return `* \`${cmd_main}\` - percevejos aquáticos`;
+            } else if (cmd_main === '/lepi') {
+                return `* \`${cmd_main}\` ou \`/lepidoptera\``;
             } else if (cmd_main === '/marimbondo') {
                 return `* \`${cmd_main}\` ou \`/vespidae\``;
             } else if (cmd_main === '/pseudoescorpiao') {
@@ -762,6 +767,17 @@ async function Comandos(message, mensagem_normalizada) {
         return;
     }
 
+    if (['/lagarta', '/lepi', '/lepidoptera'].includes(mensagem_normalizada)) {
+        const lagarta = [c.borboletas.tiago, c.borboletas.pedro_souza, 
+                         c.mariposas.fischer, c.mariposas.luis_eduardo, c.mariposas.nicolas];
+        
+        let lista = lagarta.map(user => `${user}@c.us`);
+        let pessoas = `@${lagarta.join(', @')}`;
+        
+        await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
+    }
+
     if (['/lagarto', '/calango', '/gekkota'].includes(mensagem_normalizada)) {
         const lagarto = [c.lagartos.dani_alcantara, c.lagartos.joao_alcantara];
         
@@ -821,7 +837,9 @@ async function Comandos(message, mensagem_normalizada) {
         return;
     }
 
-    if (['/mollusca', '/concha', '/caranguejo'].includes(mensagem_normalizada)) {
+    if (['/mollusca', '/molusco', '/concha', '/caracol', 
+        '/caramujo', '/caranguejo', '/gastropoda'].includes(mensagem_normalizada)) {
+        
         const mollusca = [c.mollusca.carlos_sigma, c.aranhas.celio, 
                           c.mollusca.rafael_masson, c.mosquitos.walther];
         
@@ -1128,7 +1146,7 @@ async function Comandos(message, mensagem_normalizada) {
 
     /*--- Comandos Easter Eggs ---*/
 
-    if (mensagem_normalizada === '/aga') {
+    if (['/aga', '/h'].includes(mensagem_normalizada)) {
         const aga = [c.formigas.davi, c.aranhas.gianlluca, c.mariposas.luis_eduardo, 
                      c.formigas.maycon, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, 
                      c.formigas.gomide, c.staph.pedro_staph];
@@ -1142,9 +1160,9 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     if (['/alex', '/nos', '/noz', '/naturalista'].includes(mensagem_normalizada)){
-        let random_alex = Math.floor(Math.random()*6);
+        let random_alex = Math.floor(Math.random()*7);
         
-        if(random_alex < 5){
+        if(random_alex < 6){
             const media = MessageMedia.fromFilePath(`./pictures/alexes/alex${random_alex}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         } else {
@@ -1245,7 +1263,7 @@ async function Comandos(message, mensagem_normalizada) {
             const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${7}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         } else {
-            let random_malta = Math.floor(Math.random()*10);
+            let random_malta = Math.floor(Math.random()*11);
             const media = MessageMedia.fromFilePath(`./pictures/mateiros/mateiro${random_malta}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         }
@@ -1344,8 +1362,8 @@ async function Comandos(message, mensagem_normalizada) {
     }
 
     if (mensagem_normalizada === '/vermoidea'){
-        const vermoidea = [c.mariposas.fischer, c.sapo.shiva, c.formigas.maycon, 
-                           c.aranhas.gabriel_costa, c.aranhas.adolfo];
+        const vermoidea = [c.mariposas.fischer, c.sapo.shiva, c.formigas.davi, 
+                           c.aranhas.adolfo, c.sobral, c.inacio];
         let lista = vermoidea.map(user => `${user}@c.us`);
         let pessoas = `@${vermoidea.join(', @')}`;
         await client.sendMessage(message.from, pessoas, {mentions: lista});

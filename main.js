@@ -133,7 +133,10 @@ let lista_easter = [
     '/lycan', '/lycantropia', '/mateiro', '/melga', '/melguinha', '/melgaco', '/adolfo', 
     '/meriva', '/sorteio', '/metaflora', '/metazooa', '/metazoa', '/plankoidea', 
     '/planklep', '/prancheta', '/prancha', '/26', '/reh_csif', '/rehcsif', '/dobra', 
-    '/tarrafer', '/fischer', '/vermoidea'];
+    '/tarrafer', '/fischer', '/vem', '/vermoidea', 
+
+    '/true_aga', '/true_h', '/random_clbc', '/pertubacao', '/ping', '/alou', '/dicka', 
+    '/dickao'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -251,7 +254,7 @@ function normalizarComando(message) {
     return comando;
 }
 
-// Função principal que rege todos os comandos
+// Função que rege os comandos principais
 async function Comandos(message, mensagem_normalizada) {
     /*--- Comandos Ajuda ---*/
     
@@ -273,10 +276,11 @@ async function Comandos(message, mensagem_normalizada) {
                                   '/all', '/barbeiro', '/serpente', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
                                   '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerromorpha', '/bichopau', '/phasma', 
                                   '/pseudoescorpiao', '/pseudoescorpioes', '/lepi', '/lepidoptera', '/calango', '/gekkota', 
-                                  '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/neuroptera', '/cogumelo', 
-                                  '/fungi', '/soldadinho', '/membracidae', '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', 
-                                  '/tipulomorpha', '/plecoptera', '/monocotiledonea', '/dicotiledonea', '/anura', '/thysanoptera', 
-                                  '/vespidae', '/maribondo', '/marimbondo', '/zygentoma'];
+                                  '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/molusco', '/caracol', 
+                                  '/caramujo', '/gastropoda', '/neuroptera', '/cogumelo', '/fungi', '/soldadinho', '/membracidae', 
+                                  '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', '/tipulomorpha', '/plecoptera', 
+                                  '/monocotiledonea', '/dicotiledonea', '/anura', '/thysanoptera', '/vespidae', '/maribondo', 
+                                  '/marimbondo', '/zygentoma'];
         
         let comandosPrincipais = lista_comandos.filter(comando => !comandos_removidos.includes(comando));
 
@@ -485,7 +489,7 @@ async function Comandos(message, mensagem_normalizada) {
         mensagem += 'Sugestões mandar no privado do autor! 👇\n\n'
         
         mensagem += `Desenvolvedor: @${c.aranhas.gianlluca}\n`;
-        mensagem += 'Versão atual: \`\`\`1.1.1\`\`\`\n';
+        mensagem += 'Versão atual: \`\`\`1.2.0\`\`\`\n';
         mensagem += 'GitHub: https://github.com/GianllucaLeme/Bot_iNaters';
 
         await client.sendMessage(usuario_curioso, mensagem, {mentions: c.aranhas.gianlluca + '@c.us'});
@@ -1166,8 +1170,10 @@ async function Comandos(message, mensagem_normalizada) {
         
         return;
     }
+}
 
-    /*--- Comandos Easter Eggs ---*/
+// Função para os comandos Easter Eggs
+async function ComandosEasterEgg(message, mensagem_normalizada){
 
     if (['/aga', '/h'].includes(mensagem_normalizada)) {
         const aga = [c.formigas.davi, c.aranhas.gianlluca, c.mariposas.luis_eduardo, 
@@ -1384,12 +1390,73 @@ async function Comandos(message, mensagem_normalizada) {
         return;
     }
 
+    if (mensagem_normalizada === '/vem'){
+        const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_vem.mp3`);
+        await client.sendMessage(message.from, media);
+        return;
+    }
+
     if (mensagem_normalizada === '/vermoidea'){
         const vermoidea = [c.mariposas.fischer, c.sapo.shiva, c.formigas.davi, 
                            c.aranhas.adolfo, c.sobral, c.inacio];
         let lista = vermoidea.map(user => `${user}@c.us`);
         let pessoas = `@${vermoidea.join(', @')}`;
         await client.sendMessage(message.from, pessoas, {mentions: lista});
+        return;
+    }
+}
+
+// Função para o grupo "aga"
+async function Comandosaga(message, mensagem_normalizada){
+    
+    if (['/true_aga', '/true_h'].includes(mensagem_normalizada)) {
+        const true_aga = [c.formigas.davi, c.aranhas.gianlluca, c.mariposas.luis_eduardo, 
+                          c.formigas.maycon, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, 
+                          c.formigas.gomide, c.staph.pedro_staph, c.aranhas.ryan, 
+                          c.sobral, c.inacio, c.emy, c.mariposas.fischer];
+
+        const ex_aga = [c.aga.kleber, c.aga.felix, c.aga.didobola, 
+                        c.aga.vem, c.aga.meta];
+
+        let lista = true_aga.map(user => `${user}@c.us`);
+        let pessoas = `@${true_aga.join(', @')}`;
+
+        await client.sendMessage(message.from, pessoas + ex_aga.join(', '), {mentions: lista});
+
+        return;
+    }
+
+    if (mensagem_normalizada === '/random_clbc') {
+        let random_clbc = ['davi', 'vem'];
+        random_clbc = random_clbc[Math.floor(Math.random() * random_clbc.length)];
+
+        const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_${random_clbc}.mp3`);
+        await client.sendMessage(message.from, media);
+        return;
+    }
+
+    if (['/pertubacao', '/ping', '/alou'].includes(mensagem_normalizada)) {
+        let true_aga = [c.formigas.davi, c.aranhas.gianlluca, c.mariposas.luis_eduardo, 
+                          c.formigas.maycon, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, 
+                          c.formigas.gomide, c.staph.pedro_staph, c.aranhas.ryan];
+
+        true_aga = (await embaralharContatos(true_aga)).slice(0, 1);
+
+        let lista = true_aga.map(user => `${user}@c.us`);
+        let pessoas = `@${true_aga.join(', @')}`;
+
+        for (let i = 0; i < 9; i++) {
+            pessoas = await mencionarUsuario(lista, pessoas, true_aga[0], 1);
+        }
+
+        await client.sendMessage(message.from, pessoas, { mentions: lista});
+        return;
+    }
+
+    if (['/dicka', '/dickao'].includes(mensagem_normalizada)) {
+        let random_dicka = Math.floor(Math.random()*7);
+        const media = MessageMedia.fromFilePath(`./pictures/aga/dickas/dicka${random_dicka}.png`);
+        await client.sendMessage(message.from, media);
         return;
     }
 }
@@ -1465,6 +1532,8 @@ client.on('message_create', async message => {
             mensagensProcessadas.delete(msgId);
         }, 5 * 60 * 1000);
         
+
+
         // Spam handling antes de detectar os comandos
         if ([...lista_comandos, ...lista_easter, '/start'].includes(mensagem_normalizada)) {
             
@@ -1481,7 +1550,14 @@ client.on('message_create', async message => {
             ultimoComando.set(usuario, agora);
 
             try {
-                await Comandos(message, mensagem_normalizada);
+                if (permitidos.includes(message.from)) {
+                    await Comandos(message, mensagem_normalizada);
+                    await ComandosEasterEgg(message, mensagem_normalizada);
+                }
+
+                if (message.from == `${c.grupo_aga}@g.us`) {
+                    await Comandosaga(message, mensagem_normalizada);
+                }
             } finally {
                 // limpa o usuário da lista depois de 2 s
                 setTimeout(() => {

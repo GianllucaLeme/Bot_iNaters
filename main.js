@@ -1130,7 +1130,7 @@ async function Comandos(message, mensagem_normalizada) {
             .filter(p => p.isAdmin || p.isSuperAdmin)
             .map(p => p.id.user);
 
-        if (lista_admins.includes(is_admin.id.user)) {
+        if (lista_admins.includes(is_admin.id.user) || is_admin.id.user === c.aranhas.gianlluca) {
             fs.writeFileSync(stopPath, 'stopped');
 
             await client.sendMessage(message.from, '> Bot pausado. Use /start para reativá-lo.');
@@ -1155,7 +1155,7 @@ async function Comandos(message, mensagem_normalizada) {
             .filter(p => p.isAdmin || p.isSuperAdmin)
             .map(p => p.id.user);
 
-        if (lista_admins.includes(is_admin.id.user)) {
+        if (lista_admins.includes(is_admin.id.user) || is_admin.id.user === c.aranhas.gianlluca) {
             const chat = await message.getChat();
             let mentions = [];
         
@@ -1489,7 +1489,7 @@ client.on('message_create', async message => {
             .filter(p => p.isAdmin || p.isSuperAdmin)
             .map(p => p.id.user);
 
-        if (!lista_admins.includes(is_admin.id.user)) {
+        if (!lista_admins.includes(is_admin.id.user) && is_admin.id.user !== c.aranhas.gianlluca) {
             await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
             return;
         }

@@ -206,7 +206,7 @@ function extrairComandodeURL(message) {
         linha = linha.trim();
 
         // Procura algo que comece com "/"
-        const match = linha.match(/^\/[a-zA-Z0-9_?]+/);
+        const match = linha.match(/^\/[\p{L}0-9_?]+/u);
 
         if (match) {
             return match[0];

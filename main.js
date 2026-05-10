@@ -116,13 +116,13 @@ let lista_comandos = [
     '/cupins', '/isoptera', '/diplopoda', '/escorpiao', '/escorpioes', '/formiga', '/formiga_leao', 
     '/fungo', '/cogumelo', '/fungi', '/neuroptera', '/geoplanaria', '/grilo', '/gafanhoto', '/esperanca', 
     '/orthoptera', '/hemi', '/hemiptera', '/lagarta', '/lepi', '/lepidoptera', '/lagarto', '/calango', 
-    '/gekkota', '/louva', '/louva_deus', '/mantis', '/mantodea','/mariposa', '/mollusca', '/molusco', '/concha', 
-    '/caracol', '/caramujo', '/caranguejo', '/gastropoda', '/morcego', '/mosca', '/mosquito', '/opiliao', '/opilioes', 
-    '/percevejo', '/percevejo_aq', '/gerromorpha', '/planta', '/plec', '/plecoptera', '/monocot', '/monocotiledonea', 
-    '/dicot', '/dicotiledonea', '/pseudo', '/pseudoescorpiao', '/pseudoescorpioes', '/sapo', '/anura', '/scoly', 
-    '/scolytinae', '/brocas', '/soldadinho', '/membracidae', '/staph', '/staphylinidae', '/strep', '/strepsiptera', 
-    '/tipula', '/tipulomorpha', '/traca', '/zygentoma', '/tripe', '/thysanoptera', '/vespa', '/vespidae', '/maribondo', 
-    '/marimbondo',
+    '/gekkota', '/louva', '/louva_deus', '/mantis', '/mantodea', '/marinho', '/mollusca', '/molusco', '/concha', 
+    '/caracol', '/caramujo', '/caranguejo', '/gastropoda', '/mariposa', '/morcego', '/mosca', '/mosquito', 
+    '/opiliao', '/opilioes', '/percevejo', '/percevejo_aq', '/gerromorpha', '/planta', '/plec', '/plecoptera', 
+    '/monocot', '/monocotiledonea', '/dicot', '/dicotiledonea', '/pseudo', '/pseudoescorpiao', '/pseudoescorpioes', 
+    '/sapo', '/anura', '/scoly', '/scolytinae', '/brocas', '/soldadinho', '/membracidae', '/staph', '/staphylinidae', 
+    '/strep', '/strepsiptera', '/tipula', '/tipulomorpha', '/traca', '/zygentoma', '/tripe', '/thysanoptera', 
+    '/vespa', '/vespidae', '/maribondo', '/marimbondo',
     
     '/stop', '/all'];
 
@@ -276,7 +276,7 @@ async function Comandos(message, mensagem_normalizada) {
                                   '/all', '/barbeiro', '/serpente', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
                                   '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerromorpha', '/bichopau', '/phasma', 
                                   '/pseudoescorpiao', '/pseudoescorpioes', '/lepi', '/lepidoptera', '/calango', '/gekkota', 
-                                  '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/molusco', '/caracol', 
+                                  '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/mollusca', '/molusco', '/caracol', 
                                   '/caramujo', '/gastropoda', '/neuroptera', '/cogumelo', '/fungi', '/soldadinho', '/membracidae', 
                                   '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', '/tipulomorpha', '/plecoptera', 
                                   '/monocotiledonea', '/dicotiledonea', '/anura', '/thysanoptera', '/vespidae', '/maribondo', 
@@ -319,8 +319,8 @@ async function Comandos(message, mensagem_normalizada) {
                 return `* \`${cmd_main}\` - calangos e afins`;
             } else if (cmd_main === '/louva') {
                 return `* \`${cmd_main}\` ou  \`/mantis\``;
-            } else if (cmd_main === '/mollusca') {
-                return `* \`${cmd_main}\` - inclui conchas e caranguejos tbm`;
+            } else if (cmd_main === '/marinho') {
+                return `* \`${cmd_main}\` - inclui animais marinhos e similares`;
             } else if (cmd_main === '/percevejo_aq') {
                 return `* \`${cmd_main}\` - percevejos aquáticos`;
             } else if (cmd_main === '/plec') {
@@ -864,14 +864,14 @@ async function Comandos(message, mensagem_normalizada) {
         return;
     }
 
-    if (['/mollusca', '/molusco', '/concha', '/caracol', 
+    if (['/marinho', '/mollusca', '/molusco', '/concha', '/caracol', 
         '/caramujo', '/caranguejo', '/gastropoda'].includes(mensagem_normalizada)) {
         
-        const mollusca = [c.mollusca.carlos_sigma, c.aranhas.celio, 
-                          c.mollusca.rafael_masson, c.mosquitos.walther];
+        const marinho = [c.marinho.carlos_sigma, c.aranhas.celio, 
+                          c.marinho.rafael_masson, c.mosquitos.walther];
         
-        let lista = mollusca.map(user => `${user}@c.us`);
-        let pessoas = `@${mollusca.join(', @')}`;
+        let lista = marinho.map(user => `${user}@c.us`);
+        let pessoas = `@${marinho.join(', @')}`;
     
         pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
 

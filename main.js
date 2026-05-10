@@ -509,7 +509,7 @@ async function Comandos(message, mensagem_normalizada) {
         mensagem += 'Sugestões mandar no privado do autor! 👇\n\n'
         
         mensagem += `Desenvolvedor: @${c.aranhas.gianlluca}\n`;
-        mensagem += 'Versão atual: \`\`\`1.2.0\`\`\`\n';
+        mensagem += 'Versão atual: \`\`\`1.2.1\`\`\`\n';
         mensagem += 'GitHub: https://github.com/GianllucaLeme/Bot_iNaters';
 
         await client.sendMessage(usuario_curioso, mensagem, {mentions: c.aranhas.gianlluca + '@c.us'});

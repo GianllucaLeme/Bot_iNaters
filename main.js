@@ -135,8 +135,8 @@ let lista_easter = [
     '/planklep', '/prancheta', '/prancha', '/26', '/reh_csif', '/rehcsif', '/dobra', 
     '/tarrafer', '/fischer', '/vem', '/vermoidea', 
 
-    '/true_aga', '/true_h', '/random_clbc', '/pertubacao', '/ping', '/alou', '/dicka', 
-    '/dickao'];
+    '/true_aga', '/true_h', '/cala', '/clbc', '/random_clbc', '/pertubacao', '/ping', 
+    '/alou', '/dicka', '/dickao'];
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -159,6 +159,16 @@ const gruposPermitidos = [
 ];
 
 let permitidos = [...gruposPermitidos];
+
+// Lista auxiliar para os comandos do grupo "aga"
+let clbc_aga = [
+    'dido', 'felipe', 'gabriel', 'gomide', 'henrique', 'kleber', 'laz', 'luis', 
+    'maycon', 'meta', 'pedro', 'pinguim', 'ryan', 
+    
+    c.aga.kleber_audio, c.aga.dido_audio
+];
+
+lista_easter.push(...clbc_aga.map(cmd => `/${cmd}`));
 
 // Função que determina a chance do usuário ser marcado
 async function chanceUsuario(usuario, chance) {
@@ -1244,6 +1254,13 @@ async function ComandosEasterEgg(message, mensagem_normalizada){
         return;
     }
 
+    if (['/dicka', '/dickao'].includes(mensagem_normalizada)) {
+        let random_dicka = Math.floor(Math.random()*7);
+        const media = MessageMedia.fromFilePath(`./pictures/aga/dickas/dicka${random_dicka}.png`);
+        await client.sendMessage(message.from, media);
+        return;
+    }
+
     if (mensagem_normalizada === '/douglas'){
         let random_douglas = Math.floor(Math.random()*7);
         const media = MessageMedia.fromFilePath(`./pictures/douglas/douglas${random_douglas}.png`);
@@ -1416,7 +1433,7 @@ async function Comandosaga(message, mensagem_normalizada){
                           c.sobral, c.inacio, c.emy, c.mariposas.fischer];
 
         const ex_aga = [c.aga.kleber, c.aga.felix, c.aga.didobola, 
-                        c.aga.vem, c.aga.meta];
+                        c.aga.vem, c.aga.meta, c.aga.laz];
 
         let lista = true_aga.map(user => `${user}@c.us`);
         let pessoas = `@${true_aga.join(', @')}`;
@@ -1426,12 +1443,31 @@ async function Comandosaga(message, mensagem_normalizada){
         return;
     }
 
-    if (mensagem_normalizada === '/random_clbc') {
-        let random_clbc = ['davi', 'vem'];
-        random_clbc = random_clbc[Math.floor(Math.random() * random_clbc.length)];
-
-        const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_${random_clbc}.mp3`);
+    if (['/cala', '/clbc', '/random_clbc'].includes(mensagem_normalizada)) {
+        clbc_aga = clbc_aga[Math.floor(Math.random() * clbc_aga.length)];
+        const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_${clbc_aga}.mp3`);
         await client.sendMessage(message.from, media);
+        return;
+    }
+
+    const comando_clbc = mensagem_normalizada.slice(1);
+    if (clbc_aga.includes(comando_clbc)) {
+
+        try {
+            if(comando_clbc === c.aga.dido_audio){
+                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_dido.mp3`);
+        await client.sendMessage(message.from, media);
+
+            } else if  (comando_clbc === c.aga.kleber_audio){
+                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_kleber.mp3`);
+                await client.sendMessage(message.from, media);
+
+            } else {
+                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_${comando_clbc}.mp3`);
+                await client.sendMessage(message.from, media);
+            }
+        } catch {}
+        
         return;
     }
 
@@ -1450,13 +1486,6 @@ async function Comandosaga(message, mensagem_normalizada){
         }
 
         await client.sendMessage(message.from, pessoas, { mentions: lista});
-        return;
-    }
-
-    if (['/dicka', '/dickao'].includes(mensagem_normalizada)) {
-        let random_dicka = Math.floor(Math.random()*7);
-        const media = MessageMedia.fromFilePath(`./pictures/aga/dickas/dicka${random_dicka}.png`);
-        await client.sendMessage(message.from, media);
         return;
     }
 }

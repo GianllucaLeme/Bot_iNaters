@@ -117,7 +117,7 @@ let lista_comandos = [
     '/fungo', '/cogumelo', '/fungi', '/neuroptera', '/geoplanaria', '/grilo', '/gafanhoto', '/esperanca', 
     '/orthoptera', '/hemi', '/hemiptera', '/lagarta', '/lepi', '/lepidoptera', '/lagarto', '/calango', 
     '/gekkota', '/louva', '/louva_deus', '/mantis', '/mantodea', '/marinho', '/mollusca', '/molusco', '/concha', 
-    '/caracol', '/caramujo', '/caranguejo', '/gastropoda', '/mariposa', '/morcego', '/mosca', '/mosquito', 
+    '/caracol', '/caramujo', '/caranguejo', '/gastropoda', '/mariposa', '/morcego', '/mosca', '/diptera', '/mosquito', 
     '/opiliao', '/opilioes', '/percevejo', '/percevejo_aq', '/gerromorpha', '/planta', '/plec', '/plecoptera', 
     '/monocot', '/monocotiledonea', '/dicot', '/dicotiledonea', '/pseudo', '/pseudoescorpiao', '/pseudoescorpioes', 
     '/sapo', '/anura', '/scoly', '/scolytinae', '/brocas', '/soldadinho', '/membracidae', '/staph', '/staphylinidae', 
@@ -295,7 +295,7 @@ async function Comandos(message, mensagem_normalizada) {
                                   '/caramujo', '/gastropoda', '/neuroptera', '/cogumelo', '/fungi', '/soldadinho', '/membracidae', 
                                   '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', '/tipulomorpha', '/plecoptera', 
                                   '/monocotiledonea', '/dicotiledonea', '/anura', '/thysanoptera', '/vespidae', '/maribondo', 
-                                  '/marimbondo', '/zygentoma'];
+                                  '/marimbondo', '/zygentoma', '/diptera'];
         
         let comandosPrincipais = lista_comandos.filter(comando => !comandos_removidos.includes(comando));
 
@@ -375,7 +375,7 @@ async function Comandos(message, mensagem_normalizada) {
         const usuario_duvida = message.author || message.from;
 
         let comandos_avancados = ['/anura', '/barbeiro', '/bichopau', '/calango', '/caranguejo', '/cogumelo', 
-                                  '/cupins', '/dicotiledonea', '/escorpioes', '/esperança', '/gerromorpha', 
+                                  '/cupins', '/dicotiledonea', '/diptera', '/escorpioes', '/esperança', '/gerromorpha', 
                                   '/hemiptera', '/lepi', '/marimbondo', '/neuroptera', '/opilioes', '/plecoptera', 
                                   '/pseudoescorpiao', '/scolytinae', '/staphylinidae', '/strepsiptera', 
                                   '/thysanoptera', '/tipulomorpha', '/zygentoma'];
@@ -540,7 +540,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = abelhas.map(user => `${user}@c.us`);
         let pessoas = `@${abelhas.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -565,7 +567,9 @@ async function Comandos(message, mensagem_normalizada) {
             pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 0.633975);
         }
 
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        }
 
         await client.sendMessage(message.from, pessoas, { mentions: lista});
         return;
@@ -590,8 +594,13 @@ async function Comandos(message, mensagem_normalizada) {
             pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 1);
         }
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.95);
-        pessoas = await mencionarUsuario(lista, pessoas, c.aves.victor_aves, 0.3);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.95);
+        }
+
+        if (contato_comando.id.user !== c.aves.victor_aves) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.aves.victor_aves, 0.3);
+        }
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -606,9 +615,13 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = baratas.map(user => `${user}@c.us`);
         let pessoas = `@${baratas.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
-        pessoas = await mencionarUsuario(lista, pessoas, c.louva.lorena, 0.2);
-        
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
+        }
+        if (contato_comando.id.user !== c.louva.lorena) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.louva.lorena, 0.2);
+        }
+
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
     }
@@ -621,7 +634,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = barbeiro.map(user => `${user}@c.us`);
         let pessoas = `@${barbeiro.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.6);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.6);
+        }
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -636,7 +651,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = besouros.map(user => `${user}@c.us`);
         let pessoas = `@${besouros.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.336);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.336);
+        }
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -651,7 +668,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = phasma.map(user => `${user}@c.us`);
         let pessoas = `@${phasma.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.01);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.01);
+        }
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -667,10 +686,18 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = borboletas.map(user => `${user}@c.us`);
         let pessoas = `@${borboletas.join(', @')}`;
         
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
-        pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.15);
-        pessoas = await mencionarUsuario(lista, pessoas, c.borboletas.guilherme_augusto, 0.1);
-        
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        }
+
+        if (contato_comando.id.user !== c.mariposas.fischer) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.15);
+        }
+
+        if (contato_comando.id.user !== c.borboletas.guilherme_augusto) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.borboletas.guilherme_augusto, 0.1);
+        }
+
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
     }
@@ -685,8 +712,13 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = cigarras.map(user => `${user}@c.us`);
         let pessoas = `@${cigarras.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
-        pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.15);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        }
+
+        if (contato_comando.id.user !== c.mariposas.fischer) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 0.15);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -701,7 +733,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = cigarrinha.map(user => `${user}@c.us`);
         let pessoas = `@${cigarrinha.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -709,7 +743,7 @@ async function Comandos(message, mensagem_normalizada) {
 
     if (['/cobra', '/serpente'].includes(mensagem_normalizada)) {
         let cobras = [c.enrico, c.aves.jose_valerio, 
-                        c.cobras.leonardo_conversano];
+                      c.cobras.leonardo_conversano];
         
         cobras = cobras.filter(user => user !== contato_comando.id.user);
 
@@ -728,7 +762,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = cupim.map(user => `${user}@c.us`);
         let pessoas = `@${cupim.join(', @')}`;
 
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -744,7 +780,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = diplopoda.map(user => `${user}@c.us`);
         let pessoas = `@${diplopoda.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -767,7 +805,9 @@ async function Comandos(message, mensagem_normalizada) {
             pessoas = await mencionarUsuario(lista, pessoas, prioridade[i], 0.2);
         }
 
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        }
 
         await client.sendMessage(message.from, pessoas, { mentions: lista});
         return;
@@ -781,12 +821,24 @@ async function Comandos(message, mensagem_normalizada) {
 
         let lista = formigas.map(user => `${user}@c.us`);
         let pessoas = `@${formigas.join(', @')}`;
-
-        pessoas = await mencionarUsuario(lista, pessoas, c.formigas.joao_paulo, 0.1);
-        pessoas = await mencionarUsuario(lista, pessoas, c.formigas.diego, 0.05);
-        pessoas = await mencionarUsuario(lista, pessoas, c.formigas.vankan, 0.03);
         
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.05);
+
+        if (contato_comando.id.user !== c.formigas.joao_paulo) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.formigas.joao_paulo, 0.1);
+        }
+
+        if (contato_comando.id.user !== c.formigas.diego) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.formigas.diego, 0.05);
+        }
+
+        if (contato_comando.id.user !== c.formigas.vankan) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.formigas.vankan, 0.03);
+        }
+
+
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.05);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         
@@ -801,8 +853,10 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = formiga_leao.map(user => `${user}@c.us`);
         let pessoas = `@${formiga_leao.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
-        
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
+        }
+
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
     }
@@ -817,7 +871,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = fungos.map(user => `${user}@c.us`);
         let pessoas = `@${fungos.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -833,7 +889,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = geoplanaria.map(user => `${user}@c.us`);
         let pessoas = `@${geoplanaria.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -849,7 +907,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = grilos.map(user => `${user}@c.us`);
         let pessoas = `@${grilos.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -864,7 +924,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = hemi.map(user => `${user}@c.us`);
         let pessoas = `@${hemi.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -891,7 +953,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = lagarto.map(user => `${user}@c.us`);
         let pessoas = `@${lagarto.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.6);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.6);
+        }
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -909,10 +973,12 @@ async function Comandos(message, mensagem_normalizada) {
 
         let lista = louva.map(user => `${user}@c.us`);
         let pessoas = `@${louva.join(', @')}`;
-    
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.02);
+            
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.02);
+        }
 
-        if(!pessoas.includes('@' + c.louva.gabriel_gomes)){
+        if(!pessoas.includes('@' + c.louva.gabriel_gomes) && contato_comando.id.user !== c.louva.gabriel_gomes) { 
             pessoas = await mencionarUsuario(lista, pessoas, c.louva.gabriel_gomes, 1);
         }
         
@@ -936,14 +1002,23 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = mariposas.map(user => `${user}@c.us`);
         let pessoas = `@${mariposas.join(', @')}`;
 
-        pessoas = await mencionarUsuario(lista, pessoas, prioridade[0], 1);
-        pessoas = await mencionarUsuario(lista, pessoas, prioridade[1], 1);
 
-        if(!(pessoas.includes('@' + c.mariposas.fischer))){
+        if (contato_comando.id.user !== prioridade[0]) {
+            pessoas = await mencionarUsuario(lista, pessoas, prioridade[0], 1);
+        }
+        
+        if (contato_comando.id.user !== prioridade[1]) {
+            pessoas = await mencionarUsuario(lista, pessoas, prioridade[1], 1);
+        }
+
+        if(!pessoas.includes('@' + c.mariposas.fischer) && contato_comando.id.user !== c.mariposas.fischer){
             pessoas = await mencionarUsuario(lista, pessoas, c.mariposas.fischer, 1);
         }
 
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        }
         
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -960,7 +1035,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = marinho.map(user => `${user}@c.us`);
         let pessoas = `@${marinho.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.4);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -976,13 +1053,15 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = morcegos.map(user => `${user}@c.us`);
         let pessoas = `@${morcegos.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
     }
 
-    if (mensagem_normalizada === '/mosca') {
+    if (['/mosca', '/diptera'].includes(mensagem_normalizada)) {
         let moscas = [c.moscas.daniel_schelesky, c.moscas.lais, 
                         c.moscas.leonardo_breder, c.moscas.luan, 
                         c.moscas.matheus, c.moscas.rodrigo];
@@ -992,8 +1071,10 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = moscas.map(user => `${user}@c.us`);
         let pessoas = `@${moscas.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
-        
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
+        }
+
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
     }
@@ -1008,7 +1089,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = mosquitos.map(user => `${user}@c.us`);
         let pessoas = `@${mosquitos.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1022,8 +1105,10 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = opilioes.map(user => `${user}@c.us`);
         let pessoas = `@${opilioes.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
-        
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.2);
+        }
+
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
     }
@@ -1038,7 +1123,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = percevejos.map(user => `${user}@c.us`);
         let pessoas = `@${percevejos.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1054,7 +1141,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = aquatico.map(user => `${user}@c.us`);
         let pessoas = `@${aquatico.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1082,8 +1171,10 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = plec.map(user => `${user}@c.us`);
         let pessoas = `@${plec.join(', @')}`;
 
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
-        
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.8);
+        }
+
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
     }
@@ -1098,8 +1189,10 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = pseudo.map(user => `${user}@c.us`);
         let pessoas = `@${pseudo.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
-        
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        }
+
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
     }
@@ -1131,7 +1224,7 @@ async function Comandos(message, mensagem_normalizada) {
 
     if (mensagem_normalizada === '/rbn') {
         let rbn = [c.borboletas.andre_nog, c.abelhas.bruno_aranda, c.aranhas.celio,
-                     c.phasma.edgar, c.enrico, c.aves.jose_valerio, c.rbn.tiago_rbn];
+                   c.phasma.edgar, c.enrico, c.aves.jose_valerio, c.rbn.tiago_rbn];
         
         rbn = rbn.filter(user => user !== contato_comando.id.user);
 
@@ -1150,7 +1243,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = sapo.map(user => `${user}@c.us`);
         let pessoas = `@${sapo.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.5);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1166,7 +1261,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = scoly.map(user => `${user}@c.us`);
         let pessoas = `@${scoly.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1182,7 +1279,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = staph.map(user => `${user}@c.us`);
         let pessoas = `@${staph.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1212,7 +1311,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = tipula.map(user => `${user}@c.us`);
         let pessoas = `@${tipula.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.7);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1228,7 +1329,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = traca.map(user => `${user}@c.us`);
         let pessoas = `@${traca.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1244,7 +1347,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = tripe.map(user => `${user}@c.us`);
         let pessoas = `@${tripe.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.1);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;
@@ -1258,7 +1363,9 @@ async function Comandos(message, mensagem_normalizada) {
         let lista = vespa.map(user => `${user}@c.us`);
         let pessoas = `@${vespa.join(', @')}`;
     
-        pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
+        if (contato_comando.id.user !== c.enrico) {
+            pessoas = await mencionarUsuario(lista, pessoas, c.enrico, 0.3);
+        }
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
         return;

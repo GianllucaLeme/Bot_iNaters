@@ -34,7 +34,11 @@ function temInternet() {
     });
 }
 
-client.on('ready', async () => {
+// Flag que impede que múltiplos "setInterval()" sejam criados caso haja falhas de conexão constantes
+let interval_unico = false;
+
+client.once('ready', async () => {
+    console.log('Client is ready!');
     
     // Loop para permitir que as pessoas do grupo permitido possam mandar os comandos no privado também
     for (const grupoId of gruposPermitidos) {
@@ -55,24 +59,27 @@ client.on('ready', async () => {
     permitidos = [...new Set(permitidos)];
 
     // Reinicia o bot após uma queda de conexão inesperada
-    let falhasInternet = 0;
-
-    setInterval(async () => {
-        const conectado = await temInternet();
-
-        if (!conectado) {
-            falhasInternet++;
-
-            console.log(`[BOT] Sem internet (${falhasInternet}/3)`);
-
-            if (falhasInternet >= 3) {
-                console.log('[BOT] Queda de conexão persistente, encerrando...');
-                process.exit(1);
+    if (!interval_unico) {
+        interval_unico = true;
+        let falhasInternet = 0;
+        
+        setInterval(async () => {
+            const conectado = await temInternet();
+    
+            if (!conectado) {
+                falhasInternet++;
+    
+                console.log(`[BOT] Sem internet (${falhasInternet}/3)`);
+    
+                if (falhasInternet >= 3) {
+                    console.log('[BOT] Queda de conexão persistente, encerrando...');
+                    process.exit(1);
+                }
+            } else {
+                falhasInternet = 0;
             }
-        } else {
-            falhasInternet = 0;
-        }
-    }, 20 * 1000);
+        }, 20 * 1000);
+    }
 
     // Manda mensagem de aviso de reinicialização do bot
     if (fs.existsSync(restartPath) && !fs.existsSync(stopPath)) {
@@ -87,11 +94,6 @@ client.on('ready', async () => {
 
         fs.unlinkSync(restartPath);
     }
-});
-
-// When the client is ready, run this code (only once)
-client.once('ready', () => {
-    console.log('Client is ready!');
 });
 
 // When the client received QR-Code

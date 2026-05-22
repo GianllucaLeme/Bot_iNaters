@@ -75,12 +75,7 @@ client.on('ready', async () => {
     }, 20 * 1000);
 
     // Manda mensagem de aviso de reinicialização do bot
-    const restartNotice = path.join(process.cwd(), 'RESTART_NOTICE');
-    
-    // Não manda quando o bot estiver pausado
-    const stopPath = path.join(process.cwd(), 'STOP'); 
-
-    if (fs.existsSync(restartNotice) && !fs.existsSync(stopPath)) {
+    if (fs.existsSync(restartPath) && !fs.existsSync(stopPath)) {
         const grupos = [
             `${c.grupo_bot_iNaters}@g.us`,
             `${c.grupo_iNaturalisters}@g.us`
@@ -90,7 +85,7 @@ client.on('ready', async () => {
             await client.sendMessage(grupo, '> Reiniciando o bot...');
         }
 
-        fs.unlinkSync(restartNotice);
+        fs.unlinkSync(restartPath);
     }
 });
 
@@ -148,6 +143,10 @@ const mensagensProcessadas = new Set();
 
 // Permite a criação do arquivo STOP para pausar o bot
 const path = require('path');
+
+// Variáveis para pausa e reinicialização do bot
+const stopPath = path.join(process.cwd(), 'STOP');
+const restartPath = path.join(process.cwd(), 'RESTART_NOTICE');
 
 // Lista de grupos permitidos para leitura dos comandos
 const gruposPermitidos = [
@@ -220,7 +219,7 @@ function extrairComandodeURL(message) {
         linha = linha.trim();
 
         // Procura algo que comece com "/"
-        const match = linha.match(/^\/[\p{L}0-9_?]+/u);
+        const match = linha.match(/^\/[\p{L}0-9_?]+$/u);
 
         if (match) {
             return match[0];
@@ -236,7 +235,7 @@ function normalizarComando(message) {
 
     let comando = message.toLowerCase().trim();
 
-    // Ignora comandos entre aspas ou com "> "
+    // Ignora comandos entre aspas ou com "> " ou do tipo "/comando [frase aleatória]"
     if (/^["'~].*["'~]$/.test(comando) || comando.startsWith('>')) {
         return null;
     }
@@ -1376,8 +1375,6 @@ async function Comandos(message, mensagem_normalizada) {
 
     /*--- Comandos Admin ---*/
 
-    const stopPath = path.join(process.cwd(), 'STOP');
-
     if (mensagem_normalizada === '/stop') {
         let is_admin = await message.getContact();
         const tipo_conversa = await message.getChat();
@@ -1845,14 +1842,12 @@ client.on('message_create', async message => {
         }
     }
 
-    // Comando para despausar o bot
-    const stopPath = path.join(process.cwd(), 'STOP');
-
     // Bloqueio dos comandos quando o bot estiver pausado
     if (mensagem_normalizada !== '/start' && fs.existsSync(stopPath)) {
         return;
     }
 
+    // Comando para despausar o bot
     if (mensagem_normalizada === '/start') {
         let is_admin = await message.getContact();
         const tipo_conversa = await message.getChat();

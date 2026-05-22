@@ -175,7 +175,7 @@ for (const cmd of clbc_aga) {
 }
 
 // Função que determina a chance do usuário ser marcado
-async function chanceUsuario(usuario, chance) {
+function chanceUsuario(usuario, chance) {
     if (Math.random() < chance) {
         return usuario;
     } else {
@@ -184,8 +184,8 @@ async function chanceUsuario(usuario, chance) {
 }
 
 // Função que adiciona o usuário para ser propriamente mencionado na mensagem
-async function mencionarUsuario(lista, pessoas, usuario, chance) {
-    const marcacao = await chanceUsuario(usuario, chance);
+function mencionarUsuario(lista, pessoas, usuario, chance) {
+    const marcacao = chanceUsuario(usuario, chance);
     
     if(marcacao){
         lista.push(marcacao + '@c.us');
@@ -196,7 +196,7 @@ async function mencionarUsuario(lista, pessoas, usuario, chance) {
 }
 
 // Função para embaralhar a lista de contatos
-async function embaralharContatos(contatos) {
+function embaralharContatos(contatos) {
     for (let i = contatos.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [contatos[i], contatos[j]] = [contatos[j], contatos[i]];  // Troca os elementos

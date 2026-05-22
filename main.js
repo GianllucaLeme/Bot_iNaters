@@ -108,7 +108,7 @@ client.on('qr', (qr) => {
 /*--- Funcionalidades do bot ---*/
 
 
-let lista_comandos = [
+const lista_comandos = new Set([
     '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', 
     
     '/rbn', '/aranha', '/abelha', '/ave', '/barata', '/barbeiro?', '/barbeiro', '/besouro', '/bichopau', 
@@ -124,9 +124,9 @@ let lista_comandos = [
     '/strep', '/strepsiptera', '/tipula', '/tipulomorpha', '/traca', '/zygentoma', '/tripe', '/thysanoptera', 
     '/vespa', '/vespidae', '/maribondo', '/marimbondo',
     
-    '/stop', '/all'];
+    '/stop', '/all']);
 
-let lista_easter = [
+const lista_easter = new Set([
     '/aga', '/alex', '/nos', '/noz', '/naturalista', '/bloisinho', '/blois', '/bloisin', 
     '/crispinin', '/bot', '/caf', '/cladofsm', '/curse', '/trader', '/golpe', '/davi', 
     '/douglas', '/gareli', '/garelli', '/garelao', '/kratos', '/kratosrbn', '/kratos_rbn', 
@@ -136,7 +136,7 @@ let lista_easter = [
     '/tarrafer', '/fischer', '/vem', '/vermoidea', 
 
     '/true_aga', '/true_h', '/cala', '/clbc', '/random_clbc', '/pertubacao', '/ping', 
-    '/alou', '/dicka', '/dickao', '/certo', '/grupo_certo'];
+    '/alou', '/dicka', '/dickao', '/certo', '/grupo_certo']);
 
 // Carrega o arquivo JSON
 const fs = require('fs');
@@ -161,16 +161,18 @@ const gruposPermitidos = [
 let permitidos = [...gruposPermitidos];
 
 // Lista auxiliar para os comandos do grupo "aga"
-let clbc_aga = [
+const clbc_aga = new Set([
     'dido', 'felipe', 'gabriel', 'gomide', 'henrique', 'kleber', 'laz', 'luis', 
     'maycon', 'mayconu7', 'meta', 'pedro', 'pinguim', 'ryan', 'calabot', 'bot2', 
     'sophia', 'sofia', 'carrasco', 'maria', 'cristina', 'vini', 'gian', 'gia', 
     'barata2', 'safira',
     
     c.aga.kleber_audio, c.aga.kleber_audio2, c.aga.dido_audio, c.aga.dido_audio2
-];
+]);
 
-lista_easter.push(...clbc_aga.map(cmd => `/${cmd}`));
+for (const cmd of clbc_aga) {
+    lista_easter.add(`/${cmd}`);
+}
 
 // Função que determina a chance do usuário ser marcado
 async function chanceUsuario(usuario, chance) {
@@ -298,7 +300,7 @@ async function Comandos(message, mensagem_normalizada) {
                                   '/monocotiledonea', '/dicotiledonea', '/anura', '/thysanoptera', '/vespidae', '/maribondo', 
                                   '/marimbondo', '/zygentoma', '/diptera'];
         
-        let comandosPrincipais = lista_comandos.filter(comando => !comandos_removidos.includes(comando));
+        let comandosPrincipais = [...lista_comandos].filter(comando => !comandos_removidos.includes(comando));
 
         let mensagem = `Olá! Esses são os comandos disponíveis até o momento:\n\n`;
         
@@ -1695,7 +1697,7 @@ async function Comandosaga(message, mensagem_normalizada){
     }
 
     if (['/cala', '/clbc', '/random_clbc'].includes(mensagem_normalizada)) {
-        random_clbc_aga = clbc_aga[Math.floor(Math.random() * clbc_aga.length)];
+        random_clbc_aga = [...clbc_aga][Math.floor(Math.random() * clbc_aga.size)];
 
         if([c.aga.dido_audio, c.aga.dido_audio2].includes(random_clbc_aga)){
             const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_dido.mp3`);
@@ -1742,7 +1744,7 @@ async function Comandosaga(message, mensagem_normalizada){
     }
 
     const comando_clbc = mensagem_normalizada.slice(1);
-    if (clbc_aga.includes(comando_clbc)) {
+    if (clbc_aga.has(comando_clbc)) {
 
         try {
             if([c.aga.dido_audio, c.aga.dido_audio2].includes(comando_clbc)){
@@ -1902,7 +1904,9 @@ client.on('message_create', async message => {
     
 
     // Spam handling antes de detectar os comandos
-    if ([...lista_comandos, ...lista_easter, '/start'].includes(mensagem_normalizada)) {
+    const todos_comandos = new Set([...lista_comandos, ...lista_easter, '/start']);
+
+    if (todos_comandos.has(mensagem_normalizada)) {
         
         // Obtém o par usuário-timestamp do último comando enviado
         const usuario = message.from;

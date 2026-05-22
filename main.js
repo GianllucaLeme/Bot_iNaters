@@ -1822,14 +1822,34 @@ const ultimoComando = new Map();
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
     const mensagem_normalizada = normalizarComando( extrairComandodeURL(message.body) );
-    const contato = await message.getContact();
-
+    let contato = null;
+    
     if (!mensagem_normalizada){
         return;
     } 
 
+    // Ignora mensagens antigas e evita processar mensagens duplicadas
+    if ((message.timestamp * 1000) < startTime) {
+        //console.log('[BOT] Ignorando mensagem antiga');
+        return;
+    }
+
+    // Evita que os comandos sejam mandados para pessoas de fora dos grupos
+    if (!permitidos.includes(message.from)) {
+        contato = await message.getContact();
+
+        if (!permitidos.includes(contato.id._serialized)){
+           return; 
+        }
+    }
+
     // Comando para despausar o bot
     const stopPath = path.join(process.cwd(), 'STOP');
+
+    // Bloqueio dos comandos quando o bot estiver pausado
+    if (mensagem_normalizada !== '/start' && fs.existsSync(stopPath)) {
+        return;
+    }
 
     if (mensagem_normalizada === '/start') {
         let is_admin = await message.getContact();
@@ -1859,68 +1879,59 @@ client.on('message_create', async message => {
 
         return;
     }
+    
+    // Caso não tenha obtido as informações do contato anteriormente
+    if (!contato) {
+        contato = await message.getContact();
+    }
 
-    // Bloqueio dos comandos quando o bot estiver pausado
-    if (fs.existsSync(stopPath)) {
+
+
+    const msgId = message.id._serialized;
+
+    if (mensagensProcessadas.has(msgId)) {
         return;
     }
 
-    // Evita que os comandos sejam mandados para pessoas de fora dos grupos
-    if (permitidos.includes(message.from) || permitidos.includes(contato.id._serialized)) {
+    mensagensProcessadas.add(msgId);
+
+    // limpa a lista de mensagens depois de 5 minutos 
+    setTimeout(() => {
+        mensagensProcessadas.delete(msgId);
+    }, 5 * 60 * 1000);
+    
+
+    // Spam handling antes de detectar os comandos
+    if ([...lista_comandos, ...lista_easter, '/start'].includes(mensagem_normalizada)) {
         
-        // Ignora mensagens antigas e evita processar mensagens duplicadas
-        if ((message.timestamp * 1000) < startTime) {
-            //console.log('[BOT] Ignorando mensagem antiga');
+        // Obtém o par usuário-timestamp do último comando enviado
+        const usuario = message.from;
+        const agora = Date.now(); // em milissegundos
+        const ultimo = ultimoComando.get(usuario);
+
+        // bloqueia apenas se a MESMA pessoa mandar outro comando em menos de 3 s
+        if (ultimo && (agora - ultimo) < 3000) {
             return;
         }
 
-        const msgId = message.id._serialized;
+        ultimoComando.set(usuario, agora);
 
-        if (mensagensProcessadas.has(msgId)) {
-            return;
-        }
-
-        mensagensProcessadas.add(msgId);
-
-        // limpa a lista de mensagens depois de 5 minutos 
-        setTimeout(() => {
-            mensagensProcessadas.delete(msgId);
-        }, 5 * 60 * 1000);
-        
-
-
-        // Spam handling antes de detectar os comandos
-        if ([...lista_comandos, ...lista_easter, '/start'].includes(mensagem_normalizada)) {
-            
-            // Obtém o par usuário-timestamp do último comando enviado
-            const usuario = message.from;
-            const agora = Date.now(); // em milissegundos
-            const ultimo = ultimoComando.get(usuario);
-
-            // bloqueia apenas se a MESMA pessoa mandar outro comando em menos de 3 s
-            if (ultimo && (agora - ultimo) < 3000) {
-                return;
+        try {
+            if (permitidos.includes(message.from)) {
+                await Comandos(message, mensagem_normalizada);
+                await ComandosEasterEgg(message, mensagem_normalizada);
             }
 
-            ultimoComando.set(usuario, agora);
-
-            try {
-                if (permitidos.includes(message.from)) {
-                    await Comandos(message, mensagem_normalizada);
-                    await ComandosEasterEgg(message, mensagem_normalizada);
-                }
-
-                if ([`${c.grupo_aga}@g.us`, `${c.aranhas.gianlluca}@c.us`].includes(message.from)) {
-                    await Comandosaga(message, mensagem_normalizada);
-                }
-            } finally {
-                // limpa o usuário da lista depois de 2 s
-                setTimeout(() => {
-                    if (ultimoComando.get(usuario) === agora) {
-                        ultimoComando.delete(usuario);
-                    }
-                }, 2000);
+            if ([`${c.grupo_aga}@g.us`, `${c.aranhas.gianlluca}@c.us`].includes(message.from)) {
+                await Comandosaga(message, mensagem_normalizada);
             }
+        } finally {
+            // limpa o usuário da lista depois de 2 s
+            setTimeout(() => {
+                if (ultimoComando.get(usuario) === agora) {
+                    ultimoComando.delete(usuario);
+                }
+            }, 2000);
         }
     }
 });

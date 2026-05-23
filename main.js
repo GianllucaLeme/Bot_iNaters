@@ -161,7 +161,7 @@ const gruposPermitidos = [
 
 let permitidos = [...gruposPermitidos];
 
-// Lista auxiliar para os comandos do grupo "aga"
+// Objetos auxiliares para os comandos do grupo "aga"
 const clbc_aga = new Set([
     'dido', 'felipe', 'gabriel', 'gomide', 'henrique', 'kleber', 'laz', 'luis', 
     'maycon', 'mayconu7', 'meta', 'pedro', 'pinguim', 'ryan', 'calabot', 'bot2', 
@@ -174,6 +174,31 @@ const clbc_aga = new Set([
 for (const cmd of clbc_aga) {
     lista_easter.add(`/${cmd}`);
 }
+
+const mapa_audios = new Map([
+    [new Set(['calabot', 'bot2']),                'clbc_bot.mp3'],
+    [new Set(['sophia', 'sofia', 'carrasco']),    'clbc_sofia.mp3'],
+    [new Set(['maria', 'cristina']),              'clbc_maria.mp3'],
+    [new Set(['mayconu7']),                       'clbc_maycon.mp3'],
+    [new Set(['gian', 'gia']),                    'fale_mais_gian.mp3'],
+    [new Set(['barata2']),                        'clbc_safira.mp3'],
+
+    [new Set([c.aga.dido_audio, c.aga.dido_audio2]), 'clbc_dido.mp3'],
+    [new Set([c.aga.kleber_audio, c.aga.kleber_audio2]), 'clbc_kleber.mp3'],
+    [new Set([c.aga.laz_audio]), 'clbc_laz.mp3'],
+]);
+
+// Função para mapear as pessoas e os seus respectivos áudios
+function mapear_clbc(pessoa) {
+    for (const [pessoas, arquivo] of mapa_audios) {
+        if (pessoas.has(pessoa)) {
+            return `./pictures/aga/${arquivo}`;
+        }
+    }
+
+    return `./pictures/aga/clbc_${pessoa}.mp3`;
+}
+
 
 // Função que determina a chance do usuário ser marcado
 function chanceUsuario(usuario, chance) {
@@ -1722,46 +1747,8 @@ async function Comandosaga(message, mensagem_normalizada){
     if (['/cala', '/clbc', '/random_clbc'].includes(mensagem_normalizada)) {
         random_clbc_aga = [...clbc_aga][Math.floor(Math.random() * clbc_aga.size)];
 
-        if([c.aga.dido_audio, c.aga.dido_audio2].includes(random_clbc_aga)){
-            const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_dido.mp3`);
-            await client.sendMessage(message.from, media);
-
-        } else if ([c.aga.kleber_audio, c.aga.kleber_audio2].includes(random_clbc_aga)) {
-            const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_kleber.mp3`);
-            await client.sendMessage(message.from, media);
-
-        } else if (['calabot', 'bot2'].includes(random_clbc_aga)) {
-            const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_bot.mp3`);
-            await client.sendMessage(message.from, media);
-            
-        } else if (['sophia', 'sofia', 'carrasco'].includes(random_clbc_aga)) {
-            const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_sofia.mp3`);
-            await client.sendMessage(message.from, media);
-
-        } else if (['maria', 'cristina'].includes(random_clbc_aga)) {
-            const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_maria.mp3`);
-            await client.sendMessage(message.from, media);
-
-        } else if (['mayconu7'].includes(random_clbc_aga)) {
-            const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_maycon.mp3`);
-            await client.sendMessage(message.from, media);
-
-        } else if (['gian', 'gia'].includes(random_clbc_aga)) {
-            const media = MessageMedia.fromFilePath(`./pictures/aga/fale_mais_gian.mp3`);
-            await client.sendMessage(message.from, media);
-
-        } else if (['barata2'].includes(random_clbc_aga)) {
-            const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_safira.mp3`);
-            await client.sendMessage(message.from, media);
-
-        } else if ([c.aga.laz_audio].includes(random_clbc_aga)) {
-            const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_laz.mp3`);
-            await client.sendMessage(message.from, media);
-
-        } else {
-            const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_${random_clbc_aga}.mp3`);
-            await client.sendMessage(message.from, media);
-        }
+        const media = MessageMedia.fromFilePath(mapear_clbc(random_clbc_aga));
+        await client.sendMessage(message.from, media);
 
         return;
     }
@@ -1770,46 +1757,8 @@ async function Comandosaga(message, mensagem_normalizada){
     if (clbc_aga.has(comando_clbc)) {
 
         try {
-            if([c.aga.dido_audio, c.aga.dido_audio2].includes(comando_clbc)){
-                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_dido.mp3`);
-                await client.sendMessage(message.from, media);
-
-            } else if ([c.aga.kleber_audio, c.aga.kleber_audio2].includes(comando_clbc)) {
-                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_kleber.mp3`);
-                await client.sendMessage(message.from, media);
-
-            } else if (['calabot', 'bot2'].includes(comando_clbc)) {
-                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_bot.mp3`);
-                await client.sendMessage(message.from, media);
-                
-            } else if (['sophia', 'sofia', 'carrasco'].includes(comando_clbc)) {
-                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_sofia.mp3`);
-                await client.sendMessage(message.from, media);
-
-            } else if (['maria', 'cristina'].includes(comando_clbc)) {
-                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_maria.mp3`);
-                await client.sendMessage(message.from, media);
-
-            } else if (['mayconu7'].includes(comando_clbc)) {
-                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_maycon.mp3`);
-                await client.sendMessage(message.from, media);
-
-            } else if (['gian', 'gia'].includes(comando_clbc)) {
-                const media = MessageMedia.fromFilePath(`./pictures/aga/fale_mais_gian.mp3`);
-                await client.sendMessage(message.from, media);
-
-            } else if (['barata2'].includes(comando_clbc)) {
-                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_safira.mp3`);
-                await client.sendMessage(message.from, media);
-
-            } else if ([c.aga.laz_audio].includes(comando_clbc)) {
-                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_laz.mp3`);
-                await client.sendMessage(message.from, media);
-
-            } else {
-                const media = MessageMedia.fromFilePath(`./pictures/aga/clbc_${comando_clbc}.mp3`);
-                await client.sendMessage(message.from, media);
-            }
+            const media = MessageMedia.fromFilePath(mapear_clbc(comando_clbc));
+            await client.sendMessage(message.from, media);
         } catch {}
 
         return;
@@ -1838,7 +1787,6 @@ async function Comandosaga(message, mensagem_normalizada){
         await client.sendMessage(message.from, media);
         return;
     }
-    
 }
 
 // Spam handling

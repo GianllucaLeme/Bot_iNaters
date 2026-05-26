@@ -3,6 +3,10 @@
 const { Comandos, lista_comandos } = require('./commands/core');
 const { ComandosEasterEgg, lista_easter } = require('./commands/easter');
 const { Comandosaga, lista_easter_aga } = require('./commands/aga');
+
+const { ComandosAdmin } = require('./commands/admin');
+const { ComandosAjuda } = require('./commands/help');
+
 const { gruposPermitidos } = require('./config/groups');
 
 const { extrairComandodeURL, normalizarComando, 
@@ -103,6 +107,7 @@ client.on('qr', (qr) => {
 
 
 /*--- Funcionalidades do bot ---*/
+
 
 // Variáveis para evitar que o bot leia comandos antigos
 const startTime = Date.now();
@@ -209,14 +214,23 @@ client.on('message_create', async message => {
         ultimoComando.set(usuario, agora);
 
         try {
-            if (permitidos.includes(message.from)) {
+            const isPermitido = permitidos.includes(message.from);
+            const isAGA = [`${c.grupo_aga}@g.us`, `${c.aranhas.gianlluca}@c.us`].includes(message.from);
+
+            if (isPermitido) {
                 await Comandos(client, message, mensagem_normalizada, contato);
                 await ComandosEasterEgg(client, message, mensagem_normalizada, contato);
             }
 
-            if ([`${c.grupo_aga}@g.us`, `${c.aranhas.gianlluca}@c.us`].includes(message.from)) {
+            if (isPermitido || isAGA) {
+                await ComandosAdmin(client, message, mensagem_normalizada, contato);
+                await ComandosAjuda(client, message, mensagem_normalizada);
+            }
+
+            if (isAGA) {
                 await Comandosaga(client, message, mensagem_normalizada, contato);
             }
+
         } finally {
             // limpa o usuário da lista depois de 2 s
             setTimeout(() => {

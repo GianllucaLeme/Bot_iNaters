@@ -4,7 +4,7 @@ const { Comandos, lista_comandos } = require('./commands/core');
 const { ComandosEasterEgg, lista_easter } = require('./commands/easter');
 const { Comandosaga } = require('./commands/aga');
 
-const { lista_easter_aga } = require('./commands/maps/agaCommands');
+const { lista_easter_aga } = require('./commands/helpers/agaCommands');
 const { ComandosAdmin } = require('./commands/admin');
 const { ComandosAjuda } = require('./commands/help');
 

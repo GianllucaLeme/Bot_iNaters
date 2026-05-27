@@ -3,7 +3,7 @@ const { MessageMedia } = require('whatsapp-web.js');
 
 const { embaralharContatos, mencionarUsuario } = require('../../lib/utils');
 
-const { mapa_audios } = require('../maps/agaCommands');
+const { mapa_audios } = require('../helpers/agaCommands');
 
 // Funções para mapear as pessoas e os seus respectivos áudios
 function mapear_clbc(pessoa) {

@@ -220,7 +220,7 @@ client.on('message_create', async message => {
 
             if (isPermitido) {
                 await Comandos(client, message, mensagem_normalizada, contato);
-                await ComandosEasterEgg(client, message, mensagem_normalizada, contato);
+                await ComandosEasterEgg(client, message, mensagem_normalizada);
             }
 
             if (isPermitido || isAGA) {

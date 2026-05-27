@@ -6,7 +6,7 @@ const c = require('../config/contacts_load');
 const { embaralharContatos, mencionarUsuario } = require('../lib/utils');
 
 const { Mapa_comandos } = require('./maps/mentionCommands');
-const { Nomes_alternativos } = require('./maps/aliases');
+const { Nomes_alternativos } = require('./maps/mentionAliases');
 
 const { enviarMarcacoes } = require('./handlers/mentionSender');
 

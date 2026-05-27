@@ -2,8 +2,9 @@
 
 const { Comandos, lista_comandos } = require('./commands/core');
 const { ComandosEasterEgg, lista_easter } = require('./commands/easter');
-const { Comandosaga, lista_easter_aga } = require('./commands/aga');
+const { Comandosaga } = require('./commands/aga');
 
+const { lista_easter_aga } = require('./commands/maps/agaCommands');
 const { ComandosAdmin } = require('./commands/admin');
 const { ComandosAjuda } = require('./commands/help');
 
@@ -228,7 +229,7 @@ client.on('message_create', async message => {
             }
 
             if (isAGA) {
-                await Comandosaga(client, message, mensagem_normalizada, contato);
+                await Comandosaga(client, message, mensagem_normalizada);
             }
 
         } finally {

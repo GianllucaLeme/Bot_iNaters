@@ -150,7 +150,12 @@ client.on('message_create', async message => {
 
     // Comando para despausar o bot
     if (mensagem_normalizada === '/start') {
-        let is_admin = await message.getContact();
+        let is_admin = contato;
+
+        if (!is_admin) {
+            is_admin = await message.getContact();
+        }
+        
         const tipo_conversa = await message.getChat();
 
         if (!tipo_conversa.isGroup) {

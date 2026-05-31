@@ -219,7 +219,9 @@ async function enviarTirarNome(client, message) {
     await client.sendMessage(message.from, '> Pedido enviado.');
 
     setTimeout(async () => {
-        await client.sendMessage(c.aranhas.gianlluca + '@c.us', `O @${usuario_tirar.id.user} quer retirar a marcação!`, {mentions: usuario_tirar.id.user + '@c.us'});
+        await client.sendMessage(c.aranhas.gianlluca + '@c.us', 
+                                `O @${usuario_tirar.id.user} quer retirar a marcação!`, 
+                                { mentions: [usuario_tirar.id.user + '@c.us'] });
     }, 3000);
 }
 

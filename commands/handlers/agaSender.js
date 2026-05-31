@@ -54,4 +54,4 @@ async function enviarPertubacao(client, message) {
     await client.sendMessage(message.from, pessoas, { mentions: lista});
 }
 
-module.exports = { mapear_clbc, enviarAudioaga, enviarTrueaga, enviarPertubacao};
+module.exports = { enviarAudioaga, enviarTrueaga, enviarPertubacao};

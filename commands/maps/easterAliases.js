@@ -19,7 +19,7 @@ const easterAliases = new Map([
 
     ['/lycantropia', '/lycan'],
 
-    ['/meguinha', '/melga'],
+    ['/melguinha', '/melga'],
     ['/melgaco', '/melga'],
     ['/adolfo', '/melga'],
 

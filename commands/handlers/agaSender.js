@@ -22,7 +22,7 @@ async function enviarAudioaga(client, message, pessoa) {
 }
 
 // Funções para enviar as marcações
-async function enviarTrueAGA(client, message) {
+async function enviarTrueaga(client, message) {
     const true_aga = [c.formigas.davi, c.aranhas.gianlluca, c.mariposas.luis_eduardo, 
                       c.formigas.maycon, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, 
                       c.formigas.gomide, c.staph.pedro_staph, c.aranhas.ryan, c.vankan, c.bot, 
@@ -54,4 +54,4 @@ async function enviarPertubacao(client, message) {
     await client.sendMessage(message.from, pessoas, { mentions: lista});
 }
 
-module.exports = { mapear_clbc, enviarAudioaga, enviarTrueAGA, enviarPertubacao};
+module.exports = { mapear_clbc, enviarAudioaga, enviarTrueaga, enviarPertubacao};

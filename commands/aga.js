@@ -3,7 +3,7 @@ const c = require('../config/contacts_load');
 
 const { agaAliases } = require('./maps/agaAliases');
 const { clbc_aga } = require('../config/commandList');
-const { enviarAudioaga, enviarTrueAGA, enviarPertubacao } = require('./handlers/agaSender');
+const { enviarAudioaga, enviarTrueaga, enviarPertubacao } = require('./handlers/agaSender');
 
 
 // Função para o grupo "aga"
@@ -15,7 +15,7 @@ async function Comandosaga(client, message, mensagem_normalizada){
     }
 
     if (comando === '/true_aga') {
-        await enviarTrueAGA(client, message);
+        await enviarTrueaga(client, message);
         return true;
     }
 

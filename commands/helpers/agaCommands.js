@@ -21,16 +21,23 @@ for (const comando of clbc_aga) {
 }
 
 const mapa_audios = new Map([
-    [new Set(['calabot', 'bot2']),                'clbc_bot.mp3'],
-    [new Set(['sophia', 'sofia', 'carrasco']),    'clbc_sofia.mp3'],
-    [new Set(['maria', 'cristina']),              'clbc_maria.mp3'],
-    [new Set(['mayconu7']),                       'clbc_maycon.mp3'],
-    [new Set(['gian', 'gia']),                    'fale_mais_gian.mp3'],
-    [new Set(['barata2']),                        'clbc_safira.mp3'],
+    ['calabot', 'clbc_bot.mp3'],
 
-    [new Set([c.aga.dido_audio, c.aga.dido_audio2]), 'clbc_dido.mp3'],
-    [new Set([c.aga.kleber_audio, c.aga.kleber_audio2]), 'clbc_kleber.mp3'],
-    [new Set([c.aga.laz_audio]), 'clbc_laz.mp3'],
+    ['sofia', 'clbc_sofia.mp3'],
+
+    ['maria', 'clbc_maria.mp3'],
+
+    ['maycon', 'clbc_maycon.mp3'],
+
+    ['gian', 'fale_mais_gian.mp3'],
+
+    ['safira', 'clbc_safira.mp3'],
+
+    ['dido', 'clbc_dido.mp3'],
+
+    ['kleber', 'clbc_kleber.mp3'],
+
+    ['laz', 'clbc_laz.mp3'],
 ]);
 
 

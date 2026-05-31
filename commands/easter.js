@@ -7,14 +7,7 @@ const { easterAliases } = require('./maps/easterAliases');
 
 const { enviarStickerAleatorio, enviarTexto, enviarMedia, enviarMentions } = require('./handlers/easterSender');
 
-const lista_easter = new Set([
-    '/aga', '/alex', '/nos', '/noz', '/naturalista', '/bloisinho', '/blois', '/bloisin', 
-    '/crispinin', '/bot', '/caf', '/cladofsm', '/curse', '/trader', '/golpe', '/davi', 
-    '/douglas', '/kratos', '/kratosrbn', '/kratos_rbn', '/lycan', '/lycantropia', '/mateiro', 
-    '/melga', '/melguinha', '/melgaco', '/adolfo', '/meriva', '/sorteio', '/metaflora', 
-    '/metazooa', '/metazoa', '/plankoidea', '/planklep', '/prancheta', '/prancha', '/26', 
-    '/reh_csif', '/rehcsif', '/dobra', '/tarrafer', '/fischer', '/vem', '/vermoidea'
-]);
+const { lista_easter } = require('../config/commandList');
 
 
 // Função para os comandos Easter Eggs
@@ -56,4 +49,4 @@ async function ComandosEasterEgg(client, message, mensagem_normalizada){
 }
 
 
-module.exports = { ComandosEasterEgg, lista_easter };
+module.exports = { ComandosEasterEgg };

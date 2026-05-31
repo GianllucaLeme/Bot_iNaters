@@ -1,6 +1,6 @@
 const { MessageMedia } = require('whatsapp-web.js');
 
-const { lista_comandos } = require('../core');
+const { lista_comandos } = require('../../config/commandList');
 
 const c = require('../../config/contacts_load');
 

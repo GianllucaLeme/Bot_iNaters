@@ -1,10 +1,10 @@
 /*--- Módulos Principais ---*/
 
-const { Comandos, lista_comandos } = require('./commands/core');
-const { ComandosEasterEgg, lista_easter } = require('./commands/easter');
+const { Comandos } = require('./commands/core');
+const { ComandosEasterEgg } = require('./commands/easter');
 const { Comandosaga } = require('./commands/aga');
 
-const { lista_easter_aga } = require('./commands/helpers/agaCommands');
+const { lista_comandos, lista_easter, lista_easter_aga } = require('./config/commandList');
 const { ComandosAdmin } = require('./commands/admin');
 const { ComandosAjuda } = require('./commands/help');
 
@@ -15,7 +15,7 @@ const { extrairComandodeURL, normalizarComando,
 
 const { temInternet } = require('./lib/internet');
 
-const {stopPath, restartPath } = require('./config/paths');
+const { stopPath, restartPath } = require('./config/paths');
 
 const fs = require('fs');
 const c = require('./config/contacts_load');

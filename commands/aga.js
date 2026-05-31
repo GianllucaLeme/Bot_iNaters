@@ -4,7 +4,7 @@ const c = require('../config/contacts_load');
 const { mencionarUsuario, embaralharContatos} = require('../lib/utils');
 
 const { agaAliases } = require('./maps/agaAliases');
-const { clbc_aga } = require('./helpers/agaCommands');
+const { clbc_aga } = require('../config/commandList');
 const { enviarAudioaga, enviarTrueAGA, enviarPertubacao } = require('./handlers/agaSender');
 
 

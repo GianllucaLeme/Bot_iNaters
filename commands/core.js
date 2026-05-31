@@ -10,24 +10,7 @@ const { Nomes_alternativos } = require('./maps/mentionAliases');
 
 const { enviarMarcacoes } = require('./handlers/mentionSender');
 
-
-const lista_comandos = new Set([
-    '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', 
-    
-    '/rbn', '/aranha', '/abelha', '/ave', '/barata', '/barbeiro', '/besouro', '/bichopau', 
-    '/bicho_pau', '/phasma', '/borboleta', '/cigarra', '/cigarrinha','/cobra', '/serpente', '/cupim', 
-    '/cupins', '/isoptera', '/diplopoda', '/escorpiao', '/escorpioes', '/formiga', '/formiga_leao', 
-    '/fungo', '/cogumelo', '/fungi', '/neuroptera', '/geoplanaria', '/grilo', '/gafanhoto', '/esperanca', 
-    '/orthoptera', '/hemi', '/hemiptera', '/lagarta', '/lepi', '/lepidoptera', '/lagarto', '/calango', 
-    '/gekkota', '/louva', '/louva_deus', '/mantis', '/mantodea', '/marinho', '/mollusca', '/molusco', '/concha', 
-    '/caracol', '/caramujo', '/caranguejo', '/gastropoda', '/mariposa', '/morcego', '/mosca', '/diptera', '/mosquito', 
-    '/opiliao', '/opilioes', '/percevejo', '/percevejo_aq', '/gerromorpha', '/planta', '/plec', '/plecoptera', 
-    '/monocot', '/monocotiledonea', '/dicot', '/dicotiledonea', '/pseudo', '/pseudoescorpiao', '/pseudoescorpioes', 
-    '/sapo', '/anura', '/scoly', '/scolytinae', '/brocas', '/soldadinho', '/membracidae', '/staph', '/staphylinidae', 
-    '/strep', '/strepsiptera', '/tipula', '/tipulomorpha', '/traca', '/zygentoma', '/tripe', '/thysanoptera', 
-    '/vespa', '/vespidae', '/maribondo', '/marimbondo',
-    
-    '/stop', '/all']);
+const { lista_comandos } = require('../config/commandList');
 
 
 // Função que rege os comandos principais
@@ -50,4 +33,5 @@ async function Comandos(client, message, mensagem_normalizada, contato_comando) 
 
 }
 
-module.exports = { Comandos, lista_comandos };
+
+module.exports = { Comandos };

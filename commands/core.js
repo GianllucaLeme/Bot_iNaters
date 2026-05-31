@@ -3,7 +3,6 @@ const fs = require('fs');
 
 const { MessageMedia } = require('whatsapp-web.js');
 const c = require('../config/contacts_load');
-const { embaralharContatos, mencionarUsuario } = require('../lib/utils');
 
 const { Mapa_comandos } = require('./helpers/mentionCommands');
 const { Nomes_alternativos } = require('./maps/mentionAliases');

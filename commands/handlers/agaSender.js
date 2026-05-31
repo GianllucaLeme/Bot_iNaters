@@ -42,13 +42,13 @@ async function enviarPertubacao(client, message) {
                     c.formigas.maycon, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, 
                     c.formigas.gomide, c.staph.pedro_staph, c.aranhas.ryan, c.vankan, c.bot];
 
-    true_aga = (await embaralharContatos(true_aga)).slice(0, 1);
+    true_aga = embaralharContatos(true_aga).slice(0, 1);
 
     let lista = true_aga.map(user => `${user}@c.us`);
     let pessoas = `@${true_aga.join(', @')}`;
 
     for (let i = 0; i < 9; i++) {
-        pessoas = await mencionarUsuario(lista, pessoas, true_aga[0], 1);
+        pessoas = mencionarUsuario(lista, pessoas, true_aga[0], 1);
     }
 
     await client.sendMessage(message.from, pessoas, { mentions: lista});

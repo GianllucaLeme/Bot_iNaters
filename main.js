@@ -10,8 +10,7 @@ const { ComandosAjuda } = require('./commands/help');
 
 const { gruposPermitidos } = require('./config/groups');
 
-const { extrairComandodeURL, normalizarComando, 
-        embaralharContatos, mencionarUsuario } = require('./lib/utils');
+const { extrairComandodeURL, normalizarComando } = require('./lib/utils');
 
 const { temInternet } = require('./lib/internet');
 

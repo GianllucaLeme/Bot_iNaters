@@ -35,7 +35,7 @@ async function ComandosAdmin(client, message, mensagem_normalizada, contato_coma
         }
 
         // Embaralha e pega 2 admins aleatórios para marcar
-        admins = (await embaralharContatos(admins)).slice(0, 2);
+        admins = embaralharContatos(admins).slice(0, 2);
 
         const lista = admins.map(user => `${user}@c.us`);
         const pessoas = `@${admins.join(', @')}`;

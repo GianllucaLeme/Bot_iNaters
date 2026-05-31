@@ -21,7 +21,7 @@ async function enviarMarcacoes({
     // Condicional para limitar quantas pessoas serão marcadas
     // (Auxilia em comandos com muitos membros)
     if (embaralhar) {
-        membros = await embaralharContatos(membros);
+        membros = embaralharContatos(membros);
 
         if (limite_membros) {
             membros = membros.slice(0, limite_membros);
@@ -43,13 +43,13 @@ async function enviarMarcacoes({
 
     // Loop para percorrer os membros mais ativos
     for (const usuario of prioridade) {
-        pessoas = await mencionarUsuario(lista, pessoas, usuario, 1);
+        pessoas = mencionarUsuario(lista, pessoas, usuario, 1);
     }
 
     // Loop para percorrer membros extras
     for (const adicional of adicionais) {
         if (caller !== adicional.usuario) {
-            pessoas = await mencionarUsuario(lista, pessoas, adicional.usuario, adicional.chance);
+            pessoas = mencionarUsuario(lista, pessoas, adicional.usuario, adicional.chance);
         }
     }
 

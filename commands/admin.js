@@ -17,7 +17,7 @@ async function ComandosAdmin(client, message, mensagem_normalizada, contato_coma
         const chat = await obterChatGrupo(client, message);
 
         if (!chat) {
-            return;
+            return true;
         }
 
         let admins = obterAdmins(chat);
@@ -31,7 +31,7 @@ async function ComandosAdmin(client, message, mensagem_normalizada, contato_coma
 
         if (admins.length === 0) {
             await client.sendMessage(message.from, '> Só há você de admin no grupo.');
-            return;
+            return true;
         }
 
         // Embaralha e pega 2 admins aleatórios para marcar
@@ -41,37 +41,37 @@ async function ComandosAdmin(client, message, mensagem_normalizada, contato_coma
         const pessoas = `@${admins.join(', @')}`;
 
         await client.sendMessage(message.from, pessoas, {mentions: lista});
-        return;
+        return true;
     }
 
     if (mensagem_normalizada === '/stop') {
         const chat = await obterChatGrupo(client, message);
 
         if (!chat) {
-            return;
+            return true;
         }
 
         if (!ehAdmin(chat, contato_comando)) {
             await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
-            return;
+            return true;
         }
 
         fs.writeFileSync(stopPath, 'stopped');
         await client.sendMessage(message.from, '> Bot pausado. Use /start para reativá-lo.');
 
-        return;
+        return true;
     }
 
     if (mensagem_normalizada === '/all') {
         const chat = await obterChatGrupo(client, message);
 
         if (!chat) {
-            return;
+            return true;
         }
 
         if (!ehAdmin(chat, contato_comando)) {
             await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
-            return;
+            return true;
         }
 
         let mentions = chat.participants.map(p => `${p.id.user}@c.us`);
@@ -80,8 +80,10 @@ async function ComandosAdmin(client, message, mensagem_normalizada, contato_coma
 
         await chat.sendMessage('> Marcando todo mundo...', { mentions });
 
-        return;
+        return true;
     }
+
+    return false;
 }
 
 

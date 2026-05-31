@@ -28,9 +28,10 @@ async function Comandos(client, message, mensagem_normalizada, contato_comando) 
 
     if (config) {
         await enviarMarcacoes({ client, message, contato_comando, ...config });
-        return;
+        return true;
     }
 
+    return false;
 }
 
 

@@ -219,17 +219,17 @@ client.on('message_create', async message => {
             const isAGA = [`${c.grupo_aga}@g.us`, `${c.aranhas.gianlluca}@c.us`].includes(message.from);
 
             if (isPermitido) {
-                await Comandos(client, message, mensagem_normalizada, contato);
-                await ComandosEasterEgg(client, message, mensagem_normalizada);
+                if (await Comandos(client, message, mensagem_normalizada, contato)) return;
+                if (await ComandosEasterEgg(client, message, mensagem_normalizada)) return;
             }
 
             if (isPermitido || isAGA) {
-                await ComandosAdmin(client, message, mensagem_normalizada, contato);
-                await ComandosAjuda(client, message, mensagem_normalizada);
+                if (await ComandosAdmin(client, message, mensagem_normalizada, contato)) return;
+                if (await ComandosAjuda(client, message, mensagem_normalizada)) return;
             }
 
             if (isAGA) {
-                await Comandosaga(client, message, mensagem_normalizada);
+                if (await Comandosaga(client, message, mensagem_normalizada)) return;
             }
 
         } finally {

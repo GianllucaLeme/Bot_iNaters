@@ -22,7 +22,7 @@ async function ComandosEasterEgg(client, message, mensagem_normalizada){
 
     if (comando_custom) {
         await comando_custom(client, message);
-        return;
+        return true;
     }
 
     const config = easterCommands.get(comando);
@@ -31,21 +31,23 @@ async function ComandosEasterEgg(client, message, mensagem_normalizada){
         switch (config.tipo) {
             case 'mention':
                 await enviarMentions(client, message, config.usuarios);
-                break;
+                return true;
     
             case 'random_sticker':
                 await enviarStickerAleatorio(client, message, config);
-                break;
+                return true;
     
             case 'text':
                 await enviarTexto(client, message, config);
-                break;
+                return true;
             
             case 'media':
                 await enviarMedia(client, message, config);
-                break;
+                return true;
         }
     }
+
+    return false;
 }
 
 

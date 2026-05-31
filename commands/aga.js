@@ -18,31 +18,33 @@ async function Comandosaga(client, message, mensagem_normalizada){
 
     if (comando === '/true_aga') {
         await enviarTrueAGA(client, message);
-        return;
+        return true;
     }
 
     if (comando === '/cala') {
         random_clbc_aga = [...clbc_aga][Math.floor(Math.random() * clbc_aga.size)];
 
         enviarAudioaga(client, message, random_clbc_aga);
-        return;
+        return true;
     }
 
     if (clbc_aga.has(comando.slice(1))) {
         enviarAudioaga(client, message, comando.slice(1));
-        return;
+        return true;
     }
 
     if (comando === '/pertubacao') {
         enviarPertubacao(client, message);
-        return;
+        return true;
     }
 
     if (comando === '/certo') {
         const media = MessageMedia.fromFilePath(`./pictures/aga/grupo_certo.mp3`);
         await client.sendMessage(message.from, media);
-        return;
+        return true;
     }
+
+    return false;
 }
 
 module.exports = { Comandosaga };

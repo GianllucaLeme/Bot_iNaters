@@ -2,7 +2,7 @@ const fs = require('fs');
 const { MessageMedia } = require('whatsapp-web.js');
 const c = require('../config/contacts_load');
 
-const { easterCommands, easterCommands_custom, lista_easter_set } = require('./helpers/easterCommands');
+const { easterCommands, easterCommands_custom } = require('./helpers/easterCommands');
 const { easterAliases } = require('./maps/easterAliases');
 
 const { enviarStickerAleatorio, enviarTexto, enviarMedia, enviarMentions } = require('./handlers/easterSender');

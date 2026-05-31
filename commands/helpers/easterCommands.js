@@ -224,6 +224,5 @@ const easterCommands_custom = new Map([
     }]
 ]);
 
-const lista_easter_set = new Set(...easterCommands.keys(), ...easterCommands_custom.keys());
 
-module.exports = { easterCommands, easterCommands_custom, lista_easter_set };
+module.exports = { easterCommands, easterCommands_custom };

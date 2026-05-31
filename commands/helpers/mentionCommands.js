@@ -174,6 +174,12 @@ const Mapa_comandos = new Map([
                   c.mariposas.nicolas]
     }],
 
+    ['/lagarto', {
+        membros: [c.lagartos.dani_alcantara, c.lagartos.joao_alcantara],
+
+        adicionais: [ {usuario: c.enrico, chance: 0.6} ]
+    }],
+
     ['/louva', {
         membros: [c.louva.bruno_louva, c.louva.cesar, c.louva.leo, 
                   c.louva.lorena, c.louva.lorram, c.louva.savio, c.louva.bombeiro],

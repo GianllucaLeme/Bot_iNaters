@@ -5,23 +5,37 @@ const { MessageMedia } = require('whatsapp-web.js');
 async function enviarStickerAleatorio(client, message, config) {
     const random = Math.floor(Math.random() * config.max);
 
-    const media = MessageMedia.fromFilePath(
-        `${config.pasta}/${config.prefixo}${random}.png`
-    );
+    const media = MessageMedia.fromFilePath(`${config.pasta}/${config.prefixo}${random}.png`);
 
-    await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+    if (config.descricao) {
+        await client.sendMessage(message.from, media, config.descricao);
+    } else {
+        await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
+    }
 }
 
 async function enviarTexto(client, message, config) {
-    await client.sendMessage(message.from, config.mensagem);
+    if (config.conhecimento) {
+        const texto = await fs.promises.readFile(config.conhecimento,'utf-8');
+        await client.sendMessage(message.from, texto);
+        
+    } else {
+        await client.sendMessage(message.from, config.mensagem);
+    }
 }
 
 async function enviarMedia(client, message, config) {
-    const random = Math.floor(Math.random() * config.max);
+    let arquivo;
 
-    const media = MessageMedia.fromFilePath(
-        `${config.pasta}/${config.prefixo}${random}.png`
-    );
+    if (config.max) {
+        const random = Math.floor(Math.random() * config.max);
+
+        arquivo = `${config.prefixo}${random}.${config.ext}`;
+    } else {
+        arquivo = `${config.prefixo}.${config.ext}`;
+    }
+
+    const media = MessageMedia.fromFilePath(`${config.pasta}/${arquivo}`);
 
     await client.sendMessage(message.from, media);
 }

@@ -1,7 +1,5 @@
 const c = require('../../config/contacts_load');
 
-const { lista_easter_aga } = require('../../config/commandList');
-
 const mapa_audios = new Map([
     ['calabot', 'clbc_bot.mp3'],
 
@@ -21,6 +19,5 @@ const mapa_audios = new Map([
 
     ['laz', 'clbc_laz.mp3'],
 ]);
-
 
 module.exports = { mapa_audios };

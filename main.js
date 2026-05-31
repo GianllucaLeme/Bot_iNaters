@@ -22,7 +22,7 @@ const c = require('./config/contacts_load');
 /*--- Sincronização do bot com o WhatsApp ---*/
 
 const qrcode = require('qrcode-terminal');
-const { Client, LocalAuth, MessageMedia} = require('whatsapp-web.js');
+const { Client, LocalAuth } = require('whatsapp-web.js');
 
 // Create a new client instance
 const client = new Client({
@@ -155,7 +155,7 @@ client.on('message_create', async message => {
         if (!is_admin) {
             is_admin = await message.getContact();
         }
-        
+
         const tipo_conversa = await message.getChat();
 
         if (!tipo_conversa.isGroup) {

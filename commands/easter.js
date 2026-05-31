@@ -1,13 +1,9 @@
-const fs = require('fs');
 const { MessageMedia } = require('whatsapp-web.js');
-const c = require('../config/contacts_load');
 
 const { easterCommands, easterCommands_custom } = require('./helpers/easterCommands');
 const { easterAliases } = require('./maps/easterAliases');
 
 const { enviarStickerAleatorio, enviarTexto, enviarMedia, enviarMentions } = require('./handlers/easterSender');
-
-const { lista_easter } = require('../config/commandList');
 
 
 // Função para os comandos Easter Eggs

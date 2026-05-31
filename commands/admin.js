@@ -1,7 +1,4 @@
 const fs = require('fs');
-const path = require('path');
-
-const { MessageMedia } = require('whatsapp-web.js');
 const c = require('../config/contacts_load');
 
 const { obterChatGrupo, obterAdmins, ehAdmin } = require('./handlers/adminSender');

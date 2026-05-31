@@ -1,15 +1,8 @@
 // Módulos necessários
-const fs = require('fs');
-
-const { MessageMedia } = require('whatsapp-web.js');
-const c = require('../config/contacts_load');
-
 const { Mapa_comandos } = require('./helpers/mentionCommands');
 const { Nomes_alternativos } = require('./maps/mentionAliases');
 
 const { enviarMarcacoes } = require('./handlers/mentionSender');
-
-const { lista_comandos } = require('../config/commandList');
 
 
 // Função que rege os comandos principais

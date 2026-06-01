@@ -2,6 +2,9 @@ const { MessageMedia } = require('whatsapp-web.js');
 
 const { lista_comandos } = require('../../config/commandList');
 
+const { Mapa_comandos } = require('../helpers/mentionCommands');
+const { Descricao_alternativos } = require('../maps/mentionAliases');
+
 const c = require('../../config/contacts_load');
 
 
@@ -41,66 +44,19 @@ const help_cache = (() => {
     mensagem += comandosAjuda.map(cmd_help => `* \`${cmd_help.comando}\` - ${cmd_help.descricao}`).join('\n') + '\n\n';
 
     mensagem += `> Comandos Principais - marcam os membros que trabalham em seus respectivos grupos *[ordem alfabética]*\n`;
+    
     mensagem += comandosPrincipais.map(cmd_main => {
-        if (cmd_main === '/rbn') {
-            return `* \`${cmd_main}\` - Rede Brasileira de Naturalistas`;
-        } else if (cmd_main === '/barbeiro') {
-            return `* \`${cmd_main}\` - *percevejo de importância médica*`;
-        } else if (cmd_main === '/bicho_pau'){
-            return `* \`${cmd_main}\` ou \`/phasma\``;
-        } else if (cmd_main === '/cigarrinha') {
-            return `* \`${cmd_main}\` - soldadinhos e membracídeos`;
-        } else if (cmd_main === '/cobra') {
-            return `* \`${cmd_main}\` ou \`/serpente\``;
-        } else if (cmd_main === '/diplopoda') {
-            return `* \`${cmd_main}\` - piolho-de-cobra`;
-        } else if (cmd_main === '/formiga_leao') {
-            return `* \`${cmd_main}\` - ou coisas parecidas`;
-        } else if (cmd_main === '/fungo') {
-            return `* \`${cmd_main}\` - cogumelos e afins`;
-        } else if (cmd_main === '/geoplanaria') {
-            return `* \`${cmd_main}\` - planária terrestre`;
-        } else if (cmd_main === '/grilo') {
-            return `* \`${cmd_main}\` - inclui gafanhotos e esperanças tbm`;
-        } else if (cmd_main === '/hemi') {
-            return `* \`${cmd_main}\` - cigarrinhas, percevejos, afídeos e afins`;
-        } else if (cmd_main === '/lagarta') {
-            return `* \`${cmd_main}\` - dúvida entre borboleta ou mariposa`;
-        } else if (cmd_main === '/lagarto') {
-            return `* \`${cmd_main}\` - calangos e afins`;
-        } else if (cmd_main === '/louva') {
-            return `* \`${cmd_main}\` ou  \`/mantis\``;
-        } else if (cmd_main === '/marinho') {
-            return `* \`${cmd_main}\` - inclui animais marinhos e similares`;
-        } else if (cmd_main === '/percevejo_aq') {
-            return `* \`${cmd_main}\` - percevejos aquáticos`;
-        } else if (cmd_main === '/plec') {
-            return `* \`${cmd_main}\` - plecoptera`;
-        } else if (cmd_main === '/pseudo') {
-            return `* \`${cmd_main}\` - pseudoescorpiões`;
-        } else if (cmd_main === '/monocot'){
-            return `* \`${cmd_main}\` - monocotiledôneas`;
-        } else if (cmd_main === '/dicot'){
-            return `* \`${cmd_main}\` - dicotiledôneas`;
-        } else if (cmd_main === '/sapo'){
-            return `* \`${cmd_main}\` - sapos, rãs ou pererecas`;
-        } else if (cmd_main === '/scoly') {
-            return `* \`${cmd_main}\` - scolytinae (tipo de gorgulho)`;
-        } else if (cmd_main === '/staph') {
-            return `* \`${cmd_main}\` - staphylinidae`;
-        } else if (cmd_main === '/strep') {
-            return `* \`${cmd_main}\` - strepsiptera`;
-        } else if (cmd_main === '/tipula') {
-            return `* \`${cmd_main}\` - tipulomorpha`;
-        } else if (cmd_main === '/traça') {
-            return `* \`${cmd_main}\` - zygentoma`;
-        } else if (cmd_main === '/tripe') {
-            return `* \`${cmd_main}\` - thysanoptera`;
-        } else if (cmd_main === '/vespa') {
-            return `* \`${cmd_main}\` ou \`/maribondo\``;
-        } else {
+        const config = Mapa_comandos.get(cmd_main);
+
+        if (!config?.descricao) {
             return `* \`${cmd_main}\``;
         }
+        
+        if(config.descricao.startsWith('ou')){
+            return `* \`${cmd_main}\` ${config.descricao}`;
+        }
+
+        return `* \`${cmd_main}\` - ${config.descricao}`;
     }).join('\n');
 
     return mensagem;
@@ -117,40 +73,23 @@ const help2_cache = (() => {
     ];
 
     let mensagem = `> Comandos Avançados - variações dos comandos básicos *[ordem alfabética]*\n`;
+    
     mensagem += comandos_avancados.map(cmd_main => {
-        if (cmd_main === '/anura') {
-            return `* \`${cmd_main}\` - sapos e pererecas`;
-        } else if (cmd_main === '/calango') {
-            return `* \`${cmd_main}\` ou \`/gekkota\``;
-        } else if (cmd_main === '/caranguejo') {
-            return `* \`${cmd_main}\`, \`/mollusca\`, \`/molusco\`, \`/concha\`, \`/caracol\`, \`/caramujo\`, ou \`/gastropoda\``;
-        } else if (cmd_main === '/cogumelo') {
-            return `* \`${cmd_main}\` ou \`/fungi\``;
-        } else if (cmd_main === '/cupins') {
-            return `* \`${cmd_main}\` ou \`/isoptera\``;
-        } else if (cmd_main === '/dicotiledonea') {
-            return `* \`${cmd_main}\` ou \`/monocotiledonea\``;
-        } else if (cmd_main === '/esperança') {
-            return `* \`${cmd_main}\`, \`/gafanhoto\` ou \`/orthoptera\``;
-        } else if (cmd_main === '/gerromorpha') {
-            return `* \`${cmd_main}\` - percevejos aquáticos`;
-        } else if (cmd_main === '/lepi') {
-            return `* \`${cmd_main}\` ou \`/lepidoptera\``;
-        } else if (cmd_main === '/marimbondo') {
-            return `* \`${cmd_main}\` ou \`/vespidae\``;
-        } else if (cmd_main === '/pseudoescorpiao') {
-            return `* \`${cmd_main}\` ou \`/pseudoescorpioes\``;
-        } else if (cmd_main === '/scolytinae') {
-            return `* \`${cmd_main}\` ou \`/brocas\``;
-        } else if (cmd_main === '/thysanoptera') {
-            return `* \`${cmd_main}\` - tripes`;
-        } else if (cmd_main === '/tipulomorpha') {
-            return `* \`${cmd_main}\` - típulas e afins`;
-        } else if (cmd_main === '/zygentoma') {
-            return `* \`${cmd_main}\` - traças`;
-        } else {
+        const descricao = Descricao_alternativos.get(cmd_main);
+
+        if (!descricao) {
             return `* \`${cmd_main}\``;
         }
+        
+        if(descricao.startsWith('ou')){
+            return `* \`${cmd_main}\` ${descricao}`;
+        }
+
+        if(descricao.startsWith(',')){
+            return `* \`${cmd_main}\`${descricao}`;
+        }
+
+        return `* \`${cmd_main}\` - ${descricao}`;
     }).join('\n');
     
     return mensagem;
@@ -168,6 +107,7 @@ const sac_cache = (() => {
     return sac_inat;
 })();
 
+// Mudança de versão do bot ocorre aqui
 const sobre_cache = (() => {
     let mensagem = 'O \`iMark\` foi criado para facilitar o processo de identificação de animais, plantas, fungos etc., permitindo a marcação automática de membros especializados em seus grupos taxonômicos.\n\n';
 

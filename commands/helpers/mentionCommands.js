@@ -60,7 +60,8 @@ const Mapa_comandos = new Map([
     ['/barbeiro', {
         membros: [c.carlos_adm, c.aranhas.celio],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.6} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.6} ],
+        descricao: '*percevejo de importância médica*'
     }],
 
     ['/besouro', {
@@ -72,7 +73,8 @@ const Mapa_comandos = new Map([
     ['/bichopau', {
         membros: [c.phasma.edgar, c.phasma.pedro_alvaro, c.phasma.pedro_sisnando, c.phasma.phil],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.01} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.01} ],
+        descricao: ' ou `/phasma`'
     }],
 
     ['/borboleta', {
@@ -96,11 +98,13 @@ const Mapa_comandos = new Map([
         membros: [c.cigarrinha.aline, c.cigarrinha.andre_cigarrinha, 
                   c.cigarrinha.eduardo_henrique],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.4} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.4} ],
+        descricao: 'soldadinhos e membracídeos'
     }],
 
     ['/cobra', {
-        membros: [c.enrico, c.aves.jose_valerio, c.cobras.leonardo_conversano]
+        membros: [c.enrico, c.aves.jose_valerio, c.cobras.leonardo_conversano],
+        descricao: 'ou `/serpente`'
     }],
 
     ['/cupim', {
@@ -112,7 +116,8 @@ const Mapa_comandos = new Map([
     ['/diplopoda', {
         membros: [c.diplopoda.rodrigo_bouzan],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.5} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.5} ],
+        descricao: 'piolho-de-cobra'
     }],
 
     ['/escorpiao', {
@@ -140,44 +145,51 @@ const Mapa_comandos = new Map([
     ['/formiga_leao', {
         membros: [c.formiga_leao.leon, c.formiga_leao.maria_girelli],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.3} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.3} ],
+        descricao: 'ou coisas parecidas'
     }],
 
     ['/fungo', {
         membros: [c.fungos.mateus_ribeiro],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.7} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.7} ],
+        descricao: 'cogumelos e afins'
     }],
 
     ['/geoplanaria', {
         membros: [c.geoplanaria.piter],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.2} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.2} ],
+        descricao: 'planária terrestre'
     }],
 
     ['/grilo', {
         membros: [c.phasma.phil],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.7} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.7} ],
+        descricao: 'inclui gafanhotos e esperanças tbm'
     }],
 
     ['/hemi', {
         membros: [c.cigarrinha.aline, c.cigarrinha.andre_cigarrinha, 
                   c.cigarrinha.eduardo_henrique, c.percevejos.guilherme_lopez],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.2} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.2} ],
+        descricao: 'cigarrinhas, percevejos, afídeos e afins'
     }],
 
     ['/lagarta', {
         membros: [c.borboletas.tiago, c.borboletas.pedro_souza, 
                   c.mariposas.fischer, c.mariposas.luis_eduardo, 
-                  c.mariposas.nicolas]
+                  c.mariposas.nicolas],
+        descricao: 'dúvida entre borboleta ou mariposa'
     }],
 
     ['/lagarto', {
         membros: [c.lagartos.dani_alcantara, c.lagartos.joao_alcantara],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.6} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.6} ],
+        descricao: 'calangos e afins'
     }],
 
     ['/louva', {
@@ -188,7 +200,8 @@ const Mapa_comandos = new Map([
                       {usuario: c.louva.gabriel_gomes, chance: 1} ],
         
         embaralhar: true,
-        limite_membros: 4
+        limite_membros: 4,
+        descricao: 'ou `/mantis`'
     }],
 
     ['/mariposa', {
@@ -209,7 +222,8 @@ const Mapa_comandos = new Map([
         membros: [c.marinho.carlos_sigma, c.aranhas.celio, 
                   c.marinho.rafael_masson, c.mosquitos.walther],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.4} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.4} ],
+        descricao: 'inclui animais marinhos e similares'
     }],
 
     ['/morcego', {
@@ -247,7 +261,8 @@ const Mapa_comandos = new Map([
     ['/percevejo_aq', {
         membros: [c.percevejos.taoso],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.8} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.8} ],
+        descricao: 'percevejos aquáticos'
     }],
 
     ['/planta', {
@@ -257,73 +272,87 @@ const Mapa_comandos = new Map([
     ['/plec', {
         membros: [c.plecoptera.christian],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.8} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.8} ],
+        descricao: 'plecoptera'
     }],
 
     ['/pseudo', {
         membros: [c.aranhas.dayvson],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.7} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.7} ],
+        descricao: 'pseudoescorpiões'
     }],
 
     ['/monocot', {
-        membros: [c.mariposas.fischer, c.formigas.joao_paulo, c.plantas.marcos]
+        membros: [c.mariposas.fischer, c.formigas.joao_paulo, c.plantas.marcos],
+        descricao: 'monocotiledôneas'
     }],
 
     ['/dicot', {
         membros: [c.plantas.angelo_correa, c.plantas.bruno_santos, 
-                  c.plantas.edvandro, c.opilioes.luis_cla]
+                  c.plantas.edvandro, c.opilioes.luis_cla],
+        descricao: 'dicotiledôneas'
     }],
 
     ['/rbn', {
         membros: [c.borboletas.andre_nog, c.abelhas.bruno_aranda, c.aranhas.celio,
-                  c.phasma.edgar, c.enrico, c.aves.jose_valerio, c.rbn.tiago_rbn]
+                  c.phasma.edgar, c.enrico, c.aves.jose_valerio, c.rbn.tiago_rbn],
+
+        descricao: 'Rede Brasileira de Naturalistas'
     }],
 
     ['/sapo', {
         membros: [c.sapo.allanis, c.sapo.catarina, c.sapo.shiva],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.5} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.5} ],
+        descricao: 'sapos, rãs ou pererecas'
     }],
 
     ['/scoly', {
         membros: [c.formigas.gabriel_rogerio],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.7} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.7} ],
+        descricao: 'scolytinae (tipo de gorgulho)'
     }],
 
     ['/staph', {
         membros: [c.staph.pedro_staph],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.7} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.7} ],
+        descricao: 'staphylinidae (tipo de besouro)'
     }],
 
     ['/strep', {
-        membros: [c.formigas.gabriel_rogerio]
+        membros: [c.formigas.gabriel_rogerio],
+        descricao: 'strepsiptera'
     }],
 
     ['/tipula', {
         membros: [c.mosquitos.walther],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.7} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.7} ],
+        descricao: 'tipulomorpha'
     }],
 
     ['/traca', {
         membros: [c.sapo.shiva],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.1} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.1} ],
+        descricao: 'zygentoma'
     }],
 
     ['/tripe', {
         membros: [c.tripe.marina],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.1} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.1} ],
+        descricao: 'thysanoptera'
     }],
 
     ['/vespa', {
         membros: [c.aranhas.celio, c.mariposas.laila, c.phasma.pedro_alvaro],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.3} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.3} ],
+        descricao: 'ou `/maribondo`'
     }],
 ]);
 

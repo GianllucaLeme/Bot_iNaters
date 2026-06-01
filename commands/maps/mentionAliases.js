@@ -79,5 +79,38 @@ const Nomes_alternativos = new Map([
     ['/marimbondo', '/vespa']
 ]);
 
+// Mapa para a descrição dos comandos alternativos
+const Descricao_alternativos = new Map([
+    ['/anura', 'sapos e pererecas'],
 
-module.exports = { Nomes_alternativos };
+    ['/calango', 'ou `/gekkota`'],
+    
+    ['/caranguejo', ', `/mollusca`, `/molusco`, `/concha`, `/caracol`, `/caramujo` ou `/gastropoda`'],
+
+    ['/cogumelo', 'ou `/fungi`'],
+
+    ['/cupins', 'ou `/isoptera`'],
+
+    ['/dicotiledonea', 'ou `/monocotiledonea`'],
+
+    ['/esperança', ', `/gafanhoto` ou `/orthoptera`'],
+
+    ['/gerromorpha', 'percevejos aquáticos'],
+
+    ['/lepi', 'ou `/lepidoptera`'],
+
+    ['/marimbondo', 'ou `/vespidae`'],
+
+    ['/pseudoescorpiao', 'ou `/pseudoescorpioes`'],
+
+    ['/scolytinae', 'ou `/brocas`'],
+
+    ['/thysanoptera', 'tripes'],
+
+    ['/tipulomorpha', 'típulas e afins'],
+
+    ['/zygentoma', 'traças']
+]);
+
+
+module.exports = { Nomes_alternativos, Descricao_alternativos };

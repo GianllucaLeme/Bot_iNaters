@@ -1,5 +1,3 @@
-const c = require('../../config/contacts_load');
-
 const mapa_audios = new Map([
     ['calabot', 'clbc_bot.mp3'],
 

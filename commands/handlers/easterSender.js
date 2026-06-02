@@ -5,6 +5,7 @@ const { MessageMedia } = require('whatsapp-web.js');
 async function enviarStickerAleatorio(client, message, config) {
     const random = Math.floor(Math.random() * config.max);
 
+    // Tirar .png caso queira trabalhar com outros tipos de figurinha
     const media = MessageMedia.fromFilePath(`${config.pasta}/${config.prefixo}${random}.png`);
 
     if (config.descricao) {

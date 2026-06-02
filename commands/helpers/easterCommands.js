@@ -57,6 +57,7 @@ const easterCommands = new Map([
         tipo: 'media',
         pasta: './pictures/aga/dickas',
         prefixo: 'dicka',
+        ext: 'png',
         max: 7
     }],
 
@@ -108,6 +109,7 @@ const easterCommands = new Map([
         tipo: 'media',
         pasta: './pictures/pranchetas',
         prefixo: 'prancha',
+        ext: 'png',
         max: 2
     }],
 
@@ -191,7 +193,7 @@ const easterCommands_custom = new Map([
     }],
 
     ['/tarrafer', async (client, message) => {
-        let random_tarrafer = Math.floor(Math.random()*17);
+        let random_tarrafer = Math.floor(Math.random()*16);
 
         if(random_tarrafer < 9){ //aumentar em cascata caso tenha mais .pngs
             const media = MessageMedia.fromFilePath(`./pictures/tarraferes/tarrafer${random_tarrafer}.png`);

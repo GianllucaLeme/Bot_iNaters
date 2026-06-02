@@ -152,7 +152,7 @@ async function rotina() {
                 await new Promise(resolve => setTimeout(resolve, intervalo));
             }
 
-            pararBot();
+            await pararBot();
             
             // Tempo de aviso para o início do próximo ciclo
             let tempo_reinicio = 10;

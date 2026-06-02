@@ -1,5 +1,4 @@
 const { MessageMedia } = require('whatsapp-web.js');
-const c = require('../config/contacts_load');
 
 const { agaAliases } = require('./maps/agaAliases');
 const { clbc_aga } = require('../config/commandList');
@@ -20,19 +19,19 @@ async function Comandosaga(client, message, mensagem_normalizada){
     }
 
     if (comando === '/cala') {
-        random_clbc_aga = [...clbc_aga][Math.floor(Math.random() * clbc_aga.size)];
+        const random_clbc_aga = [...clbc_aga][Math.floor(Math.random() * clbc_aga.size)];
 
-        enviarAudioaga(client, message, random_clbc_aga);
+        await enviarAudioaga(client, message, random_clbc_aga);
         return true;
     }
 
     if (clbc_aga.has(comando.slice(1))) {
-        enviarAudioaga(client, message, comando.slice(1));
+        await enviarAudioaga(client, message, comando.slice(1));
         return true;
     }
 
     if (comando === '/pertubacao') {
-        enviarPertubacao(client, message);
+        await enviarPertubacao(client, message);
         return true;
     }
 

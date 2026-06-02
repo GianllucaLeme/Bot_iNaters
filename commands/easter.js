@@ -1,5 +1,3 @@
-const { MessageMedia } = require('whatsapp-web.js');
-
 const { easterCommands, easterCommands_custom } = require('./helpers/easterCommands');
 const { easterAliases } = require('./maps/easterAliases');
 

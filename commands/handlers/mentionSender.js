@@ -21,7 +21,7 @@ async function enviarMarcacoes({
     // Condicional para limitar quantas pessoas serão marcadas
     // (Auxilia em comandos com muitos membros)
     if (embaralhar) {
-        membros = embaralharContatos(membros);
+        membros = embaralharContatos([...membros]);
 
         if (limite_membros) {
             membros = membros.slice(0, limite_membros);

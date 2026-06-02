@@ -129,13 +129,19 @@ async function rotina() {
             }
 
             // Espera um tempo para o bot reiniciar (ajustar conforme necessário)
-            let horas_extras = 1;
-            let horas = 1; // converter em minutos
-            let minutos = 60 * 30; // converter em segundos
+            // Exemplo: horas_extras = 1
+            // Resultado: 1 × 60 × 60 × 1000 = 3.600.000 ms = 1 hora
+
+            let horas_extras = 0.5;      // atualmente, 30 minutos
+            let horas = 60;              // em minutos
+            let minutos = 60;            // em segundos
             
-            botCaiu = false;
             const tempoTotal = horas_extras * horas * minutos * 1000;
-            const intervalo = 5000;
+            
+            // A cada 5 segundos o watchdog verifica se o bot caiu.
+            const intervalo = 5 * 1000;
+
+            botCaiu = false;
 
             for (let tempo = 0; tempo < tempoTotal; tempo += intervalo) {
                 if (botCaiu) {

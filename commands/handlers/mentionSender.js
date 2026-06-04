@@ -39,7 +39,13 @@ async function enviarMarcacoes({
 
 
     let lista = membros.map(user => `${user}@c.us`);
-    let pessoas = `@${membros.join(', @')}`;
+
+    // Evita gerar apenas "@" e mandar como mensagem
+    let pessoas = '';
+
+    if (membros.length > 0) {
+        pessoas = `@${membros.join(', @')}`;
+    }
 
     // Loop para percorrer os membros mais ativos
     for (const usuario of prioridade) {
@@ -51,6 +57,12 @@ async function enviarMarcacoes({
         if (caller !== adicional.usuario) {
             pessoas = mencionarUsuario(lista, pessoas, adicional.usuario, adicional.chance);
         }
+    }
+
+    // Segurança extra caso ninguém tenha sido adicionado
+    if (!pessoas.trim()) {
+        await client.sendMessage(message.from, erro);
+        return;
     }
 
     await client.sendMessage(message.from, pessoas, { mentions: lista });

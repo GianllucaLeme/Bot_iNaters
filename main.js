@@ -242,7 +242,7 @@ client.on('message_create', async message => {
                 if (ultimoComando.get(usuario) === agora) {
                     ultimoComando.delete(usuario);
                 }
-            }, 2000);
+            }, 3000);
         }
     }
 });

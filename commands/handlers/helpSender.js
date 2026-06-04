@@ -27,7 +27,7 @@ const help_cache = (() => {
     const comandos_removidos = new Set([
         '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', '/stop', 
         '/all', '/serpente', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
-        '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerromorpha', '/bichopau', '/phasma', 
+        '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerromorpha', '/bicho_pau', '/phasma', 
         '/pseudoescorpiao', '/pseudoescorpioes', '/lepi', '/lepidoptera', '/calango', '/gekkota', 
         '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/mollusca', '/molusco', '/caracol', 
         '/caramujo', '/gastropoda', '/neuroptera', '/cogumelo', '/fungi', '/soldadinho', '/membracidae', 
@@ -65,7 +65,7 @@ const help_cache = (() => {
 const help2_cache = (() => {
     
     let comandos_avancados = [
-        '/anura', '/bichopau', '/calango', '/caranguejo', '/cogumelo', 
+        '/anura', '/bicho_pau', '/calango', '/caranguejo', '/cogumelo', 
         '/cupins', '/dicotiledonea', '/diptera', '/escorpioes', '/esperança', '/gerromorpha', 
         '/hemiptera', '/lepi', '/marimbondo', '/neuroptera', '/opilioes', '/plecoptera', 
         '/pseudoescorpiao', '/scolytinae', '/staphylinidae', '/strepsiptera', 
@@ -159,9 +159,16 @@ async function enviarTirarNome(client, message) {
     await client.sendMessage(message.from, '> Pedido enviado.');
 
     setTimeout(async () => {
-        await client.sendMessage(c.aranhas.gianlluca + '@c.us', 
-                                `O @${usuario_tirar.id.user} quer retirar a marcação!`, 
-                                { mentions: [usuario_tirar.id.user + '@c.us'] });
+        // try para evitar que o bot encerre caso haja algum problema ao enviar a mensagem
+        try {
+            await client.sendMessage(c.aranhas.gianlluca + '@c.us', 
+                    `O @${usuario_tirar.id.user} quer retirar a marcação!`, 
+                    { mentions: [usuario_tirar.id.user + '@c.us'] }
+            );
+        
+        } catch (error) {
+            console.error('[tirar_nome] Falha ao notificar: ', error.message);
+        }
     }, 3000);
 }
 

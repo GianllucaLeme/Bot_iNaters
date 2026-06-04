@@ -74,7 +74,7 @@ const Mapa_comandos = new Map([
         membros: [c.phasma.edgar, c.phasma.pedro_alvaro, c.phasma.pedro_sisnando, c.phasma.phil],
 
         adicionais: [ {usuario: c.enrico, chance: 0.01} ],
-        descricao: ' ou `/phasma`'
+        descricao: 'ou `/phasma`'
     }],
 
     ['/borboleta', {

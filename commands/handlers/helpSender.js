@@ -116,7 +116,7 @@ const sobre_cache = (() => {
     mensagem += 'Sugestões mandar no privado do autor! 👇\n\n'
     
     mensagem += `Desenvolvedor: @${c.aranhas.gianlluca}\n`;
-    mensagem += 'Versão atual: \`\`\`1.2.2\`\`\`\n';
+    mensagem += 'Versão atual: \`\`\`1.3.0\`\`\`\n';
     mensagem += 'GitHub: https://github.com/GianllucaLeme/Bot_iNaters';
     
     return mensagem;

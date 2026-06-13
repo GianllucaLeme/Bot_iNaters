@@ -21,7 +21,7 @@ const lista_comandos = new Set([
 
 const lista_easter = new Set([
     '/alex', '/nos', '/noz', '/naturalista', '/bloisinho', '/blois', '/bloisin', 
-    '/crispinin', '/bot', '/caf', '/cladofsm', '/curse', '/trader', '/golpe', , 
+    '/crispinin', '/bot', '/caf', '/cladofsm', '/curse', '/trader', '/golpe', 
     '/douglas', '/kratos', '/kratosrbn', '/kratos_rbn', '/lycan', '/lycantropia', '/mateiro', 
     '/melga', '/melguinha', '/melgaco', '/adolfo', '/meriva', '/sorteio', '/metaflora', 
     '/metazooa', '/metazoa', '/plankoidea', '/planklep', '/prancheta', '/prancha', '/26', 

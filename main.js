@@ -152,7 +152,7 @@ client.on('message_create', async message => {
     }
 
     // Bloqueio dos comandos quando o bot estiver pausado
-    if (mensagem_normalizada !== '/start' && gruposPausados[message.from]) {
+    if (mensagem_normalizada !== '/start' && message.from.endsWith('@g.us') && gruposPausados[message.from]) {
         return;
     }
 

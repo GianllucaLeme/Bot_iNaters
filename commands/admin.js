@@ -1,3 +1,5 @@
+const c = require('../config/contacts_load');
+
 const { carregarGruposPausados, salvarGruposPausados } = require('../lib/utils');
 
 const { obterChatGrupo, obterAdmins, ehAdmin } = require('./handlers/adminSender');

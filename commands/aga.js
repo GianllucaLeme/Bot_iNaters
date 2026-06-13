@@ -4,7 +4,6 @@ const { agaAliases } = require('./maps/agaAliases');
 const { clbc_aga } = require('../config/commandList');
 const { enviarAudioaga, enviarTrueaga, enviarPertubacao } = require('./handlers/agaSender');
 
-
 // Função para o grupo "aga"
 async function Comandosaga(client, message, mensagem_normalizada){
     let comando = mensagem_normalizada;
@@ -19,10 +18,10 @@ async function Comandosaga(client, message, mensagem_normalizada){
     }
 
     if (comando === '/cala') {
-        const random_clbc_aga = [...clbc_aga][Math.floor(Math.random() * clbc_aga.size)];
+        let random_clbc_aga = [...clbc_aga][Math.floor(Math.random() * clbc_aga.size)];
 
         // Retira a barra da pessoa selecionada (e.g. /gian -> gian)
-        const alias = agaAliases.get(`/${random_clbc_aga}`);
+        let alias = agaAliases.get(`/${random_clbc_aga}`);
 
         if (alias) {
             random_clbc_aga = alias.slice(1);

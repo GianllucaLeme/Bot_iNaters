@@ -1,6 +1,6 @@
 const c = require('../config/contacts_load');
 
-const { carregarGruposPausados, salvarGruposPausados } = require('../lib/utils');
+const { pausarGrupo } = require('../lib/pauseManager');
 
 const { obterChatGrupo, obterAdmins, ehAdmin } = require('./handlers/adminSender');
 
@@ -52,10 +52,8 @@ async function ComandosAdmin(client, message, mensagem_normalizada, contato_coma
             return true;
         }
 
-        const gruposPausados = carregarGruposPausados();
-        gruposPausados[message.from] = true;
-
-        salvarGruposPausados(gruposPausados);
+        pausarGrupo(message.from);
+        
         await client.sendMessage(message.from, '> Bot pausado. Use /start para reativá-lo.');
 
         return true;

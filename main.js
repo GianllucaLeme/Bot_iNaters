@@ -15,7 +15,7 @@ const { extrairComandodeURL, normalizarComando } = require('./lib/utils');
 const { temInternet } = require('./lib/internet');
 
 const { restartPath } = require('./config/paths');
-const { carregarGruposPausados, salvarGruposPausados } = require('./lib/utils');
+const { estaPausado, despausarGrupo, obterGruposPausados } = require('./lib/pauseManager');
 
 const fs = require('fs');
 const c = require('./config/contacts_load');
@@ -94,7 +94,7 @@ client.once('ready', async () => {
         ];
 
         for (const grupo of grupos) {
-            if (gruposPausados[grupo]) {
+            if (estaPausado(grupo)) {
                 continue;
             }
             
@@ -124,8 +124,6 @@ let permitidos = [...gruposPermitidos];
 const ultimoComando = new Map();
 const todos_comandos = new Set([...lista_comandos, ...lista_easter, ...lista_easter_aga, '/start']);
 
-// Variável para grupos pausados
-let gruposPausados = carregarGruposPausados();
 
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
@@ -152,7 +150,7 @@ client.on('message_create', async message => {
     }
 
     // Bloqueio dos comandos quando o bot estiver pausado
-    if (mensagem_normalizada !== '/start' && message.from.endsWith('@g.us') && gruposPausados[message.from]) {
+    if (mensagem_normalizada !== '/start' && message.from.endsWith('@g.us') && estaPausado(message.from)) {
         return;
     }
 
@@ -181,9 +179,8 @@ client.on('message_create', async message => {
         }
 
         // Caso seja admin, o bot será despausado
-        if (gruposPausados[message.from]) {
-            delete gruposPausados[message.from];  // Despausa o grupo atual
-            salvarGruposPausados(gruposPausados);
+        if (estaPausado(message.from)) {
+            despausarGrupo(message.from);  // Despausa o grupo atual
             
             await client.sendMessage(message.from, '> Bot despausando...');
         } else {

@@ -1,7 +1,7 @@
 <h1 align="center">🤖 Bot iNaters 🤖</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/github/v/tag/GianllucaLeme/Bot_iNaters?label=versão" alt="Versão">
+  <img src="https://img.shields.io/github/v/tag/GianllucaLeme/Bot_iNaters?label=vers%C3%A3o" alt="Versão">
 </p>
 
 ## Sobre

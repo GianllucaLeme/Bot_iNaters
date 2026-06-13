@@ -38,7 +38,7 @@ const clbc_aga = new Set([
     'barata2', 'safira',
     
     c.aga.kleber_audio, c.aga.kleber_audio2, c.aga.dido_audio, c.aga.dido_audio2, 
-    c.aga.laz_audio
+    c.aga.laz_audio, c.aga.henrique_audio
 ]);
 
 const lista_easter_aga = new Set([

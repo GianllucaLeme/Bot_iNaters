@@ -194,7 +194,8 @@ const Mapa_comandos = new Map([
 
     ['/louva', {
         membros: [c.louva.bruno_louva, c.louva.cesar, c.louva.leo, 
-                  c.louva.lorena, c.louva.lorram, c.louva.savio, c.louva.bombeiro],
+                  c.louva.lorena, c.louva.lorram, c.louva.savio, 
+                  c.louva.bruno_bombeiro],
 
         adicionais: [ {usuario: c.enrico, chance: 0.02},
                       {usuario: c.louva.gabriel_gomes, chance: 1} ],

@@ -43,6 +43,7 @@ const Nomes_alternativos = new Map([
     ['/caramujo', '/marinho'],
     ['/caranguejo', '/marinho'],
     ['/gastropoda', '/marinho'],
+    ['/siri', '/marinho'],
 
     ['/diptera', '/mosca'],
 
@@ -85,7 +86,7 @@ const Descricao_alternativos = new Map([
 
     ['/calango', 'ou `/gekkota`'],
     
-    ['/caranguejo', ', `/mollusca`, `/molusco`, `/concha`, `/caracol`, `/caramujo` ou `/gastropoda`'],
+    ['/caranguejo', ', `/mollusca`, `/molusco`, `/concha`, `/caracol`, `/caramujo`, `/siri` ou `/gastropoda`'],
 
     ['/cogumelo', 'ou `/fungi`'],
 

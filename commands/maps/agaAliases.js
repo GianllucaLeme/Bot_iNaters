@@ -21,6 +21,8 @@ const agaAliases = new Map([
 
     [`/${c.aga.laz_audio}`, '/laz'],
 
+    [`/${c.aga.henrique_audio}`, '/henrique'],
+
     ['/mayconu7', '/maycon'],
 
     ['/bot2', '/calabot'],

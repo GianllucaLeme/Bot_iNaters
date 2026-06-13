@@ -1,10 +1,12 @@
-# 🤖 Bot iNaters
+<h1 align="center">🤖 Bot iNaters 🤖</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/github/v/tag/GianllucaLeme/Bot_iNaters?label=versão" alt="Versão">
+</p>
+
+## Sobre
 
 Bot de automação para grupos de WhatsApp desenvolvido com [whatsapp-web.js](https://github.com/pedroslopez/whatsapp-web.js). Criado para uso em grupos privados de naturalistas, o bot permite mencionar membros por categoria taxonômica, enviar mídias, easter eggs, e oferece controles administrativos por grupo.
-
-**Versão atual:** `1.3.1`
-
----
 
 ## Tecnologias utilizadas
 
@@ -246,10 +248,10 @@ echo. > KILL   # Windows
 
 Qualquer administrador do grupo pode enviar os comandos diretamente no chat:
 
-| Comando  | Ação                                   |
-|----------|------                                  |
-| `/stop`  | Pausa o bot **somente** no grupo atual |
-| `/start` | Retoma o bot **somente** no grupo atual|
+| Comando  | Ação                                       |
+|----------|------                                      |
+| `/stop`  | Pausa o bot **somente** no grupo atual     |
+| `/start` | Retoma o bot **somente** no grupo atual    |
 
 - Os demais grupos continuam funcionando normalmente enquanto um grupo está pausado.
 - O estado de pausa é persistido em `pausedGroups.json` e sobrevive a reinicializações.
@@ -305,8 +307,8 @@ O bot registra o timestamp do último comando por usuário. Comandos enviados em
 
 ## Licença
 
-Consulte o campo `license` no `package.json`.
+Consulte o campo `license` no [`package.json`](https://github.com/GianllucaLeme/Bot_iNaters/blob/main/package.json).
 
 ---
 
-<sub>Desenvolvido para uso privado em grupos de WhatsApp de naturalistas.</sub>
+<sub>Desenvolvido para uso privado em grupos de WhatsApp.</sub>

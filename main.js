@@ -86,9 +86,6 @@ client.once('ready', async () => {
         }, 20 * 1000);
     }
 
-    // Variável global para armazenar os grupos pausados
-    gruposPausados = carregarGruposPausados();
-
     // Manda mensagem de aviso de reinicialização do bot
     if (fs.existsSync(restartPath)) {
         const grupos = [
@@ -128,7 +125,7 @@ const ultimoComando = new Map();
 const todos_comandos = new Set([...lista_comandos, ...lista_easter, ...lista_easter_aga, '/start']);
 
 // Variável para grupos pausados
-let gruposPausados = {};
+let gruposPausados = carregarGruposPausados();
 
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
@@ -155,8 +152,6 @@ client.on('message_create', async message => {
     }
 
     // Bloqueio dos comandos quando o bot estiver pausado
-    gruposPausados = carregarGruposPausados();
-
     if (mensagem_normalizada !== '/start' && gruposPausados[message.from]) {
         return;
     }

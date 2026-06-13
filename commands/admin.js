@@ -1,11 +1,8 @@
-const fs = require('fs');
-const c = require('../config/contacts_load');
+const { carregarGruposPausados, salvarGruposPausados } = require('../lib/utils');
 
 const { obterChatGrupo, obterAdmins, ehAdmin } = require('./handlers/adminSender');
 
 const { embaralharContatos } = require('../lib/utils');
-
-const { stopPath } = require('../config/paths');
 
 // Função para os comandos de administrador
 async function ComandosAdmin(client, message, mensagem_normalizada, contato_comando){
@@ -53,7 +50,10 @@ async function ComandosAdmin(client, message, mensagem_normalizada, contato_coma
             return true;
         }
 
-        fs.writeFileSync(stopPath, 'stopped');
+        const gruposPausados = carregarGruposPausados();
+        gruposPausados[message.from] = true;
+
+        salvarGruposPausados(gruposPausados);
         await client.sendMessage(message.from, '> Bot pausado. Use /start para reativá-lo.');
 
         return true;

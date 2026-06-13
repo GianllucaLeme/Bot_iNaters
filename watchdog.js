@@ -8,12 +8,13 @@ let contadorReinicio = 0; // Flag para mandar mensagem de aviso de reinicializa�
 let botCaiu = false; // Flag para escutar o encerramento do processo
 
 // Limpa arquivos de controle antigos
+const pausedGroupsPath = path.join(process.cwd(), 'pausedGroups.json');
 const killrestartNotice = path.join(process.cwd(), 'RESTART_NOTICE');
-const killStop = path.join(process.cwd(), 'STOP');
 
-if (fs.existsSync(killStop)) {
-    fs.unlinkSync(killStop);
+if (fs.existsSync(pausedGroupsPath)) {
+    fs.unlinkSync(pausedGroupsPath);
 }
+
 if (fs.existsSync(killrestartNotice)) {
     fs.unlinkSync(killrestartNotice);
 }
@@ -108,24 +109,12 @@ async function rotina() {
             }
 
             // Condição para mandar mensagem de reinício do bot no grupo
-            const stopPath = path.join(process.cwd(), 'STOP'); // Impede a mensagem caso o bot esteja pausado
+            // Aviso a cada 6 reinicializações
+            contadorReinicio++;
 
-            if (fs.existsSync(stopPath)) {
+            if (contadorReinicio >= 6) {
+                fs.writeFileSync(path.join(process.cwd(), 'RESTART_NOTICE'), '1');
                 contadorReinicio = 0;
-
-                const restartPath = path.join(process.cwd(), 'RESTART_NOTICE');
-
-                if (fs.existsSync(restartPath)) {
-                    fs.unlinkSync(restartPath);
-                }
-            } else {
-                // Aviso a cada 6 reinícios
-                contadorReinicio++;
-
-                if (contadorReinicio >= 6) {
-                    fs.writeFileSync(path.join(process.cwd(), 'RESTART_NOTICE'), '1');
-                    contadorReinicio = 0;
-                }
             }
 
             // Espera um tempo para o bot reiniciar (ajustar conforme necessário)

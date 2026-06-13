@@ -91,7 +91,7 @@ pictures/
 KILL
 KILLt
 RESTART_NOTICE
-STOP
+pausedGroups.json
 
 # Routine executable files
 *.exe

@@ -14,7 +14,8 @@ const { extrairComandodeURL, normalizarComando } = require('./lib/utils');
 
 const { temInternet } = require('./lib/internet');
 
-const { stopPath, restartPath } = require('./config/paths');
+const { restartPath } = require('./config/paths');
+const { carregarGruposPausados, salvarGruposPausados } = require('./lib/utils');
 
 const fs = require('fs');
 const c = require('./config/contacts_load');
@@ -85,14 +86,21 @@ client.once('ready', async () => {
         }, 20 * 1000);
     }
 
+    // Variável global para armazenar os grupos pausados
+    gruposPausados = carregarGruposPausados();
+
     // Manda mensagem de aviso de reinicialização do bot
-    if (fs.existsSync(restartPath) && !fs.existsSync(stopPath)) {
+    if (fs.existsSync(restartPath)) {
         const grupos = [
             `${c.grupo_bot_iNaters}@g.us`,
             `${c.grupo_iNaturalisters}@g.us`
         ];
 
         for (const grupo of grupos) {
+            if (gruposPausados[grupo]) {
+                continue;
+            }
+            
             await client.sendMessage(grupo, '> Reiniciando o bot...');
         }
 
@@ -119,6 +127,9 @@ let permitidos = [...gruposPermitidos];
 const ultimoComando = new Map();
 const todos_comandos = new Set([...lista_comandos, ...lista_easter, ...lista_easter_aga, '/start']);
 
+// Variável para grupos pausados
+let gruposPausados = {};
+
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
     const mensagem_normalizada = normalizarComando( extrairComandodeURL(message.body) );
@@ -144,7 +155,9 @@ client.on('message_create', async message => {
     }
 
     // Bloqueio dos comandos quando o bot estiver pausado
-    if (mensagem_normalizada !== '/start' && fs.existsSync(stopPath)) {
+    gruposPausados = carregarGruposPausados();
+
+    if (mensagem_normalizada !== '/start' && gruposPausados[message.from]) {
         return;
     }
 
@@ -173,8 +186,10 @@ client.on('message_create', async message => {
         }
 
         // Caso seja admin, o bot será despausado
-        if (fs.existsSync(stopPath)) {
-            fs.unlinkSync(stopPath); // Remove o arquivo STOP
+        if (gruposPausados[message.from]) {
+            delete gruposPausados[message.from];  // Despausa o grupo atual
+            salvarGruposPausados(gruposPausados);
+            
             await client.sendMessage(message.from, '> Bot despausando...');
         } else {
             await client.sendMessage(message.from, '> O bot já está em execução.');

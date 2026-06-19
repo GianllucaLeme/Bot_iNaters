@@ -14,7 +14,7 @@ const easterCommands = new Map([
         tipo: 'random_sticker',
         pasta: './pictures/bot_patadas',
         prefixo: 'patada',
-        max: 3
+        max: 4
     }],
     
     ['/bloisinho', {

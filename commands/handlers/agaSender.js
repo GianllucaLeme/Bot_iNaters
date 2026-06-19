@@ -29,7 +29,11 @@ async function enviarTrueaga(client, message) {
                       c.sobral, c.inacio, c.emy, c.mariposas.fischer];
 
     const ex_aga = [c.aga.kleber, c.aga.felix, c.aga.didobola, c.aga.sofia, 
-                    c.aga.maria, c.aga.vini, c.aga.barata, c.aga.laz, c.aga.meta];
+                    c.aga.maria, c.aga.vini, c.aga.barata, c.aga.celante,
+                    c.aga.livia, c.aga.adrielle, c.aga.ana, c.aga.laila,
+                    c.aga.leticia, c.aga.gian_soul,
+                    
+                    c.aga.laz, c.aga.meta];
 
     let lista = true_aga.map(user => `${user}@c.us`);
     let pessoas = `@${true_aga.join(', @')}`;

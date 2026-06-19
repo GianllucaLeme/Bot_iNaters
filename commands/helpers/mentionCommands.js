@@ -8,9 +8,9 @@ const Mapa_comandos = new Map([
     }],
 
     ['/milicia', {
-        membros: [c.aranhas.celio, c.aranhas.gianlluca, c.mariposas.fischer, 
-                  c.mariposas.luis_eduardo, c.formigas.davi, c.formigas.gabriel_rogerio, 
-                  c.formigas.maycon, c.phasma.edgar, c.enrico, c.sapo.shiva, c.aves.jose_valerio],
+        membros: [c.aranhas.celio, c.aranhas.gianlluca, c.mariposas.fischer, c.sobral,
+                  c.mariposas.luis_eduardo, c.borboletas.pedro_souza, c.formigas.gabriel_rogerio, 
+                  c.phasma.edgar, c.enrico, c.sapo.shiva, c.aves.jose_valerio],
         
         embaralhar: true,
         limite_membros: 5       // Limita o array de membros

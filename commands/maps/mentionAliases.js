@@ -20,6 +20,8 @@ const Nomes_alternativos = new Map([
     ['/cogumelo', '/fungo'],
     ['/fungi', '/fungo'],
 
+    ['/coleoptera', '/besouro'],
+
     ['/gafanhoto', '/grilo'],
     ['/esperanca', '/grilo'],
     ['/orthoptera', '/grilo'],
@@ -89,6 +91,8 @@ const Descricao_alternativos = new Map([
     ['/caranguejo', ', `/mollusca`, `/molusco`, `/concha`, `/caracol`, `/caramujo`, `/siri` ou `/gastropoda`'],
 
     ['/cogumelo', 'ou `/fungi`'],
+
+    ['/coleoptera', 'besouros'],
 
     ['/cupins', 'ou `/isoptera`'],
 

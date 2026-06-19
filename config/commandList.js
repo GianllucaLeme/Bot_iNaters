@@ -3,7 +3,7 @@ const c = require('./contacts_load');
 const lista_comandos = new Set([
     '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', 
     
-    '/rbn', '/aranha', '/abelha', '/ave', '/barata', '/barbeiro', '/besouro', '/bichopau', 
+    '/rbn', '/aranha', '/abelha', '/ave', '/barata', '/barbeiro', '/besouro', '/coleoptera', '/bichopau', 
     '/bicho_pau', '/phasma', '/borboleta', '/cigarra', '/cigarrinha','/cobra', '/serpente', '/cupim', 
     '/cupins', '/isoptera', '/diplopoda', '/escorpiao', '/escorpioes', '/formiga', '/formiga_leao', 
     '/fungo', '/cogumelo', '/fungi', '/neuroptera', '/geoplanaria', '/grilo', '/gafanhoto', '/esperanca', 

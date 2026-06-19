@@ -65,7 +65,7 @@ const help_cache = (() => {
 const help2_cache = (() => {
     
     let comandos_avancados = [
-        '/anura', '/bicho_pau', '/calango', '/caranguejo', '/cogumelo', 
+        '/anura', '/bicho_pau', '/calango', '/caranguejo', '/cogumelo', '/coleoptera',
         '/cupins', '/dicotiledonea', '/diptera', '/escorpioes', '/esperança', '/gerromorpha', 
         '/hemiptera', '/lepi', '/marimbondo', '/neuroptera', '/opilioes', '/plecoptera', 
         '/pseudoescorpiao', '/scolytinae', '/staphylinidae', '/strepsiptera', 

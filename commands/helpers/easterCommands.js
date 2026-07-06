@@ -214,7 +214,7 @@ const easterCommands_custom = new Map([
 
             await client.sendMessage(message.from, texto_sabio, {mentions: contatinho});
 
-        } else if([12, 13, 14, 15].includes(random_tarrafer)){
+        } else if([tarrafer_pictures + 3, tarrafer_pictures + 4, tarrafer_pictures + 5, tarrafer_pictures + 6].includes(random_tarrafer)){
             const contatinho = [`${c.mariposas.fischer}@c.us`];
 
             let texto_sabio2 = `Áudio supremo do nosso amigo @${c.mariposas.fischer}:`;

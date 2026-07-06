@@ -76,7 +76,7 @@ const easterCommands = new Map([
         descricao: { sendMediaAsSticker: true , 
                      stickerAuthor: "AracnoGian", 
                      stickerName: "🤗 Irrita_Melgaço.exe 🤗" },
-        max: 14
+        max: 15
     }],
 
     ['/meriva', {

@@ -13,13 +13,14 @@ const Mapa_comandos = new Map([
                   c.phasma.edgar, c.enrico, c.sapo.shiva, c.aves.jose_valerio],
         
         embaralhar: true,
-        limite_membros: 5       // Limita o array de membros
+        limite_membros: 6       // Limita o array de membros
     }],
 
     /*--- Comandos Principais ---*/
 
     ['/abelha', {
-        membros: [c.abelhas.bruno_abelha, c.abelhas.bruno_aranda, c.abelhas.beatriz, c.staph.pedro_staph],
+        membros: [c.abelhas.atila_dur, c.abelhas.bruno_abelha, c.abelhas.bruno_aranda, 
+                  c.abelhas.beatriz, c.staph.pedro_staph],
         
         adicionais: [ {usuario: c.enrico, chance: 0.3}]
     }],
@@ -143,7 +144,7 @@ const Mapa_comandos = new Map([
     }],
 
     ['/formiga_leao', {
-        membros: [c.formiga_leao.leon, c.formiga_leao.maria_girelli],
+        membros: [c.formiga_leao.guendo, c.formiga_leao.leon, c.formiga_leao.maria_girelli],
 
         adicionais: [ {usuario: c.enrico, chance: 0.3} ],
         descricao: 'ou coisas parecidas'

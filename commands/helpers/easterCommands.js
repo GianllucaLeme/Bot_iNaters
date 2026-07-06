@@ -194,11 +194,12 @@ const easterCommands_custom = new Map([
 
     ['/tarrafer', async (client, message) => {
         let random_tarrafer = Math.floor(Math.random()*16);
+        let tarrafer_pictures = 10;            // quantidade de .pngs
 
-        if(random_tarrafer < 9){ //aumentar em cascata caso tenha mais .pngs
+        if(random_tarrafer < tarrafer_pictures){
             const media = MessageMedia.fromFilePath(`./pictures/tarraferes/tarrafer${random_tarrafer}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
-        } else if([9, 10, 11].includes(random_tarrafer)){
+        } else if([tarrafer_pictures, tarrafer_pictures + 1, tarrafer_pictures + 2].includes(random_tarrafer)){
             const contatinho = [`${c.mariposas.fischer}@c.us`];
 
             let texto_sabio = `Quote do dia do nosso amigo @${c.mariposas.fischer}:\n`;
@@ -209,7 +210,7 @@ const easterCommands_custom = new Map([
                 `> _Zwibbly wobble flibbertigibbet snozzwanger snazzlepop blibber-blubber jibber-jabber!_`,
             ];
             
-            texto_sabio += quotes[random_tarrafer - 9];
+            texto_sabio += quotes[random_tarrafer - tarrafer_pictures];
 
             await client.sendMessage(message.from, texto_sabio, {mentions: contatinho});
 

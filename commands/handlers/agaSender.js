@@ -15,10 +15,15 @@ function mapear_clbc(pessoa) {
 }
 
 async function enviarAudioaga(client, message, pessoa) {
+    const arquivo = `./pictures/aga/${mapear_clbc(pessoa)}`;
+
     try {
-        const media = MessageMedia.fromFilePath(`./pictures/aga/${mapear_clbc(pessoa)}`);
+        const media = MessageMedia.fromFilePath(arquivo);
         await client.sendMessage(message.from, media);
-    } catch {}
+
+    } catch (erro) {
+        console.log(`[aga] Falha ao enviar o seguinte áudio: ${mapear_clbc(pessoa)}`);
+    }
 }
 
 // Funções para enviar as marcações
@@ -58,4 +63,4 @@ async function enviarPertubacao(client, message) {
     await client.sendMessage(message.from, pessoas, { mentions: lista});
 }
 
-module.exports = { enviarAudioaga, enviarTrueaga, enviarPertubacao};
+module.exports = { enviarAudioaga, enviarTrueaga, enviarPertubacao };

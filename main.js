@@ -43,65 +43,73 @@ const client = new Client({
 let interval_unico = false;
 
 client.once('ready', async () => {
-    console.log('Client is ready!');
-    
-    // Loop para permitir que as pessoas do grupo permitido possam mandar os comandos no privado também
-    for (const grupoId of gruposPermitidos) {
-        try {
-            const chat = await client.getChatById(grupoId);
-
-            if (chat.isGroup) {
-                for (const participante of chat.participants) {
-                    permitidos.push(participante.id._serialized);
-                }
-            }
-        } catch (erro) {
-            console.log(`Erro ao ler participantes de ${grupoId}:`, erro);
-        }
-    }
-
-    // Remove duplicados
-    permitidos = [...new Set(permitidos)];
-
-    // Reinicia o bot após uma queda de conexão inesperada
-    if (!interval_unico) {
-        interval_unico = true;
-        let falhasInternet = 0;
+    try {
+        console.log('Client is ready!');
         
-        setInterval(async () => {
-            const conectado = await temInternet();
+        // Loop para permitir que as pessoas do grupo permitido possam mandar os comandos no privado também
+        for (const grupoId of gruposPermitidos) {
+            try {
+                const chat = await client.getChatById(grupoId);
     
-            if (!conectado) {
-                falhasInternet++;
-    
-                console.log(`[BOT] Sem internet (${falhasInternet}/3)`);
-    
-                if (falhasInternet >= 3) {
-                    console.log('[BOT] Queda de conexão persistente, encerrando...');
-                    process.exit(1);
+                if (chat.isGroup) {
+                    for (const participante of chat.participants) {
+                        permitidos.push(participante.id._serialized);
+                    }
                 }
-            } else {
-                falhasInternet = 0;
+            } catch (erro) {
+                console.log(`Erro ao ler participantes de ${grupoId}:`, erro);
             }
-        }, 20 * 1000);
-    }
-
-    // Manda mensagem de aviso de reinicialização do bot
-    if (fs.existsSync(restartPath)) {
-        const grupos = [
-            `${c.grupo_bot_iNaters}@g.us`,
-            `${c.grupo_iNaturalisters}@g.us`
-        ];
-
-        for (const grupo of grupos) {
-            if (estaPausado(grupo)) {
-                continue;
-            }
-            
-            await client.sendMessage(grupo, '> Reiniciando o bot...');
         }
-
-        fs.unlinkSync(restartPath);
+    
+        // Remove duplicados
+        permitidos = [...new Set(permitidos)];
+    
+        // Reinicia o bot após uma queda de conexão inesperada
+        if (!interval_unico) {
+            interval_unico = true;
+            let falhasInternet = 0;
+            
+            setInterval(async () => {
+                try {
+                    const conectado = await temInternet();
+            
+                    if (!conectado) {
+                        falhasInternet++;
+            
+                        console.log(`[BOT] Sem internet (${falhasInternet}/3)`);
+            
+                        if (falhasInternet >= 3) {
+                            console.log('[BOT] Queda de conexão persistente, encerrando...');
+                            process.exit(1);
+                        }
+                    } else {
+                        falhasInternet = 0;
+                    }
+                } catch (erro) {
+                    console.error('[BOT] Falha ao verificar internet:\n\n', erro);
+                }
+            }, 20 * 1000);
+        }
+    
+        // Manda mensagem de aviso de reinicialização do bot
+        if (fs.existsSync(restartPath)) {
+            const grupos = [
+                `${c.grupo_bot_iNaters}@g.us`,
+                `${c.grupo_iNaturalisters}@g.us`
+            ];
+    
+            for (const grupo of grupos) {
+                if (estaPausado(grupo)) {
+                    continue;
+                }
+                
+                await client.sendMessage(grupo, '> Reiniciando o bot...');
+            }
+    
+            fs.unlinkSync(restartPath);
+        }
+    } catch (erro) {
+        console.error('[BOT] Falha inesperada no evento \'ready\':\n\n', erro);
     }
 });
 
@@ -127,132 +135,152 @@ const todos_comandos = new Set([...lista_comandos, ...lista_easter, ...lista_eas
 
 // Bot, em loop, lendo as mensagens
 client.on('message_create', async message => {
-    const mensagem_normalizada = normalizarComando( extrairComandodeURL(message.body) );
-    let contato = null;
-    
-    if (!mensagem_normalizada){
-        return;
-    } 
-
-    // Ignora mensagens antigas e evita processar mensagens duplicadas
-    if ((message.timestamp * 1000) < startTime) {
-        //console.log('[BOT] Ignorando mensagem antiga');
-        return;
-    }
-
-    // Evita que os comandos sejam mandados para pessoas de fora dos grupos
-    if (!permitidos.includes(message.from)) {
-        contato = await message.getContact();
-
-        if (!permitidos.includes(contato.id._serialized)){
-           return; 
-        }
-    }
-
-    // Bloqueio dos comandos quando o bot estiver pausado
-    if (mensagem_normalizada !== '/start' && message.from.endsWith('@g.us') && estaPausado(message.from)) {
-        return;
-    }
-
-    // Comando para despausar o bot
-    if (mensagem_normalizada === '/start') {
-        let is_admin = contato;
-
-        if (!is_admin) {
-            is_admin = await message.getContact();
-        }
-
-        const tipo_conversa = await message.getChat();
-
-        if (!tipo_conversa.isGroup) {
-            await client.sendMessage(message.from, '> Esse comando só funciona em grupos.');
-            return;
-        }
-
-        let lista_admins = tipo_conversa.participants
-            .filter(p => p.isAdmin || p.isSuperAdmin)
-            .map(p => p.id.user);
+    try {
+        const mensagem_normalizada = normalizarComando( extrairComandodeURL(message.body) );
+        let contato = null;
         
-        if (!lista_admins.includes(is_admin.id.user) && is_admin.id.user !== c.aranhas.gianlluca) {
-            await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
+        if (!mensagem_normalizada){
+            return;
+        } 
+    
+        // Ignora mensagens antigas e evita processar mensagens duplicadas
+        if ((message.timestamp * 1000) < startTime) {
+            //console.log('[BOT] Ignorando mensagem antiga');
             return;
         }
-
-        // Caso seja admin, o bot será despausado
-        if (estaPausado(message.from)) {
-            despausarGrupo(message.from);  // Despausa o grupo atual
+    
+        // Evita que os comandos sejam mandados para pessoas de fora dos grupos
+        if (!permitidos.includes(message.from)) {
+            contato = await message.getContact();
+    
+            if (!permitidos.includes(contato.id._serialized)){
+               return; 
+            }
+        }
+    
+        // Bloqueio dos comandos quando o bot estiver pausado
+        if (mensagem_normalizada !== '/start' && message.from.endsWith('@g.us') && estaPausado(message.from)) {
+            return;
+        }
+    
+        // Comando para despausar o bot
+        if (mensagem_normalizada === '/start') {
+            let is_admin = contato;
+    
+            if (!is_admin) {
+                is_admin = await message.getContact();
+            }
+    
+            const tipo_conversa = await message.getChat();
+    
+            if (!tipo_conversa.isGroup) {
+                await client.sendMessage(message.from, '> Esse comando só funciona em grupos.');
+                return;
+            }
+    
+            let lista_admins = tipo_conversa.participants
+                .filter(p => p.isAdmin || p.isSuperAdmin)
+                .map(p => p.id.user);
             
-            await client.sendMessage(message.from, '> Bot despausando...');
-        } else {
-            await client.sendMessage(message.from, '> O bot já está em execução.');
-        }
-
-        return;
-    }
+            if (!lista_admins.includes(is_admin.id.user) && is_admin.id.user !== c.aranhas.gianlluca) {
+                await client.sendMessage(message.from, '> Você não tem autorização para utilizar esse comando.');
+                return;
+            }
     
-    // Caso não tenha obtido as informações do contato anteriormente
-    if (!contato) {
-        contato = await message.getContact();
-    }
-
-
-    const msgId = message.id._serialized;
-
-    if (mensagensProcessadas.has(msgId)) {
-        return;
-    }
-
-    mensagensProcessadas.add(msgId);
-
-    // limpa a lista de mensagens depois de 5 minutos 
-    setTimeout(() => {
-        mensagensProcessadas.delete(msgId);
-    }, 5 * 60 * 1000);
+            // Caso seja admin, o bot será despausado
+            if (estaPausado(message.from)) {
+                despausarGrupo(message.from);  // Despausa o grupo atual
+                
+                await client.sendMessage(message.from, '> Bot despausando...');
+            } else {
+                await client.sendMessage(message.from, '> O bot já está em execução.');
+            }
     
-
-    // Spam handling antes de detectar os comandos
-    if (todos_comandos.has(mensagem_normalizada)) {
-        
-        // Obtém o par usuário-timestamp do último comando enviado
-        const usuario = message.from;
-        const agora = Date.now(); // em milissegundos
-        const ultimo = ultimoComando.get(usuario);
-
-        // bloqueia apenas se a MESMA pessoa mandar outro comando em menos de 3 s
-        if (ultimo && (agora - ultimo) < 3000) {
             return;
         }
-
-        ultimoComando.set(usuario, agora);
-
-        try {
-            const isPermitido = permitidos.includes(message.from);
-            const isAGA = [`${c.grupo_aga}@g.us`, `${c.aranhas.gianlluca}@c.us`].includes(message.from);
-
-            if (isPermitido) {
-                if (await Comandos(client, message, mensagem_normalizada, contato)) return;
-                if (await ComandosEasterEgg(client, message, mensagem_normalizada)) return;
-            }
-
-            if (isPermitido || isAGA) {
-                if (await ComandosAdmin(client, message, mensagem_normalizada, contato)) return;
-                if (await ComandosAjuda(client, message, mensagem_normalizada)) return;
-            }
-
-            if (isAGA) {
-                if (await Comandosaga(client, message, mensagem_normalizada)) return;
-            }
-
-        } finally {
-            // limpa o usuário da lista depois de 2 s
-            setTimeout(() => {
-                if (ultimoComando.get(usuario) === agora) {
-                    ultimoComando.delete(usuario);
-                }
-            }, 3000);
+        
+        // Caso não tenha obtido as informações do contato anteriormente
+        if (!contato) {
+            contato = await message.getContact();
         }
+    
+    
+        const msgId = message.id._serialized;
+    
+        if (mensagensProcessadas.has(msgId)) {
+            return;
+        }
+    
+        mensagensProcessadas.add(msgId);
+    
+        // limpa a lista de mensagens depois de 5 minutos 
+        setTimeout(() => {
+            mensagensProcessadas.delete(msgId);
+        }, 5 * 60 * 1000);
+        
+    
+        // Spam handling antes de detectar os comandos
+        if (todos_comandos.has(mensagem_normalizada)) {
+            
+            // Obtém o par usuário-timestamp do último comando enviado
+            const usuario = message.author || contato.id._serialized || message.from;
+            const agora = Date.now();                   // em milissegundos
+            const ultimo = ultimoComando.get(usuario);
+    
+            // bloqueia apenas se a MESMA pessoa mandar outro comando em menos de 3 s
+            if (ultimo && (agora - ultimo) < 3000) {
+                return;
+            }
+    
+            ultimoComando.set(usuario, agora);
+    
+            try {
+                const isPermitido = permitidos.includes(message.from);
+                const isAGA = [`${c.grupo_aga}@g.us`, `${c.aranhas.gianlluca}@c.us`].includes(message.from);
+    
+                if (isPermitido) {
+                    if (await Comandos(client, message, mensagem_normalizada, contato)) return;
+                    if (await ComandosEasterEgg(client, message, mensagem_normalizada)) return;
+                }
+    
+                if (isPermitido || isAGA) {
+                    if (await ComandosAdmin(client, message, mensagem_normalizada, contato)) return;
+                    if (await ComandosAjuda(client, message, mensagem_normalizada)) return;
+                }
+    
+                if (isAGA) {
+                    if (await Comandosaga(client, message, mensagem_normalizada)) return;
+                }
+    
+            } finally {
+                // limpa o usuário da lista depois de 2 s
+                setTimeout(() => {
+                    if (ultimoComando.get(usuario) === agora) {
+                        ultimoComando.delete(usuario);
+                    }
+                }, 3000);
+            }
+        }
+    } catch (erro) {
+        let origem = 'origem-desconhecida';
+        let msgId = 'id-desconhecido';
+
+        if (message) {
+            if (message.from) {
+                origem = message.from;
+            }
+
+            if (message.id && message.id._serialized) {
+                msgId = message.id._serialized;
+            }
+        }
+
+        console.error(`[BOT] Falha ao processar mensagem ${msgId} de ${origem}:\n\n`, erro);
     }
 });
 
 // Ligar o bot
-client.initialize();
+client.initialize().catch(erro => {
+    console.error('[BOT] Falha ao inicializar cliente:\n\n', erro);
+    process.exit(1);
+});

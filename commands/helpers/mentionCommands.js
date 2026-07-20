@@ -135,7 +135,8 @@ const Mapa_comandos = new Map([
 
     ['/formiga', {
         membros: [c.formigas.davi, c.formigas.felipe_santos, 
-                  c.formigas.gabriel_rogerio, c.formigas.maycon],
+                  c.formigas.gabriel_rogerio, c.formigas.maycon,
+                  c.formigas.gomide],
 
         adicionais: [ {usuario: c.formigas.joao_paulo, chance: 0.1},
                       {usuario: c.formigas.diego, chance: 0.05},
@@ -239,7 +240,8 @@ const Mapa_comandos = new Map([
                   c.moscas.leonardo_breder, c.moscas.luan, 
                   c.moscas.matheus, c.moscas.rodrigo],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.1} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.1},
+                      {usuario: c.formigas.gomide, chance: 0.4} ]
     }],
 
     ['/mosquito', {
@@ -307,7 +309,7 @@ const Mapa_comandos = new Map([
         membros: [c.sapo.allanis, c.sapo.catarina, c.sapo.shiva],
 
         adicionais: [ {usuario: c.enrico, chance: 0.5} ],
-        descricao: 'sapos, rãs ou pererecas'
+        descricao: ', `/perereca` ou `/rã`'
     }],
 
     ['/scoly', {

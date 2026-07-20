@@ -15,11 +15,13 @@ const Nomes_alternativos = new Map([
 
     ['/escorpioes', '/escorpiao'],
 
+    ['/neuro', '/formiga_leao'],
     ['/neuroptera', '/formiga_leao'],
 
     ['/cogumelo', '/fungo'],
     ['/fungi', '/fungo'],
 
+    ['/coleo', '/besouro'],
     ['/coleoptera', '/besouro'],
 
     ['/gafanhoto', '/grilo'],
@@ -28,6 +30,7 @@ const Nomes_alternativos = new Map([
 
     ['/hemiptera', '/hemi'],
 
+    ['/lep', '/lagarta'],
     ['/lepi', '/lagarta'], 
     ['/lepidoptera', '/lagarta'],
 
@@ -51,6 +54,7 @@ const Nomes_alternativos = new Map([
 
     ['/opilioes', '/opiliao'],
 
+    ['/gerro', '/percevejo_aq'],
     ['/gerromorpha', '/percevejo_aq'],
 
     ['/plecoptera', '/plec'],
@@ -63,6 +67,8 @@ const Nomes_alternativos = new Map([
     ['/dicotiledonea', '/dicot'],
 
     ['/anura', '/sapo'],
+    ['/perereca', '/sapo'],
+    ['/ra', '/sapo'],
 
     ['/scolytinae', '/scoly'],
     ['/brocas', '/scoly'],
@@ -92,7 +98,7 @@ const Descricao_alternativos = new Map([
 
     ['/cogumelo', 'ou `/fungi`'],
 
-    ['/coleoptera', 'besouros'],
+    ['/coleo', 'ou `/coleoptera` (besouros)'],
 
     ['/cupins', 'ou `/isoptera`'],
 
@@ -100,11 +106,13 @@ const Descricao_alternativos = new Map([
 
     ['/esperança', ', `/gafanhoto` ou `/orthoptera`'],
 
-    ['/gerromorpha', 'percevejos aquáticos'],
+    ['/gerro', 'ou `/gerromorpha` (percevejos aquáticos)'],
 
-    ['/lepi', 'ou `/lepidoptera`'],
+    ['/lep', ', `/lepi` ou `/lepidoptera`'],
 
     ['/marimbondo', 'ou `/vespidae`'],
+
+    ['/neuro', 'ou `/neuroptera` (cupins)'],
 
     ['/pseudoescorpiao', 'ou `/pseudoescorpioes`'],
 

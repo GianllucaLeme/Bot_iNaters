@@ -26,14 +26,14 @@ const help_cache = (() => {
     
     const comandos_removidos = new Set([
         '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', '/stop', 
-        '/all', '/serpente', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
-        '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerromorpha', '/bicho_pau', '/phasma', 
+        '/all', '/serpente', '/coleo', '/coleoptera', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
+        '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerro', '/gerromorpha', '/bicho_pau', '/phasma', 
         '/pseudoescorpiao', '/pseudoescorpioes', '/lepi', '/lepidoptera', '/calango', '/gekkota', 
         '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/mollusca', '/molusco', '/caracol', 
         '/caramujo', '/gastropoda', '/neuroptera', '/cogumelo', '/fungi', '/soldadinho', '/membracidae', 
         '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', '/tipulomorpha', '/plecoptera', 
         '/monocotiledonea', '/dicotiledonea', '/anura', '/thysanoptera', '/vespidae', '/maribondo', 
-        '/marimbondo', '/zygentoma', '/diptera'
+        '/marimbondo', '/zygentoma', '/diptera', '/neuro', '/lep', '/siri', '/perereca', '/ra'
     ]);
     
     const comandosPrincipais = [...lista_comandos].filter(comando => !comandos_removidos.has(comando));
@@ -56,6 +56,10 @@ const help_cache = (() => {
             return `* \`${cmd_main}\` ${config.descricao}`;
         }
 
+        if(config.descricao.startsWith(',')){
+            return `* \`${cmd_main}\`${config.descricao}`;
+        }
+
         return `* \`${cmd_main}\` - ${config.descricao}`;
     }).join('\n');
 
@@ -65,9 +69,9 @@ const help_cache = (() => {
 const help2_cache = (() => {
     
     let comandos_avancados = [
-        '/anura', '/bicho_pau', '/calango', '/caranguejo', '/cogumelo', '/coleoptera',
-        '/cupins', '/dicotiledonea', '/diptera', '/escorpioes', '/esperança', '/gerromorpha', 
-        '/hemiptera', '/lepi', '/marimbondo', '/neuroptera', '/opilioes', '/plecoptera', 
+        '/anura', '/bicho_pau', '/calango', '/caranguejo', '/cogumelo', '/coleo',
+        '/cupins', '/dicotiledonea', '/diptera', '/escorpioes', '/esperança', '/gerro', 
+        '/hemiptera', '/lep', '/marimbondo', '/neuro', '/opilioes', '/plecoptera', 
         '/pseudoescorpiao', '/scolytinae', '/staphylinidae', '/strepsiptera', 
         '/thysanoptera', '/tipulomorpha', '/zygentoma'
     ];

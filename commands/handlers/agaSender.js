@@ -28,15 +28,14 @@ async function enviarAudioaga(client, message, pessoa) {
 
 // Funções para enviar as marcações
 async function enviarTrueaga(client, message) {
-    const true_aga = [c.formigas.davi, c.aranhas.gianlluca, c.mariposas.luis_eduardo, 
-                      c.formigas.maycon, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, 
-                      c.formigas.gomide, c.staph.pedro_staph, c.aranhas.ryan, c.vankan, c.bot, 
-                      c.sobral, c.inacio, c.emy, c.mariposas.fischer];
+    const true_aga = [c.formigas.davi, c.aranhas.gianlluca, c.formigas.maycon, c.formigas.felipe_santos, 
+                      c.formigas.gabriel_rogerio, c.formigas.gomide, c.staph.pedro_staph, c.aranhas.ryan, 
+                      c.vankan, c.bot, c.sobral, c.inacio, c.emy, c.mariposas.fischer];
 
-    const ex_aga = [c.aga.kleber, c.aga.felix, c.aga.didobola, c.aga.sofia, 
-                    c.aga.maria, c.aga.vini, c.aga.barata, c.aga.celante,
+    const ex_aga = [c.aga.kleber, c.aga.felix, c.aga.didobola, c.aga.luis_aga, 
+                    c.aga.sofia, c.aga.maria, c.aga.vini, c.aga.barata, c.aga.celante,
                     c.aga.livia, c.aga.adrielle, c.aga.ana, c.aga.laila,
-                    c.aga.leticia, c.aga.gian_soul,
+                    c.aga.leticia, c.aga.gian_soul, c.aga.lucas_aga, c.aga.esperidiao,
                     
                     c.aga.laz, c.aga.meta];
 

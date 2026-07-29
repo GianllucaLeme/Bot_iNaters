@@ -66,7 +66,8 @@ const Mapa_comandos = new Map([
     }],
 
     ['/besouro', {
-        membros: [c.besouros.glauco, c.besouros.lorenne, c.besouros.vincenzo, c.besouros.bruno_begha],
+        membros: [c.besouros.glauco, c.besouros.lorenne, c.besouros.vincenzo, 
+                  c.besouros.bruno_begha, c.vankan],
 
         adicionais: [ {usuario: c.enrico, chance: 0.336} ]
     }],
@@ -136,11 +137,10 @@ const Mapa_comandos = new Map([
     ['/formiga', {
         membros: [c.formigas.davi, c.formigas.felipe_santos, 
                   c.formigas.gabriel_rogerio, c.formigas.maycon,
-                  c.formigas.gomide],
+                  c.formigas.gomide, c.vankan],
 
         adicionais: [ {usuario: c.formigas.joao_paulo, chance: 0.1},
                       {usuario: c.formigas.diego, chance: 0.05},
-                      {usuario: c.vankan, chance: 0.03},
                       {usuario: c.enrico, chance: 0.05} ]
     }],
 
@@ -196,8 +196,7 @@ const Mapa_comandos = new Map([
 
     ['/louva', {
         membros: [c.louva.bruno_louva, c.louva.cesar, c.louva.leo, 
-                  c.louva.lorena, c.louva.lorram, c.louva.savio, 
-                  c.louva.bruno_bombeiro],
+                  c.louva.lorena, c.louva.lorram, c.louva.savio],
 
         adicionais: [ {usuario: c.enrico, chance: 0.02},
                       {usuario: c.louva.gabriel_gomes, chance: 1} ],
@@ -353,9 +352,9 @@ const Mapa_comandos = new Map([
     }],
 
     ['/vespa', {
-        membros: [c.aranhas.celio, c.mariposas.laila, c.phasma.pedro_alvaro],
+        membros: [c.aranhas.celio, c.mariposas.laila],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.3} ],
+        adicionais: [ {usuario: c.enrico, chance: 0.5} ],
         descricao: 'ou `/maribondo`'
     }],
 ]);

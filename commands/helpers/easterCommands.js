@@ -135,9 +135,10 @@ const easterCommands = new Map([
 
 const easterCommands_custom = new Map([
     ['/alex', async (client, message) => {
-        let random_alex = Math.floor(Math.random()*7);
+        let total_alex = 7;
+        let random_alex = Math.floor(Math.random()*(total_alex + 1));
                 
-        if(random_alex < 6){
+        if(random_alex < total_alex){
             const media = MessageMedia.fromFilePath(`./pictures/alexes/alex${random_alex}.png`);
             await client.sendMessage(message.from, media, { sendMediaAsSticker: true });
         

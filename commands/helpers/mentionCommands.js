@@ -28,14 +28,15 @@ const Mapa_comandos = new Map([
     ['/aranha', {
         membros: [c.aranhas.adolfo, c.aranhas.alfredo, c.aranhas.claudia, c.aranhas.dayvson, 
                   c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.gabriel_vianna, 
-                  c.aranhas.isaac, c.aranhas.lucas_gusso, c.aranhas.pedro_martins, c.aranhas.victor],
+                  c.aranhas.isaac, c.aranhas.lucas_gusso, c.aranhas.pedro_martins, c.aranhas.victor,
+                  c.aranhas.julio],
 
         prioridade: [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan, c.aranhas.michelotto],
 
         adicionais: [ {usuario: c.enrico, chance: 0.2} ],
 
         embaralhar: true,
-        limite_membros: 3
+        limite_membros: 4
     }],
 
     ['/ave', {
@@ -67,9 +68,9 @@ const Mapa_comandos = new Map([
 
     ['/besouro', {
         membros: [c.besouros.glauco, c.besouros.lorenne, c.besouros.vincenzo, 
-                  c.besouros.bruno_begha, c.vankan],
+                  c.besouros.bruno_begha, c.vankan, c.staph.pedro_staph],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.336} ]
+        adicionais: [ {usuario: c.enrico, chance: 0.3} ]
     }],
 
     ['/bichopau', {

@@ -1,7 +1,8 @@
 const c = require('./contacts_load');
 
 const lista_comandos = new Set([
-    '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', 
+    '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/curador', '/curadores', '/curadoria', '/sobre', 
+    '/tirar_nome',
     
     '/rbn', '/aranha', '/abelha', '/ave', '/barata', '/barbeiro', '/besouro', '/coleo', '/coleoptera', '/bichopau', 
     '/bicho_pau', '/phasma', '/borboleta', '/cigarra', '/cigarrinha','/cobra', '/serpente', '/cupim', 

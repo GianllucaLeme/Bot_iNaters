@@ -18,14 +18,14 @@ async function enviarMarcacoes({
     membros = membros.filter(user => user !== caller);
     prioridade = prioridade.filter(user => user !== caller);
 
-    // Condicional para limitar quantas pessoas serão marcadas
-    // (Auxilia em comandos com muitos membros)
     if (embaralhar) {
         membros = embaralharContatos([...membros]);
+    }
 
-        if (limite_membros) {
-            membros = membros.slice(0, limite_membros);
-        }
+    // Condicional para limitar quantas pessoas serão marcadas
+    // (Auxilia em comandos com muitos membros)
+    if (limite_membros) {
+        membros = membros.slice(0, limite_membros);
     }
 
     // Condicional para enviar uma mensagem customizada caso não 

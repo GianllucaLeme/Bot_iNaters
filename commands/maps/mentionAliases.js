@@ -2,6 +2,9 @@
 // A ordem importa: (alternativo1, nome_principal)
 //                  (alternativo2, nome_principal)
 const Nomes_alternativos = new Map([
+    ['/curador', '/curadores'],
+    ['/curadoria', '/curadores'],
+
     ['/bicho_pau', '/bichopau'],
     ['/phasma', '/bichopau'],
 

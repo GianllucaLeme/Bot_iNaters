@@ -20,15 +20,18 @@ const help_cache = (() => {
         { comando: '/bicho', descricao: 'Usar quando não souber quem marcar;' },
         { comando: '/milicia', descricao: 'Usar quando precisar de ajuda para virar IDs no iNat;' },
         { comando: '/sac', descricao: 'Fornece o link para o *SAC - iNaturalist*;' },
+        { comando: '/curadores', descricao: 'Usar quando precisar adicionar um táxon no iNat;' },
         { comando: '/sobre', descricao: 'Mostra informações sobre o bot;'},
         { comando: '/tirar_nome', descricao: 'Abre um requerimento para retirar seu nome das marcações.'}
     ];
     
     const comandos_removidos = new Set([
-        '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/sobre', '/tirar_nome', '/stop', 
-        '/all', '/serpente', '/coleo', '/coleoptera', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
-        '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerro', '/gerromorpha', '/bicho_pau', '/phasma', 
-        '/pseudoescorpiao', '/pseudoescorpioes', '/lepi', '/lepidoptera', '/calango', '/gekkota', 
+        '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/curador', '/curadores', '/curadoria', 
+        '/sobre', '/tirar_nome', '/stop', '/all', 
+        
+        '/serpente', '/coleo', '/coleoptera', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
+        '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerro', '/gerromorpha', '/bicho_pau', 
+        '/phasma', '/pseudoescorpiao', '/pseudoescorpioes', '/lepi', '/lepidoptera', '/calango', '/gekkota', 
         '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/mollusca', '/molusco', '/caracol', 
         '/caramujo', '/gastropoda', '/neuroptera', '/cogumelo', '/fungi', '/soldadinho', '/membracidae', 
         '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', '/tipulomorpha', '/plecoptera', 

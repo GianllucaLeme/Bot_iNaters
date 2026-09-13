@@ -16,6 +16,16 @@ const Mapa_comandos = new Map([
         limite_membros: 6       // Limita o array de membros
     }],
 
+    ['/curadores', {
+        membros: [c.borboletas.andre_nog, c.aranhas.celio, c.aranhas.fernando, c.aranhas.jean, 
+                  c.aranhas.michelotto, c.geoplanaria.piter, c.marinho.rafael_masson, c.moscas.rodrigo],
+        
+        prioridade: [c.phasma.edgar, c.enrico, c.mariposas.fischer, c.aranhas.gianlluca, c.formigas.maycon],
+
+        embaralhar: true,
+        limite_membros: 2
+    }],
+
     /*--- Comandos Principais ---*/
 
     ['/abelha', {

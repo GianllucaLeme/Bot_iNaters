@@ -141,7 +141,7 @@ const Mapa_comandos = new Map([
                   c.formigas.gomide, c.vankan],
 
         adicionais: [ {usuario: c.formigas.joao_paulo, chance: 0.1},
-                      {usuario: c.formigas.diego, chance: 0.05},
+                      {usuario: c.formigas.diego, chance: 0.3},
                       {usuario: c.enrico, chance: 0.05} ]
     }],
 
@@ -230,7 +230,7 @@ const Mapa_comandos = new Map([
     }],
 
     ['/morcego', {
-        membros: [c.aranhas.lucas_gusso],
+        membros: [c.aranhas.lucas_gusso, c.morcegos.mari],
 
         adicionais: [ {usuario: c.enrico, chance: 0.7} ]
     }],
@@ -327,7 +327,7 @@ const Mapa_comandos = new Map([
     }],
 
     ['/strep', {
-        membros: [c.formigas.gabriel_rogerio],
+        membros: [c.formigas.gabriel_rogerio, c.strep.andre_marambaia],
         descricao: 'strepsiptera'
     }],
 

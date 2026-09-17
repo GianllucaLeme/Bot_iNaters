@@ -127,7 +127,7 @@ const Mapa_comandos = new Map([
     }],
 
     ['/diplopoda', {
-        membros: [c.diplopoda.rodrigo_bouzan],
+        membros: [c.diplopoda.karen, c.diplopoda.rodrigo_bouzan],
 
         adicionais: [ {usuario: c.enrico, chance: 0.5} ],
         descricao: 'piolho-de-cobra'

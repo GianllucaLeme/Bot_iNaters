@@ -78,7 +78,8 @@ const Mapa_comandos = new Map([
 
     ['/besouro', {
         membros: [c.besouros.glauco, c.besouros.lorenne, c.besouros.vincenzo, 
-                  c.besouros.bruno_begha, c.vankan, c.staph.pedro_staph],
+                  c.besouros.bruno_begha, c.vankan, c.staph.pedro_staph, 
+                  c.besouros.joao_caetan],
 
         adicionais: [ {usuario: c.enrico, chance: 0.3} ]
     }],

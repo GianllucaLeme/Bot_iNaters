@@ -21,7 +21,9 @@ Bot de automação para grupos de WhatsApp desenvolvido com [whatsapp-web.js](ht
 
 ### Sistema de menções
 
-O bot possui mais de **45** comandos de menção, cada um associado a um grupo específico de membros. Ao enviar um comando como `/aranha` ou `/formiga`, o bot menciona automaticamente os participantes cadastrados naquela categoria.
+O bot possui um total de **209** comandos de menção, sendo **55** comandos principais, **52** comandos alternativos (aliases), **9** comandos de ajuda, **4** comandos administrativos e **89** comandos relacionados a easter eggs.
+
+Os comandos principais são cada um associado a um grupo específico de membros. Ao enviar um comando como `/aranha` ou `/formiga`, o bot menciona automaticamente os participantes cadastrados naquela categoria.
 
 - Suporte a aliases: múltiplos nomes para o mesmo comando (`/cobra` e `/serpente`, por exemplo)
 - Alguns membros têm chance probabilística de serem incluídos na menção (evita spam de marcações para aqueles que não querem ser marcados a todo momento)
@@ -40,7 +42,6 @@ Administradores podem pausar e retomar o bot individualmente por grupo, sem afet
 
 ### Comandos administrativos
 
-- `/admin` — menciona até dois administradores do grupo aleatoriamente
 - `/all` — menciona todos os participantes do grupo
 - `/stop` — pausa o bot no grupo atual
 - `/start` — retoma o bot no grupo atual
@@ -49,8 +50,11 @@ Administradores podem pausar e retomar o bot individualmente por grupo, sem afet
 
 - `/help` — lista os comandos de menção disponíveis
 - `/help2` — lista os comandos alternativos
-- `/sobre` — exibe informações sobre o bot e sua versão atual
+- `/admin` — menciona até dois administradores do grupo aleatoriamente
+- `/bicho` — meciona algumas pessoas que conhecem uma gama de animais diferentes;
 - `/sac` — Fornece o link para o **SAC - iNaturalist**
+- `/curadores` — menciona alguns curadores para adicionar um táxon no iNat;
+- `/sobre` — exibe informações sobre o bot e sua versão atual
 - `/tirar_nome` — solicita a remoção do remetente das listas de menção
 
 ### Watchdog automático
@@ -127,6 +131,7 @@ bot_inaters/
 ├── lib/
 │   ├── utils.js                     # Normalização de comandos, utilitários e persistência de pausa
 │   └── internet.js                  # Verificação de conectividade
+│   └── pauseManager.js              # Gerenciamento de grupos pausados
 │
 └── pictures/                        # ⚠️ Arquivos de mídia (dados sensíveis, modificar conforme necessário)
 ```

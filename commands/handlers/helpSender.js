@@ -35,7 +35,7 @@ const help_cache = (() => {
         '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/mollusca', '/molusco', '/caracol', 
         '/caramujo', '/gastropoda', '/neuroptera', '/cogumelo', '/fungi', '/soldadinho', '/membracidae', 
         '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', '/tipulomorpha', '/plecoptera', 
-        '/monocotiledonea', '/dicotiledonea', '/anura', '/thysanoptera', '/vespidae', '/maribondo', 
+        '/monocotiledonea', '/dicotiledonea', '/eudicot', '/anura', '/thysanoptera', '/vespidae', '/maribondo', 
         '/marimbondo', '/zygentoma', '/diptera', '/neuro', '/lep', '/siri', '/perereca', '/ra'
     ]);
     

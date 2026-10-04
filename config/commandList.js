@@ -12,7 +12,7 @@ const lista_comandos = new Set([
     '/gekkota', '/louva', '/louva_deus', '/mantis', '/mantodea', '/marinho', '/mollusca', '/molusco', '/concha', 
     '/caracol', '/caramujo', '/caranguejo', '/gastropoda', '/siri', '/mariposa', '/morcego', '/mosca', '/diptera', '/mosquito', 
     '/opiliao', '/opilioes', '/percevejo', '/percevejo_aq', '/gerro', '/gerromorpha', '/planta', '/plec', '/plecoptera', 
-    '/monocot', '/monocotiledonea', '/dicot', '/dicotiledonea', '/pseudo', '/pseudoescorpiao', '/pseudoescorpioes', 
+    '/monocot', '/monocotiledonea', '/dicot', '/eudicot', '/dicotiledonea', '/pseudo', '/pseudoescorpiao', '/pseudoescorpioes', 
     '/perereca', '/ra', '/sapo', '/anura', '/scoly', '/scolytinae', '/brocas', '/soldadinho', '/membracidae', '/staph', 
     '/staphylinidae', '/strep', '/strepsiptera', '/tipula', '/tipulomorpha', '/traca', '/zygentoma', '/tripe', 
     '/thysanoptera', '/vespa', '/vespidae', '/maribondo', '/marimbondo',

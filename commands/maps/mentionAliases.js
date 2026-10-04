@@ -68,6 +68,7 @@ const Nomes_alternativos = new Map([
     ['/monocotiledonea', '/monocot'],
 
     ['/dicotiledonea', '/dicot'],
+    ['/eudicot', '/dicot'],
 
     ['/anura', '/sapo'],
     ['/perereca', '/sapo'],
@@ -105,7 +106,7 @@ const Descricao_alternativos = new Map([
 
     ['/cupins', 'ou `/isoptera`'],
 
-    ['/dicotiledonea', 'ou `/monocotiledonea`'],
+    ['/dicotiledonea', ', `/monocotiledonea` ou `/eudicot`'],
 
     ['/esperança', ', `/gafanhoto` ou `/orthoptera`'],
 

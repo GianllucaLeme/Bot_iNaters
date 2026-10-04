@@ -21,7 +21,7 @@ Bot de automação para grupos de WhatsApp desenvolvido com [whatsapp-web.js](ht
 
 ### Sistema de menções
 
-O bot possui um total de **212** comandos de menção, sendo **55** comandos principais, **55** comandos alternativos (aliases), **9** comandos de ajuda, **4** comandos administrativos e **89** comandos relacionados a easter eggs.
+O bot possui um total de **211** comandos de menção, sendo **55** comandos principais, **55** comandos alternativos (aliases), **9** comandos de ajuda, **3** comandos administrativos e **89** comandos relacionados a easter eggs.
 
 Os comandos principais são cada um associado a um grupo específico de membros. Ao enviar um comando como `/aranha` ou `/formiga`, o bot menciona automaticamente os participantes cadastrados naquela categoria.
 
@@ -130,7 +130,7 @@ bot_inaters/
 │
 ├── lib/
 │   ├── utils.js                     # Normalização de comandos, utilitários e persistência de pausa
-│   └── internet.js                  # Verificação de conectividade
+│   ├── internet.js                  # Verificação de conectividade
 │   └── pauseManager.js              # Gerenciamento de grupos pausados
 │
 └── pictures/                        # ⚠️ Arquivos de mídia (dados sensíveis, modificar conforme necessário)

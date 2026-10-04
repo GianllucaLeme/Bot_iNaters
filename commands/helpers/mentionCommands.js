@@ -39,7 +39,7 @@ const Mapa_comandos = new Map([
         membros: [c.aranhas.adolfo, c.aranhas.alfredo, c.aranhas.claudia, c.aranhas.dayvson, 
                   c.aranhas.fernando, c.aranhas.gabriel_costa, c.aranhas.gabriel_vianna, 
                   c.aranhas.isaac, c.aranhas.lucas_gusso, c.aranhas.pedro_martins, c.aranhas.victor,
-                  c.aranhas.julio],
+                  c.aranhas.julio, c.aranhas.rike],
 
         prioridade: [c.aranhas.celio, c.aranhas.gianlluca, c.aranhas.jean, c.aranhas.ryan, c.aranhas.michelotto],
 
@@ -122,7 +122,7 @@ const Mapa_comandos = new Map([
     }],
 
     ['/cupim', {
-        membros: [c.cupim.gustavo, c.cupim.karina_lima, c.cupim.giordano],
+        membros: [c.cupim.gustavo, c.cupim.karina_lima, c.cupim.giordano, c.cupim.duda_melo],
 
         adicionais: [ {usuario: c.enrico, chance: 0.4} ]
     }],
@@ -256,7 +256,7 @@ const Mapa_comandos = new Map([
     }],
 
     ['/mosquito', {
-        membros: [c.mosquitos.walther],
+        membros: [c.mosquitos.walther, c.mosquitos.lc_pinho],
 
         adicionais: [ {usuario: c.enrico, chance: 0.7} ]
     }],

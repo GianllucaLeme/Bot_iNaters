@@ -7,7 +7,7 @@ const easterCommands = new Map([
         
         usuarios: [c.formigas.davi, c.aranhas.gianlluca, c.mariposas.luis_eduardo, 
                    c.formigas.maycon, c.formigas.felipe_santos, c.formigas.gabriel_rogerio, 
-                   c.formigas.gomide, c.staph.pedro_staph, c.aranhas.ryan, c.vankan, c.bot]
+                   c.formigas.gomide, c.staph.pedro_staph, c.vankan, c.bot]
     }],
 
     ['/bot', {
@@ -195,7 +195,7 @@ const easterCommands_custom = new Map([
 
     ['/tarrafer', async (client, message) => {
         let random_tarrafer = Math.floor(Math.random()*16);
-        let tarrafer_pictures = 10;            // quantidade de .pngs
+        let tarrafer_pictures = 9;            // quantidade de .pngs
 
         if(random_tarrafer < tarrafer_pictures){
             const media = MessageMedia.fromFilePath(`./pictures/tarraferes/tarrafer${random_tarrafer}.png`);

@@ -233,7 +233,7 @@ const Mapa_comandos = new Map([
     }],
 
     ['/marinho', {
-        membros: [c.marinho.carlos_sigma, c.aranhas.celio, 
+        membros: [c.marinho.carlos_sigma, c.aranhas.celio, c.marinho.gabriel_alledo, 
                   c.marinho.rafael_masson, c.mosquitos.walther],
 
         adicionais: [ {usuario: c.enrico, chance: 0.4} ],

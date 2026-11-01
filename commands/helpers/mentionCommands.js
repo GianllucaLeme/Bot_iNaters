@@ -364,9 +364,9 @@ const Mapa_comandos = new Map([
     }],
 
     ['/vespa', {
-        membros: [c.aranhas.celio, c.mariposas.laila],
+        membros: [c.aranhas.celio],
 
-        adicionais: [ {usuario: c.enrico, chance: 0.5} ],
+        adicionais: [ {usuario: c.enrico, chance: 0.8} ],
         descricao: 'ou `/maribondo`'
     }],
 ]);

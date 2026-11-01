@@ -27,6 +27,11 @@ const Nomes_alternativos = new Map([
     ['/coleo', '/besouro'],
     ['/coleoptera', '/besouro'],
 
+    ['/curculionidae', '/gorgulho'],
+    ['/curculionoidea', '/gorgulho'],
+    ['/curcu', '/gorgulho'],
+    ['/broca', '/gorgulho'],
+
     ['/gafanhoto', '/grilo'],
     ['/esperanca', '/grilo'],
     ['/orthoptera', '/grilo'],
@@ -75,7 +80,6 @@ const Nomes_alternativos = new Map([
     ['/ra', '/sapo'],
 
     ['/scolytinae', '/scoly'],
-    ['/brocas', '/scoly'],
 
     ['/staphylinidae', '/staph'],
 
@@ -95,6 +99,8 @@ const Nomes_alternativos = new Map([
 // Mapa para a descrição dos comandos alternativos
 const Descricao_alternativos = new Map([
     ['/anura', 'sapos e pererecas'],
+
+    ['/broca', ', `/curcu`, `/curculionidae` ou `/curculionoidea`'],
 
     ['/calango', 'ou `/gekkota`'],
     
@@ -119,8 +125,6 @@ const Descricao_alternativos = new Map([
     ['/neuro', 'ou `/neuroptera` (cupins)'],
 
     ['/pseudoescorpiao', 'ou `/pseudoescorpioes`'],
-
-    ['/scolytinae', 'ou `/brocas`'],
 
     ['/thysanoptera', 'tripes'],
 

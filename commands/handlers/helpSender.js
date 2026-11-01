@@ -29,14 +29,14 @@ const help_cache = (() => {
         '/help', '/help2', '/admin', '/bicho', '/milicia', '/sac', '/curador', '/curadores', '/curadoria', 
         '/sobre', '/tirar_nome', '/stop', '/all', 
         
-        '/serpente', '/coleo', '/coleoptera', '/cupins', '/isoptera', '/escorpioes', '/gafanhoto', 
-        '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', '/gerro', '/gerromorpha', '/bicho_pau', 
-        '/phasma', '/pseudoescorpiao', '/pseudoescorpioes', '/lepi', '/lepidoptera', '/calango', '/gekkota', 
-        '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', '/mollusca', '/molusco', '/caracol', 
-        '/caramujo', '/gastropoda', '/neuroptera', '/cogumelo', '/fungi', '/soldadinho', '/membracidae', 
-        '/scolytinae', '/brocas', '/staphylinidae', '/strepsiptera', '/tipulomorpha', '/plecoptera', 
-        '/monocotiledonea', '/dicotiledonea', '/eudicot', '/anura', '/thysanoptera', '/vespidae', '/maribondo', 
-        '/marimbondo', '/zygentoma', '/diptera', '/neuro', '/lep', '/siri', '/perereca', '/ra'
+        '/serpente', '/coleo', '/coleoptera', '/broca', '/curculionoidea', '/curculionidae', '/curcu', '/cupins', 
+        '/isoptera', '/escorpioes', '/gafanhoto', '/esperanca', '/orthoptera', '/hemiptera', '/opilioes', 
+        '/gerro', '/gerromorpha', '/bicho_pau', '/phasma', '/pseudoescorpiao', '/pseudoescorpioes', '/lepi', 
+        '/lepidoptera', '/calango', '/gekkota', '/louva_deus', '/mantis', '/mantodea', '/concha', '/caranguejo', 
+        '/mollusca', '/molusco', '/caracol', '/caramujo', '/gastropoda', '/neuroptera', '/cogumelo', '/fungi', 
+        '/soldadinho', '/membracidae', '/scolytinae', '/staphylinidae', '/strepsiptera', '/tipulomorpha', 
+        '/plecoptera', '/monocotiledonea', '/dicotiledonea', '/eudicot', '/anura', '/thysanoptera', '/vespidae', 
+        '/maribondo', '/marimbondo', '/zygentoma', '/diptera', '/neuro', '/lep', '/siri', '/perereca', '/ra'
     ]);
     
     const comandosPrincipais = [...lista_comandos].filter(comando => !comandos_removidos.has(comando));
@@ -72,7 +72,7 @@ const help_cache = (() => {
 const help2_cache = (() => {
     
     let comandos_avancados = [
-        '/anura', '/bicho_pau', '/calango', '/caranguejo', '/cogumelo', '/coleo',
+        '/anura', '/bicho_pau', '/broca', '/calango', '/caranguejo', '/cogumelo', '/coleo',
         '/cupins', '/dicotiledonea', '/diptera', '/escorpioes', '/esperança', '/gerro', 
         '/hemiptera', '/lep', '/marimbondo', '/neuro', '/opilioes', '/plecoptera', 
         '/pseudoescorpiao', '/scolytinae', '/staphylinidae', '/strepsiptera', 

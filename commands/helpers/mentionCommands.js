@@ -177,6 +177,13 @@ const Mapa_comandos = new Map([
         descricao: 'planária terrestre'
     }],
 
+    ['/gorgulho', {
+        membros: [c.formigas.gabriel_rogerio, c.besouros.vincenzo, c.vankan, c.gorgulho.luan_gorgulho],
+
+        adicionais: [ {usuario: c.enrico, chance: 0.3} ],
+        descricao: 'inclui tudo em Curculionoidea'
+    }],
+
     ['/grilo', {
         membros: [c.phasma.phil],
 

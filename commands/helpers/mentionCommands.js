@@ -51,7 +51,7 @@ const Mapa_comandos = new Map([
 
     ['/ave', {
         membros: [c.plantas.edvandro, c.aves.jose_valerio, c.aves.matheus_santos, 
-                  c.borboletas.pedro_souza, c.aves.ruan],
+                  c.borboletas.pedro_souza],
 
         prioridade: [c.aves.leticia_keiko, c.aves.miguel_malta, c.aves.henrique_stranz],
 

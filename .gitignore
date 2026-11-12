@@ -78,8 +78,11 @@ typings/
 .idea
 .vscode
 
-# Contact list
+# Contact list and other sensitive data
 contacts.json
+contacts_compare.js
+group_numbers.json
+unmatched_numbers.json
 
 # future deployment files
 future_deploy/

@@ -226,17 +226,13 @@ const Mapa_comandos = new Map([
     }],
 
     ['/mariposa', {
-        membros: [c.mariposas.jhonatan, c.mariposas.miguel, 
-                  c.phasma.pedro_alvaro, c.mariposas.pedro_lafin],
+        membros: [c.mariposas.jhonatan, c.mariposas.miguel, c.phasma.pedro_alvaro, 
+                  c.mariposas.pedro_lafin, c.mariposas.luis_eduardo, c.mariposas.nicolas,
+                  c.mariposas.fischer],
 
-        prioridade: [c.mariposas.laila, c.mariposas.luis_eduardo, 
-                     c.mariposas.nicolas],
-
-        adicionais: [ {usuario: c.enrico, chance: 0.2},
-                      {usuario: c.mariposas.fischer, chance: 1} ],
+        adicionais: [ {usuario: c.enrico, chance: 0.2} ],
         
-        embaralhar: true,
-        limite_membros: 3
+        embaralhar: true
     }],
 
     ['/marinho', {

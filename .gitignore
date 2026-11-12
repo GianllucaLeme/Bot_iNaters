@@ -95,3 +95,6 @@ pausedGroups.json
 
 # Routine executable files
 *.exe
+
+# Cloned repositories for development
+whatsapp-web.js/
